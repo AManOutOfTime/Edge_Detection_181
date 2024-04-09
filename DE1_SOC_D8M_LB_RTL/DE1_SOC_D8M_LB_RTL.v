@@ -53,7 +53,12 @@ module DE1_SOC_D8M_LB_RTL (
    output         MIPI_REFCLK,          // 20 MHz from video_pll.v
    output         MIPI_RESET_n
 );
-
+//parameters for cursor control
+parameter H_LIMIT = 640;
+parameter V_LIMIT = 480;
+parameter VELOCITY = 2;
+parameter R = 4;
+parameter LENGTH = 5;
 //=============================================================================
 // reg and wire declarations
 //=============================================================================
@@ -61,6 +66,7 @@ module DE1_SOC_D8M_LB_RTL (
    wire    [7:0]  raw_VGA_R;
    wire    [7:0]  raw_VGA_G;
    wire    [7:0]  raw_VGA_B;
+
    wire           VGA_CLK_25M;
    wire           RESET_N; 
 	wire           Icontrol1;
@@ -69,6 +75,25 @@ module DE1_SOC_D8M_LB_RTL (
 	wire           gIenable;
 	wire           bIenable;
 	wire           brightLevel;
+	reg 	[21:0] count = 0;
+	reg 	       c_clk;
+	wire	[7:0]  final_VGA_R;
+	wire	[7:0]  final_VGA_G;
+	wire	[7:0]  final_VGA_B;
+	reg 	[7:0]  input_R;
+	reg 	[7:0]  input_G;
+	reg 	[7:0]  input_B;
+	reg 	[7:0]  next_input_R;
+	reg 	[7:0]  next_input_G;
+	reg 	[7:0]  next_input_B;
+	// cursor bounds
+	reg   signed	[12:0] c_top = 13'd0238;
+	reg   signed   [12:0] c_bottom = 13'd0242;
+	reg   signed   [12:0] c_right = 13'd0322;
+	reg 	signed   [12:0] c_left = 13'd0318;
+	// plus center
+	wire 	 [12:0] c_row;
+	wire 	 [12:0] c_col;
    wire    [7:0]  sCCD_R;
    wire    [7:0]  sCCD_G;
    wire    [7:0]  sCCD_B; 
@@ -91,6 +116,15 @@ module DE1_SOC_D8M_LB_RTL (
 assign  LUT_MIPI_PIXEL_HS = MIPI_PIXEL_HS;
 assign  LUT_MIPI_PIXEL_VS = MIPI_PIXEL_VS;
 assign  LUT_MIPI_PIXEL_D  = MIPI_PIXEL_D ;
+
+// calculate plus cursor center
+assign c_row = (c_left + c_right) >> 1; 
+assign c_col = (c_top + c_bottom) >> 1; 
+
+// final colors to input to the monitor (unless its part of the cursor)
+assign	final_VGA_R = raw_VGA_R;
+assign	final_VGA_G = raw_VGA_G;
+assign	final_VGA_B = raw_VGA_B;
 
 assign RESET_N= ~SW[0]; 
 assign Icontrol1 = SW[1];
@@ -155,9 +189,9 @@ RGB_Process p1 (
 	.gIenable(gIenable),
 	.bIenable(bIenable),
 	.brightLevel(brightLevel),
-   .raw_VGA_R(raw_VGA_R),
-   .raw_VGA_G(raw_VGA_G),
-   .raw_VGA_B(raw_VGA_B),
+  	.raw_VGA_R(input_R),
+	.raw_VGA_G(input_G),
+	.raw_VGA_B(input_B),
    .row      (row),
    .col      (col),
    .o_VGA_R  (VGA_R),
@@ -175,6 +209,41 @@ assign orequest = ((x_count > 13'd0160 && x_count < 13'd0800 ) &&
 
 // this blanking signal is active low
 assign VGA_BLANK_N = ~((x_count < 13'd0160 ) || ( y_count < 13'd0045 ));
+	
+// cursor color control
+always @ (*)
+begin
+	if(SW[9]) 
+	begin
+		next_input_R = final_VGA_R;
+		next_input_G = final_VGA_G;
+		next_input_B = final_VGA_B;
+	end
+	else
+	begin
+		// plus for cursor
+		// horizontal
+		if((col == c_col) && (row >= c_row - LENGTH/2) && (row <= c_row + LENGTH/2))
+		begin
+			next_input_R = 8'd255;
+			next_input_G = 8'd0;
+			next_input_B = 8'd255;
+		end
+		//vertical
+		else if((row == c_row) && (col >= c_col - LENGTH/2) && (col <= c_col + LENGTH/2))
+		begin
+			next_input_R = 8'd255;
+			next_input_G = 8'd0;
+			next_input_B = 8'd255;
+		end
+		else
+		begin
+			next_input_R = final_VGA_R;
+			next_input_G = final_VGA_G;
+			next_input_B = final_VGA_B;
+		end
+	end		
+end
 
 // generate the horizontal and vertical sync signals
 always @(*) begin
@@ -188,7 +257,85 @@ always @(*) begin
    else
       VGA_VS = 1'b1;
 end
+// slower clk control to allow for easier cursor movement
+always @ (posedge CLOCK_50)
+begin
+	if(count[20] == 1'b1) 
+	begin  
+		c_clk <= 1'b1;
+		count <= count + 1;
+	end
+	else 
+	begin
+		c_clk <= 1'b0;
+		count <= count + 1;
+	end
+end
+// max vert = 480 max horz = 640
+// changing cursor point (KEY[3] = left, KEY[2] = up, KEY[1] = down, KEY[0] = right)
+always @ (posedge c_clk) 
+begin
+	if(~KEY[3]) 
+	begin
+		if(c_right <= 0 && c_left <= 0)
+		begin
+			c_right <= c_right + H_LIMIT;
+			c_left <= c_left + H_LIMIT;
+		end
+		else
+		begin
+			c_right <= c_right - VELOCITY;
+			c_left <= c_left - VELOCITY;
+		end
+	end
+	if(~KEY[2])
+	begin 	
+		if(c_top <= 0 && c_bottom <= 0)
+		begin
+			c_top <= c_top + V_LIMIT;
+			c_bottom <= c_bottom + V_LIMIT;
+		end
+		else
+		begin
+			c_top <= c_top - VELOCITY;
+			c_bottom <= c_bottom - VELOCITY;
+		end
+	end
+	if(~KEY[1])
+	begin
+		if(c_bottom >= V_LIMIT && c_top >= V_LIMIT)
+		begin
+			c_top <= c_top - V_LIMIT;
+			c_bottom <= c_bottom - V_LIMIT;
+		end
+		else
+		begin
+			c_top <= c_top + VELOCITY;
+			c_bottom <= c_bottom + VELOCITY;
+		end
+	end
+	if(~KEY[0])
+	begin
+		if(c_right >= H_LIMIT && c_left >= H_LIMIT)
+		begin
+			c_right <= c_right - H_LIMIT;
+			c_left <= c_left - H_LIMIT;
+		end
+		else
+		begin
+			c_right <= c_right + VELOCITY;
+			c_left <= c_left + VELOCITY;
+		end
+	end
+end
 
+// color state control
+always @ (posedge CLOCK_50)
+begin
+	input_R <= #1 next_input_R;
+	input_G <= #1 next_input_G;
+	input_B <= #1 next_input_B;
+end
 // calculate col and row as an offset from the x and y counter values
 assign col = x_count - 13'd0164;
 assign row = y_count - 13'd0047;
