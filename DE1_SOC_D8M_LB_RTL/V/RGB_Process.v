@@ -64,28 +64,28 @@ end
 //end
 
 else if (row < 13'd478 && col < 13'd617) begin //bottom right - white
-	o_VGA_R = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_R < midpoint)? ((raw_VGA_R*6)/16):(((raw_VGA_R*18)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_R < midpoint)? ((raw_VGA_R*4)/16):(((raw_VGA_R*20)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_R < midpoint)? ((raw_VGA_R*3)/16):(((raw_VGA_R*21)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_R < midpoint)? ((raw_VGA_R*1)/16):(((raw_VGA_R*23)/16) > 8'b11111111)? 8'b11111111:
+	o_VGA_R = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_R < midpoint)? ((raw_VGA_R*6)/16):(((raw_VGA_R*18)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*18)/16):
+				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_R < midpoint)? ((raw_VGA_R*4)/16):(((raw_VGA_R*20)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*20)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_R < midpoint)? ((raw_VGA_R*3)/16):(((raw_VGA_R*21)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*21)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_R < midpoint)? ((raw_VGA_R*1)/16):(((raw_VGA_R*23)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*23)/16):
 				 (rIenable == 0)? raw_VGA_R:
 				 (rIenable == 1 && Icontrol2 == 0 && Icontrol1 == 0)? 8'b00000000:
 	          (rIenable == 1 && Icontrol2 == 0 && Icontrol1 == 1)? raw_VGA_R >> 2:
 				 (rIenable == 1 && Icontrol2 == 1 && Icontrol1 == 0)? raw_VGA_R >> 1:
 				 (rIenable == 1 && Icontrol2 == 1 && Icontrol1 == 1)? raw_VGA_R:raw_VGA_R;
-	o_VGA_G = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_G < midpoint)? ((raw_VGA_G*6)/16):(((raw_VGA_G*18)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_G < midpoint)? ((raw_VGA_G*4)/16):(((raw_VGA_G*20)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_G < midpoint)? ((raw_VGA_G*3)/16):(((raw_VGA_G*21)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_G < midpoint)? ((raw_VGA_G*1)/16):(((raw_VGA_G*23)/16) > 8'b11111111)? 8'b11111111:
+	o_VGA_G = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_G < midpoint)? ((raw_VGA_G*6)/16):(((raw_VGA_G*18)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*18)/16):
+				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_G < midpoint)? ((raw_VGA_G*4)/16):(((raw_VGA_G*20)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*20)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_G < midpoint)? ((raw_VGA_G*3)/16):(((raw_VGA_G*21)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*21)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_G < midpoint)? ((raw_VGA_G*1)/16):(((raw_VGA_G*23)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*23)/16):
 				 (gIenable == 0)? raw_VGA_G:
 				 (gIenable == 1 && Icontrol2 == 0 && Icontrol1 == 0)? 8'b00000000:
 	          (gIenable == 1 && Icontrol2 == 0 && Icontrol1 == 1)? raw_VGA_G >> 2:
 				 (gIenable == 1 && Icontrol2 == 1 && Icontrol1 == 0)? raw_VGA_G >> 1:
 				 (gIenable == 1 && Icontrol2 == 1 && Icontrol1 == 1)? raw_VGA_G:raw_VGA_G;
-	o_VGA_B = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_B < midpoint)? ((raw_VGA_B*6)/16):(((raw_VGA_B*18)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_B*5/4)):
-				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_B < midpoint)? ((raw_VGA_B*4)/16):(((raw_VGA_B*20)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_B < midpoint)? ((raw_VGA_B*3)/16):(((raw_VGA_B*21)/16) > 8'b11111111)? 8'b11111111:
-				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_B < midpoint)? ((raw_VGA_B*1)/16):(((raw_VGA_B*23)/16) > 8'b11111111)? 8'b11111111:
+	o_VGA_B = (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 0)? (raw_VGA_B < midpoint)? ((raw_VGA_B*6)/16):(((raw_VGA_B*18)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*18)/16):
+				 (brightLevel == 1 && Icontrol2 == 0 && Icontrol1 == 1)? (raw_VGA_B < midpoint)? ((raw_VGA_B*4)/16):(((raw_VGA_B*20)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*20)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 0)? (raw_VGA_B < midpoint)? ((raw_VGA_B*3)/16):(((raw_VGA_B*21)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*21)/16):
+				 (brightLevel == 1 && Icontrol2 == 1 && Icontrol1 == 1)? (raw_VGA_B < midpoint)? ((raw_VGA_B*1)/16):(((raw_VGA_B*23)/16) > 8'b11111111)? 8'b11111111:((raw_VGA_R*23)/16):
 				 (bIenable == 0)? raw_VGA_B:
 				 (bIenable == 1 && Icontrol2 == 0 && Icontrol1 == 0)? 8'b00000000:
 	          (bIenable == 1 && Icontrol2 == 0 && Icontrol1 == 1)? raw_VGA_B >> 2:
