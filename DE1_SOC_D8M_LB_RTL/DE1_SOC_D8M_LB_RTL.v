@@ -87,10 +87,10 @@ parameter LENGTH = 5;
 	reg 	[7:0]  next_input_G;
 	reg 	[7:0]  next_input_B;
 	// cursor bounds
-	reg   signed	[12:0] c_top = 13'd0238;
-	reg   signed   [12:0] c_bottom = 13'd0242;
-	reg   signed   [12:0] c_right = 13'd0322;
-	reg 	signed   [12:0] c_left = 13'd0318;
+	reg   signed	[12:0] c_top = 13'd0318;
+	reg   signed   [12:0] c_bottom = 13'd0322;
+	reg   signed   [12:0] c_right = 13'd0242;
+	reg 	signed   [12:0] c_left = 13'd0238;
 	// plus center
 	wire 	 [12:0] c_row;
 	wire 	 [12:0] c_col;
