@@ -60,6 +60,7 @@ parameter H_LIMIT = 640;
 parameter V_LIMIT = 480;
 parameter VELOCITY = 2;
 parameter R = 4;
+parameter LENGTH = 5;
 //=============================================================================
 // reg and wire declarations
 //=============================================================================
@@ -290,37 +291,26 @@ end
 // cursor color control
 always @ (*)
 begin
-	if(SW[7]) // allows for cursor to switch between circle and square
+	// plus for cursor
+	// horizontal
+	if((col == c_col) && (row >= c_row - LENGTH/2) && (row <= c_row + LENGTH/2))
 	begin
-		// circle control using circle area function 
-		if(((col - c_row) * (col - c_row) + (row - c_col) * (row - c_col)) <= R*R)
-		begin
-			next_input_R = 8'd255;
-			next_input_G = 8'd0;
-			next_input_B = 8'd255;
-		end
-		else
-		begin
-			next_input_R = final_VGA_R;
-			next_input_G = final_VGA_G;
-			next_input_B = final_VGA_B;
-		end
+		next_input_R = 8'd255;
+		next_input_G = 8'd0;
+		next_input_B = 8'd255;
+	end
+	//vertical
+	else if((row == c_row) && (col >= c_col - LENGTH/2) && (col <= c_col + LENGTH/2))
+	begin
+		next_input_R = 8'd255;
+		next_input_G = 8'd0;
+		next_input_B = 8'd255;
 	end
 	else
 	begin
-		// square for cursor
-		if((row >= c_top) && (row <= c_bottom) && (col >= c_left) && (col <= c_right))
-		begin
-			next_input_R = 8'd255;
-			next_input_G = 8'd0;
-			next_input_B = 8'd255;
-		end
-		else
-		begin
-			next_input_R = final_VGA_R;
-			next_input_G = final_VGA_G;
-			next_input_B = final_VGA_B;
-		end
+		next_input_R = final_VGA_R;
+		next_input_G = final_VGA_G;
+		next_input_B = final_VGA_B;
 	end
 		
 end
