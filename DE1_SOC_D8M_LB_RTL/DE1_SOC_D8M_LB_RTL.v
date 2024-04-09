@@ -54,8 +54,8 @@ module DE1_SOC_D8M_LB_RTL (
    output         MIPI_RESET_n
 );
 //parameters for cursor control
-parameter H_LIMIT = 640;
-parameter V_LIMIT = 480;
+parameter H_LIMIT = 478;
+parameter V_LIMIT = 617;
 parameter VELOCITY = 2;
 parameter R = 4;
 parameter LENGTH = 5;
