@@ -1,17 +1,17 @@
-Fitter Status : Successful - Tue Apr 09 16:27:34 2024
+Fitter Status : Successful - Tue May 07 17:13:04 2024
 Quartus Prime Version : 20.1.0 Build 711 06/05/2020 SJ Standard Edition
 Revision Name : DE1_SOC_D8M_LB_RTL
 Top-level Entity Name : DE1_SOC_D8M_LB_RTL
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 1,393 / 32,070 ( 4 % )
-Total registers : 748
+Logic utilization (in ALMs) : 1,982 / 32,070 ( 6 % )
+Total registers : 909
 Total pins : 124 / 457 ( 27 % )
 Total virtual pins : 0
 Total block memory bits : 122,880 / 4,065,280 ( 3 % )
 Total RAM Blocks : 15 / 397 ( 4 % )
-Total DSP Blocks : 7 / 87 ( 8 % )
+Total DSP Blocks : 13 / 87 ( 15 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0
