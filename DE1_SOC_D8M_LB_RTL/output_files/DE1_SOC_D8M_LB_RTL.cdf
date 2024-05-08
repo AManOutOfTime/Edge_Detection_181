@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Ign)
-		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
+		Device PartName(5CSEMA5F31) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
 		Device PartName(5CSEMA5F31) Path("C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/output_files/") File("DE1_SOC_D8M_LB_RTL.sof") MfrSpec(OpMask(1));
 

@@ -1,0 +1,7 @@
+
+State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state
+Name rect_state.R_LOCK2 rect_state.R_LOCK1 rect_state.R_READY rect_state.R_OFF 
+rect_state.R_OFF 0 0 0 0 
+rect_state.R_READY 0 0 1 1 
+rect_state.R_LOCK1 0 1 0 1 
+rect_state.R_LOCK2 1 0 0 1 
