@@ -88,7 +88,23 @@ module DE1_SOC_D8M_LB_RTL (
 	reg 	[7:0]  reg_curs_ol__input_R;
 	reg 	[7:0]  reg_curs_ol__input_G;
 	reg 	[7:0]  reg_curs_ol__input_B;
-	
+	wire [7:0] blurred_R;
+	wire [7:0] blurred_G;
+	wire [7:0] blurred_B;
+	reg [7:0] reg_blur_R;
+	reg [7:0] reg_blur_G;
+	reg [7:0] reg_blur_B;
+	reg [7:0] reg_blurred_R;
+	reg [7:0] reg_blurred_G;
+	reg [7:0] reg_blurred_B;
+	wire [7:0] 	 blur_output;
+	reg  [7:0]   reg_blur_input, reg_blur_output;
+	reg	blur_en; 
+	wire read_flag_R;
+	wire read_flag_G;
+	wire read_flag_B;
+	wire [8:0] rows_written;
+	wire [9:0] cols_written;
 	
    wire    [7:0]  sCCD_R;
    wire    [7:0]  sCCD_G;
@@ -126,7 +142,7 @@ assign Icontrol4 = SW[4];
 // 010
 // 011
 // 100
-// 101
+// 101 BLUR
 // 110
 // 111
 
@@ -182,14 +198,48 @@ RGB_Process p1 (
 	.Icontrol3(Icontrol3),
 	.Icontrol4(Icontrol4),
 	.brightLevel(brightLevel),
-  	.raw_VGA_R(reg_raw_VGA_R),
-	.raw_VGA_G(reg_raw_VGA_G),
-	.raw_VGA_B(reg_raw_VGA_B),
+  	.raw_VGA_R(reg_blurred_R),
+	.raw_VGA_G(reg_blurred_G),
+	.raw_VGA_B(reg_blurred_B),
    .row      (row),
    .col      (col),
    .o_VGA_R  (fil_proc_R),
    .o_VGA_G  (fil_proc_G),
    .o_VGA_B  (fil_proc_B)
+);
+
+//--- Module to Handle 5x5 Gaussian Blur (greyscale, only need one input color pixel value bc R=G=B)
+blur_5x5 G_R(
+	.clk(CLOCK_50),
+	.reset(1'b0),
+	.en(blur_en),
+	.input_pixel(reg_blur_R),
+	.rd_flag(read_flag_R),
+	.output_pixel(blurred_R),
+	.rows_written(rows_written_R),
+	.cols_written(cols_written_R)
+);
+
+blur_5x5 G_G(
+	.clk(CLOCK_50),
+	.reset(1'b0), 
+	.en(blur_en), 
+	.input_pixel(reg_blur_G), 
+	.rd_flag(read_flag_G),
+	.output_pixel(blurred_G),
+	.rows_written(rows_written_G),
+	.cols_written(cols_written_G)
+);
+
+blur_5x5 G_B(
+	.clk(CLOCK_50),
+	.reset(1'b0), 
+	.en(blur_en), 
+	.input_pixel(reg_blur_B), 
+	.rd_flag(read_flag_B),
+	.output_pixel(blurred_B),
+	.rows_written(rows_written_B),
+	.cols_written(cols_written_B)
 );
 
 //--- Process monitor cursor
@@ -210,6 +260,8 @@ cursor c_proc(
 //--- VGA interface signals ---
 assign VGA_CLK    = MIPI_PIXEL_CLK;           // GPIO clk
 assign VGA_SYNC_N = 1'b0;
+//if greyscale enabled and blur switch high
+
 
 // orequest signals when an output from the camera is needed
 assign orequest = ((x_count > 13'd0160 && x_count < 13'd0800 ) &&
@@ -224,19 +276,80 @@ assign VGA_G = reg_curs_ol__input_G;
 assign VGA_B = reg_curs_ol__input_B;
 
 // register module wires
+// raw to RGB_Process module
 always @ (posedge CLOCK_50) begin
 	reg_raw_VGA_R <= raw_VGA_R;
 	reg_raw_VGA_G <= raw_VGA_G;
 	reg_raw_VGA_B <= raw_VGA_B;
 end
 
-
-always @ (posedge CLOCK_50) begin
+always@(posedge CLOCK_50) begin
 	reg_fil_proc_R <= fil_proc_R;
 	reg_fil_proc_G <= fil_proc_G;
 	reg_fil_proc_B <= fil_proc_B;
 end
 
+////blur output to reg
+//always @(posedge CLOCK_50)
+//begin
+//	if(read_flag)
+//	begin
+//		reg_blur_output <= blur_output;
+//	end
+//	else
+//	begin
+//		reg_blur_output <= 0;
+//	end
+//end
+
+//RGB_Process output to cursor module input
+
+always @ (posedge CLOCK_50) begin
+	if(SW[9] && ~SW[8] && SW[7])
+	begin
+		//deal with 0's padding on inputs for 2 rows and two cols
+		blur_en <= 1'b1;
+		if((((0 <= rows_written) && (rows_written < 2)) || ((482 < rows_written) && (rows_written <= 484))) || 
+		(((0 <= cols_written) && (cols_written < 2)) || ((642 < cols_written) && (cols_written <= 644))))
+		begin
+		reg_blur_R <= 8'b0;
+		reg_blur_G <= 8'b0;
+		reg_blur_B <= 8'b0;
+		end
+		else
+		begin
+		reg_blur_R <= raw_VGA_R;
+		reg_blur_G <= raw_VGA_G;
+		reg_blur_B <= raw_VGA_B;
+		end
+		if(read_flag_R) begin // if new value ready
+			reg_blurred_R <= blurred_R;
+		end
+		else begin // else old val
+			reg_blurred_R <= reg_blurred_R;
+		end
+		if(read_flag_G) begin // if new value ready
+			reg_blurred_G <= blurred_G;
+		end
+		else begin // else old val
+			reg_blurred_G <= reg_blurred_G;
+		end
+		if(read_flag_B) begin // if new value ready
+			reg_blurred_B <= blurred_B;
+		end
+		else begin // else old val
+			reg_blurred_B <= reg_blurred_B;
+		end
+	end
+	else
+	begin
+		blur_en <= 1'b0;
+		reg_blurred_R <= raw_VGA_R;
+		reg_blurred_G <= raw_VGA_G;
+		reg_blurred_B <= raw_VGA_B;
+	end
+end
+//cursor output to VGA input wires
 always @ (posedge CLOCK_50) begin
 	reg_curs_ol__input_R <= curs_ol__input_R;
 	reg_curs_ol__input_G <= curs_ol__input_G;

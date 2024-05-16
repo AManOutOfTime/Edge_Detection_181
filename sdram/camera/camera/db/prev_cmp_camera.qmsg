@@ -1,0 +1,2 @@
+{ "Error" "ECPT_NO_QUARTUS_LICENSE" "" "Specified license does not contain information required to run the Quartus Prime software." {  } {  } 0 292027 "Specified license does not contain information required to run the Quartus Prime software." 0 0 "Design Software" 0 -1 1650697544055 ""}
+{ "Error" "EFLOW_ERROR_COUNT" "Full Compilation 1  0 s " "Quartus Prime Full Compilation was unsuccessful. 1 error, 0 warnings" {  } {  } 0 293001 "Quartus Prime %1!s! was unsuccessful. %2!d! error%3!s!, %4!d! warning%5!s!" 0 0 "Design Software" 0 -1 1650697544696 ""}
