@@ -235,6 +235,19 @@ set_global_assignment -name VERILOG_FILE V/RGB_Process.v
 set_global_assignment -name VERILOG_FILE cursor.v
 set_global_assignment -name VERILOG_FILE img_row.v
 set_global_assignment -name QIP_FILE line_ram.qip
+set_global_assignment -name VERILOG_FILE mac_unit.v
+set_global_assignment -name VERILOG_FILE mac_unit_3x3.v
+set_global_assignment -name VERILOG_FILE sobel_conv.v
+set_global_assignment -name VERILOG_FILE sqrt_approx.v
+set_global_assignment -name VERILOG_FILE sqrt_approx_23bit.v
+set_global_assignment -name VERILOG_FILE sqrt_approx_tb.v
+set_global_assignment -name VERILOG_FILE sobel_conv_tb.v
+set_global_assignment -name QIP_FILE ram.qip
+set_global_assignment -name VERILOG_FILE buffer.v
+set_global_assignment -name VERILOG_FILE greyscale.v
+set_global_assignment -name VERILOG_FILE edge.v
+set_global_assignment -name VERILOG_FILE edge_detect.v
+set_global_assignment -name VERILOG_FILE trial_buffer.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top

@@ -1,0 +1,16 @@
+module sqrt_approx_23bit (
+	input [22:0] radicand,
+	output [10:0] sqrt
+);
+	
+	reg [10:0] fin;
+	reg [22:0] val;
+	integer i;
+	
+	always@(in) begin
+		fin = 0;
+		val = radicand;
+		for (i = 10
+	end
+	
+endmodule

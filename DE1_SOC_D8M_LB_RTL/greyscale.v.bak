@@ -1,0 +1,19 @@
+module greyscale(
+		input [7:0] in_R, 
+		input [7:0] in_G, 
+		input [7:0] in_B, 
+		output [7:0] gray_R, 
+		output [7:0] gray_G, 
+		output [7:0] gray_B, 
+);
+
+	// 16 bit due to multiplication overflow
+	wire [15:0] intermediate;
+	
+	// luminance formula (NTSC formula): greyscale = 0.299*R + 0.587*G + 0.114*B)
+	// R: 77/256 = 0.3
+	// G: 150/256 = 0.5859375
+	// B: 29/256 = 0.11328125
+	assign intermediate = (in_R *
+
+endmodule

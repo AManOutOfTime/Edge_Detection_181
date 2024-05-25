@@ -1,0 +1,13 @@
+module edge(
+			input clk,
+			input [7:0] in_R, 
+			input [7:0] in_G, 
+			input [7:0] in_B, 
+			output [7:0] edge_R, 
+			output [7:0] edge_G, 
+			output [7:0] edge_B
+		);
+				
+		greyscale grey(
+				
+endmodule

@@ -1,5 +1,5 @@
 Flow report for DE1_SOC_D8M_LB_RTL
-Thu May 16 14:24:01 2024
+Sat May 25 14:58:05 2024
 Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
 
 
@@ -41,19 +41,19 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Thu May 16 14:23:48 2024           ;
+; Flow Status                     ; Successful - Sat May 25 14:57:16 2024           ;
 ; Quartus Prime Version           ; 20.1.0 Build 711 06/05/2020 SJ Standard Edition ;
 ; Revision Name                   ; DE1_SOC_D8M_LB_RTL                              ;
 ; Top-level Entity Name           ; DE1_SOC_D8M_LB_RTL                              ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 1,995 / 32,070 ( 6 % )                          ;
-; Total registers                 ; 924                                             ;
+; Logic utilization (in ALMs)     ; 21,294 / 32,070 ( 66 % )                        ;
+; Total registers                 ; 34896                                           ;
 ; Total pins                      ; 124 / 457 ( 27 % )                              ;
 ; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 122,880 / 4,065,280 ( 3 % )                     ;
-; Total DSP Blocks                ; 13 / 87 ( 15 % )                                ;
+; Total block memory bits         ; 294,912 / 4,065,280 ( 7 % )                     ;
+; Total DSP Blocks                ; 87 / 87 ( 100 % )                               ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
 ; Total HSSI TX PCSs              ; 0                                               ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/16/2024 14:20:14 ;
+; Start date & time ; 05/25/2024 14:36:06 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; DE1_SOC_D8M_LB_RTL  ;
 +-------------------+---------------------+
@@ -79,10 +79,11 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 2222737845120.171589441329052          ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 2222737845120.171667296626724          ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
 ; MISC_FILE                           ; line_ram_bb.v                          ; --            ; --          ; --         ;
+; MISC_FILE                           ; ram_bb.v                               ; --            ; --          ; --         ;
 ; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
 ; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
 ; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
@@ -97,11 +98,11 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:46     ; 1.0                     ; 5450 MB             ; 00:00:22                           ;
-; Fitter               ; 00:02:33     ; 1.2                     ; 8034 MB             ; 00:02:34                           ;
-; Assembler            ; 00:00:09     ; 1.0                     ; 4883 MB             ; 00:00:07                           ;
-; Timing Analyzer      ; 00:00:12     ; 3.0                     ; 5412 MB             ; 00:00:17                           ;
-; Total                ; 00:03:40     ; --                      ; --                  ; 00:03:20                           ;
+; Analysis & Synthesis ; 00:01:39     ; 3.8                     ; 6203 MB             ; 00:03:16                           ;
+; Fitter               ; 00:18:51     ; 1.5                     ; 9039 MB             ; 00:40:10                           ;
+; Assembler            ; 00:00:21     ; 1.0                     ; 5226 MB             ; 00:00:07                           ;
+; Timing Analyzer      ; 00:00:47     ; 8.4                     ; 6068 MB             ; 00:02:14                           ;
+; Total                ; 00:21:38     ; --                      ; --                  ; 00:45:47                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

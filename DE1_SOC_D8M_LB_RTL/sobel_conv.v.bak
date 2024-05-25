@@ -1,0 +1,40 @@
+// assume 3x3 conv
+module sobel_conv(
+					// values from vga
+					// [ 0 1 2 ]
+					// [ 3 4 5 ]
+					// [ 6 7 8 ]
+					input clk,
+					input [10:0] pixel0, 
+					input [10:0] pixel1, 
+					input [10:0] pixel2, 
+					input [10:0] pixel3, 
+					input [10:0] pixel4, 
+					input [10:0] pixel5, 
+					input [10:0] pixel6, 
+					input [10:0] pixel7, 
+					input [10:0] pixel8, 
+					output [7:0] op_val
+					);
+					
+					reg [7:0] kernel [8:0]; // 3x3 kernel for sobel
+					
+					// sobel operator for horz edges
+					// [ -1 -2 -2 ]
+					// [  0  0  0 ]
+					// [  1  2  1 ]
+					initial begin
+						kernel[0] = -1;
+						kernel[1] = -2;
+						kernel[2] = -1;
+						kernel[3] = 0;
+						kernel[4] = 0;
+						kernel[5] = 0;
+						kernel[6] = 1;
+						kernel[7] = 2;
+						kernel[8] = 1;
+					end
+					
+					assign op_val = pixel
+					
+endmodule

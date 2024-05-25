@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at convolution.v(59): always construct contains both blocking and non-blocking assignments File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v Line: 59
+Warning (10268): Verilog HDL information at edge_detect.v(215): always construct contains both blocking and non-blocking assignments File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 215

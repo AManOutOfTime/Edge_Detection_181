@@ -1,4 +1,25 @@
 
+State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sync_state
+Name sync_state.OFF sync_state.ACTIVE sync_state.IDLE 
+sync_state.OFF 0 0 0 
+sync_state.IDLE 1 0 1 
+sync_state.ACTIVE 1 1 0 
+
+State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|conv_state
+Name conv_state.SET3 conv_state.SET2 conv_state.SET1 conv_state.SET0 conv_state.INIT_BUFF conv_state.INIT 
+conv_state.INIT 0 0 0 0 0 0 
+conv_state.INIT_BUFF 0 0 0 0 1 1 
+conv_state.SET0 0 0 0 1 0 1 
+conv_state.SET1 0 0 1 0 0 1 
+conv_state.SET2 0 1 0 0 0 1 
+conv_state.SET3 1 0 0 0 0 1 
+
+State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|count_state
+Name count_state.EDGE_OFF count_state.ON_FINISH count_state.ON_CONV 
+count_state.EDGE_OFF 0 0 0 
+count_state.ON_CONV 1 0 1 
+count_state.ON_FINISH 1 1 0 
+
 State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state
 Name rect_state.R_LOCK2 rect_state.R_LOCK1 rect_state.R_READY rect_state.R_OFF 
 rect_state.R_OFF 0 0 0 0 

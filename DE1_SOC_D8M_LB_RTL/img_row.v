@@ -7,55 +7,94 @@
 
 // return sequence of bits relative to ea step of convolution
 module img_row(
-
-					input CLOCK_50, 
+					input zero_fill, // if on fills entire buffer with zeroes
+					input clk, 
 					input rst, 
-					input [11:0] in_data, 
+					input [7:0] in_data, 
 					input wr_en, 
+					// every clk increment ptr 
+					// and send out new set of adjacent row pixels
 					input rd_en,
 					
-					output [35:0] out_data 
+					// returns 3 adjacent row pixels
+					output [7:0] pixelA, pixelB, pixelC
 
 					);
 					
-					
-	// 2d memory 
-	// 3 rows of 640
+				
 	
 	// storage
-	reg [11:0] row [639:0] /* synthesis ramstyle = "M10K" */; 
-	
-	
-
-	
+	// 640 pixels + 2 extra pixels for padding
+	reg [7:0] row [641:0] /* synthesis ramstyle = "no_rw_check, M10K" */; 
 	reg [9:0] wr_ptr; // log2(memory_depth)
 	reg [9:0] rd_ptr; // log2(memory_depth)
 	
+	// initialize all val in M10K as 0
+	integer i;
+	initial begin
+		for (i = 0; i < 642; i = i + 1) begin
+			row[i] = 8'd0;
+		end
+		wr_ptr = 10'd1; // prevent padding from being overwritten
+		rd_ptr = 10'd0; // allow rd out of padding
+	end
 	
 	// read operation
-	// pixel at rd_ptr concatenated with next 2 pixels
-	assign out_data = {row[rd_ptr], row[rd_ptr+1], row[rd_ptr+2]}; // output 36 bits at once
+	// send out adjacent pixels
+	assign pixelA = row[rd_ptr];
+	assign pixelB = row[rd_ptr+1];
+	assign pixelC = row[rd_ptr+2];
 	
-	always@(posedge CLOCK_50) begin
+	// zero fill also does a reset automatically
+	// however normal reset takes precedence if both signals HIGH
+	// read ptr operation
+	always@(posedge clk) begin
 		if(rst) begin
-			rd_ptr <= 0;
+			rd_ptr <= 10'd0;
+		end
+		else if (zero_fill) begin
+			rd_ptr <= 10'd0;
 		end
 		else if(rd_en) begin
 			rd_ptr <= rd_ptr + 1; // inc by 1 not 3 so convolution can occur
 		end
+		else begin
+			rd_ptr <= rd_ptr;
+		end
 	end
 	
 	// write operation
-	always@(posedge CLOCK_50) begin
+	always@(posedge clk) begin
+	
+		// reset logic
 		if(rst) begin
-			wr_ptr <= 0;
+			wr_ptr <= 10'd1; // start writing at word 1
 		end
+		
+		// zero fill logic
+		else if (zero_fill) begin // fill all storage with zeroes
+			for (i = 0; i < 642; i = i + 1) begin
+				row[i] <= 8'd0;
+			end
+			wr_ptr <= 10'd1;
+		end
+		
+		// wr enable logic => write in and ptr update
 		else if(wr_en) begin
-			wr_ptr <= wr_ptr + 1;
+			// extra protection to protect padding vals
+			if (wr_ptr <= 10'd640) begin
+				row[wr_ptr] <= in_data;
+			end
+			if(wr_ptr < 10'd640) begin // protect padding
+				wr_ptr <= wr_ptr + 1;
+			end
 		end
-		if(wr_en) begin
-			row[wr_ptr] <= in_data;
+		
+		// default behavior
+		else begin
+			wr_ptr <= wr_ptr;
 		end
+		
 	end
 	
 	

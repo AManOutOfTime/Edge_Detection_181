@@ -1,0 +1,19 @@
+module sqrt_approx(
+    input [31:0] x,
+    output [15:0] y
+						);
+    reg [15:0] result;
+    reg [31:0] value;
+    integer i;
+
+    always @(x) begin
+        result = 0;
+        value = x;
+        for (i = 15; i >= 0; i = i - 1) begin
+            if ((result + (1 << i)) * (result + (1 << i)) <= value) begin
+                result = result + (1 << i);
+            end
+        end
+        y = result;
+    end
+endmodule

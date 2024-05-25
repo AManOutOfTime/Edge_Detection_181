@@ -64,18 +64,18 @@ module DE1_SOC_D8M_LB_RTL (
 	wire           orequest;
    wire           VGA_CLK_25M;
    wire           RESET_N; 
+	wire				mon_reset;
 	wire           Icontrol1;
 	wire           Icontrol2;
 	wire           rIenable;
 	wire           gIenable;
 	wire           bIenable;
 	wire           brightLevel;
+	wire				edge_en;
 	wire    [7:0]  raw_VGA_R;
    wire    [7:0]  raw_VGA_G;
    wire    [7:0]  raw_VGA_B;
-	reg    [7:0]  reg_raw_VGA_R;
-   reg    [7:0]  reg_raw_VGA_G;
-   reg    [7:0]  reg_raw_VGA_B;
+
 	wire 	[7:0]  fil_proc_R;
 	wire 	[7:0]  fil_proc_G;
 	wire 	[7:0]  fil_proc_B;
@@ -88,6 +88,9 @@ module DE1_SOC_D8M_LB_RTL (
 	reg 	[7:0]  reg_curs_ol__input_R;
 	reg 	[7:0]  reg_curs_ol__input_G;
 	reg 	[7:0]  reg_curs_ol__input_B;
+	wire [7:0] in_blur_R;
+	wire [7:0] in_blur_G;
+	wire [7:0] in_blur_B;
 	wire [7:0] blurred_R;
 	wire [7:0] blurred_G;
 	wire [7:0] blurred_B;
@@ -100,11 +103,22 @@ module DE1_SOC_D8M_LB_RTL (
 	wire [7:0] 	 blur_output;
 	reg  [7:0]   reg_blur_input, reg_blur_output;
 	reg	blur_en; 
-	wire read_flag_R;
-	wire read_flag_G;
-	wire read_flag_B;
+	wire read_flag;
 	wire [8:0] rows_written;
 	wire [9:0] cols_written;
+	// inputs to edge.v
+	reg [7:0] input_edge_R;
+	reg [7:0] input_edge_G;
+	reg [7:0] input_edge_B;
+	// outputs of edge.v
+	wire [7:0] edged_R;
+	wire [7:0] edged_G;
+	wire [7:0] edged_B;
+	reg    [7:0]  reg_edged_R;
+   reg    [7:0]  reg_edged_G;
+   reg    [7:0]  reg_edged_B;
+	wire [9:0] cycle_count;
+	
 	
    wire    [7:0]  sCCD_R;
    wire    [7:0]  sCCD_G;
@@ -138,16 +152,21 @@ assign Icontrol4 = SW[4];
 
 // mode assignment {SW[9], SW[8], SW[7]}
 // 000 normal operation
-// 001 brightLevel
-// 010
-// 011
-// 100
+// 001 brightLevel (greyscale/contrast)
+// 010 
+// 011 
+// 100 
 // 101 BLUR
-// 110
-// 111
+// 110 EDGE DETECT
+// 111 GAME
+
+// count convolution cycles, output range of 523776 to 512
+assign LEDR = cycle_count;
 
 // greyscale/contrast enable
-assign brightLevel = {~SW[9], ~SW[8], SW[7]};
+assign brightLevel = (~SW[9] && ~SW[8] && SW[7]);
+// EDGE DETECT enable
+assign edge_en = (SW[9] && SW[8] && ~SW[7]);
 
 assign MIPI_RESET_n   = RESET_N;
 assign CAMERA_PWDN_n  = RESET_N; 
@@ -175,7 +194,7 @@ video_pll MIPI_clk(
 
 //--- D8M RAWDATA to RGB ---
 D8M_SET   ccd (
-   .RESET_SYS_N  ( RESET_N ),
+   .RESET_SYS_N  ( ~mon_reset ),
    .CLOCK_50     ( CLOCK_50 ),
    .CCD_DATA     ( LUT_MIPI_PIXEL_D [9:0]),
    .CCD_FVAL     ( LUT_MIPI_PIXEL_VS ),       // 60HZ
@@ -209,37 +228,26 @@ RGB_Process p1 (
 );
 
 //--- Module to Handle 5x5 Gaussian Blur (greyscale, only need one input color pixel value bc R=G=B)
-blur_5x5 G_R(
-	.clk(CLOCK_50),
-	.reset(1'b0),
+// blur module inputs
+// CLOCK_50
+// reset
+// enable
+// inputR
+// inputG
+// inputB
+// ready_flag
+// output_pixel
+
+blur_5x5 blur(
+	.clk(CLOCK_50), 
 	.en(blur_en),
-	.input_pixel(reg_blur_R),
-	.rd_flag(read_flag_R),
-	.output_pixel(blurred_R),
-	.rows_written(rows_written_R),
-	.cols_written(cols_written_R)
-);
-
-blur_5x5 G_G(
-	.clk(CLOCK_50),
-	.reset(1'b0), 
-	.en(blur_en), 
-	.input_pixel(reg_blur_G), 
-	.rd_flag(read_flag_G),
-	.output_pixel(blurred_G),
-	.rows_written(rows_written_G),
-	.cols_written(cols_written_G)
-);
-
-blur_5x5 G_B(
-	.clk(CLOCK_50),
-	.reset(1'b0), 
-	.en(blur_en), 
-	.input_pixel(reg_blur_B), 
-	.rd_flag(read_flag_B),
-	.output_pixel(blurred_B),
-	.rows_written(rows_written_B),
-	.cols_written(cols_written_B)
+	.input_pixel_R(reg_blur_R),
+	.input_pixel_G(reg_blur_G),
+	.input_pixel_B(reg_blur_B),
+	.output_pixel_R(blurred_R), 
+	.output_pixel_G(blurred_G),
+	.output_pixel_B(blurred_B),
+	.rd_flag(read_flag)
 );
 
 //--- Process monitor cursor
@@ -256,6 +264,22 @@ cursor c_proc(
 	.curs_ol__input_G(curs_ol__input_G), 
 	.curs_ol__input_B(curs_ol__input_B)
 					);
+					
+// edge detection
+edge_detect edger(
+	.vga_reset(mon_reset),
+	.row(row), 
+	.col(col),
+	.clk(CLOCK_50),
+	.in_R(input_edge_R), 
+	.edge_R_out(edged_R),
+	.in_G(input_edge_G), 
+	.edge_G_out(edged_G),
+	.in_B(input_edge_B), 
+	.edge_B_out(edged_B),
+	.edge_en(edge_en),
+	.cycles(cycle_count)
+);
 
 //--- VGA interface signals ---
 assign VGA_CLK    = MIPI_PIXEL_CLK;           // GPIO clk
@@ -275,13 +299,14 @@ assign VGA_R = reg_curs_ol__input_R;
 assign VGA_G = reg_curs_ol__input_G;
 assign VGA_B = reg_curs_ol__input_B;
 
+// connect output of edge to blur
+assign in_blur_R = reg_edged_R;
+assign in_blur_G = reg_edged_G;
+assign in_blur_B = reg_edged_B;
+
+
 // register module wires
 // raw to RGB_Process module
-always @ (posedge CLOCK_50) begin
-	reg_raw_VGA_R <= raw_VGA_R;
-	reg_raw_VGA_G <= raw_VGA_G;
-	reg_raw_VGA_B <= raw_VGA_B;
-end
 
 always@(posedge CLOCK_50) begin
 	reg_fil_proc_R <= fil_proc_R;
@@ -289,6 +314,17 @@ always@(posedge CLOCK_50) begin
 	reg_fil_proc_B <= fil_proc_B;
 end
 
+always@(posedge CLOCK_50) begin
+	reg_edged_R <= edged_R;
+	reg_edged_G <= edged_G;
+	reg_edged_B <= edged_B;
+end
+
+always@(posedge CLOCK_50) begin
+	input_edge_R <= raw_VGA_R;
+	input_edge_G <= raw_VGA_G;
+	input_edge_B <= raw_VGA_B;
+end
 ////blur output to reg
 //always @(posedge CLOCK_50)
 //begin
@@ -318,23 +354,23 @@ always @ (posedge CLOCK_50) begin
 		end
 		else
 		begin
-		reg_blur_R <= raw_VGA_R;
-		reg_blur_G <= raw_VGA_G;
-		reg_blur_B <= raw_VGA_B;
+		reg_blur_R <= in_blur_R;
+		reg_blur_G <= in_blur_G;
+		reg_blur_B <= in_blur_B;
 		end
-		if(read_flag_R) begin // if new value ready
+		if(read_flag) begin // if new value ready
 			reg_blurred_R <= blurred_R;
 		end
 		else begin // else old val
 			reg_blurred_R <= reg_blurred_R;
 		end
-		if(read_flag_G) begin // if new value ready
+		if(read_flag) begin // if new value ready
 			reg_blurred_G <= blurred_G;
 		end
 		else begin // else old val
 			reg_blurred_G <= reg_blurred_G;
 		end
-		if(read_flag_B) begin // if new value ready
+		if(read_flag) begin // if new value ready
 			reg_blurred_B <= blurred_B;
 		end
 		else begin // else old val
@@ -344,9 +380,9 @@ always @ (posedge CLOCK_50) begin
 	else
 	begin
 		blur_en <= 1'b0;
-		reg_blurred_R <= raw_VGA_R;
-		reg_blurred_G <= raw_VGA_G;
-		reg_blurred_B <= raw_VGA_B;
+		reg_blurred_R <= in_blur_R;
+		reg_blurred_G <= in_blur_G;
+		reg_blurred_B <= in_blur_B;
 	end
 end
 //cursor output to VGA input wires

@@ -1,0 +1,43 @@
+C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module convolution
+
+Top level modules:
+	convolution
+
+} {} {}} C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module row_buffer
+
+Top level modules:
+	row_buffer
+
+} {} {}} C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module blur_control
+
+Top level modules:
+	blur_control
+
+} {} {}} C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module M10K_line_buff
+
+Top level modules:
+	M10K_line_buff
+
+} {} {}} C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module blur_tb
+
+Top level modules:
+	blur_tb
+
+} {} {}} C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v {1 {vlog -work work C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module blur_5x5
+
+Top level modules:
+	blur_5x5
+
+} {} {}}

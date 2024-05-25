@@ -1,0 +1,22 @@
+module edge_detect(
+			input clk,
+			input edge_en,
+			input [7:0] in_R, 
+			input [7:0] in_G, 
+			input [7:0] in_B, 
+			output [7:0] edge_R, 
+			output [7:0] edge_G, 
+			output [7:0] edge_B
+		);
+		
+		
+		greyscale grey(
+			.in_R(in_R), 
+			.in_G(in_G), 
+			.in_B(in_B), 
+			.grey_R(edge_R), 
+			.grey_G(edge_G), 
+			.grey_B(edge_B)
+		);
+				
+endmodule

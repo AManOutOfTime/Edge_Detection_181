@@ -1,0 +1,177 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.0sp1
+vblur_5x5
+Z1 IieU?Qgemd7Z=;`3We6dSo3
+Z2 V7Koz012m>NbcEDUn?HeFP2
+Z3 dC:\Users\amaan\Documents\WinterQtr2024\EEC181A\final\Edge_Detection_181\DE1_SOC_D8M_LB_RTL
+Z4 w1716411357
+Z5 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v
+Z6 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v
+L0 3
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 o-work work -O0
+Z9 !s100 9QQnGNMmUZz4;1zIQI5V`0
+Z10 !s108 1716414851.073000
+Z11 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v|
+Z12 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_5x5.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vblur_control
+Z13 I6L^CDb;:hTlim55aOP`b^2
+Z14 VXYhCl_n^Z<Tej9NY806[[0
+R3
+Z15 w1716411038
+Z16 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v
+Z17 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v
+L0 3
+R7
+r1
+31
+R8
+Z18 !s100 OhOI;BRmN>PTaGFbNf@FQ0
+Z19 !s108 1716414851.136000
+Z20 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v|
+Z21 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_control.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vblur_tb
+Z22 IR53L4C@jM:nEn03V;6Mh?1
+Z23 Vc75=Se@oDi>kXH0SoH4a<3
+R3
+Z24 w1716410422
+Z25 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v
+Z26 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v
+L0 1
+R7
+r1
+31
+R8
+Z27 !s100 G7Gn?AnNP3IoVg1Xn=_]R3
+Z28 !s108 1716414851.183000
+Z29 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v|
+Z30 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/blur_tb.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vconvolution
+Z31 IdlWlNE_if=oABfLV57kfW0
+Z32 Vg0IDK7<E2@mn2Z=?XU:@L2
+R3
+Z33 w1716411387
+Z34 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v
+Z35 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v
+L0 3
+R7
+r1
+31
+R8
+Z36 !s100 o2_ljz<A3V;O0M:_PTRfI0
+Z37 !s108 1716414851.246000
+Z38 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v|
+Z39 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/convolution.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vM10K_line_buff
+Z40 Ib0F5la[a9KJn`>XC[KbPQ2
+Z41 VY[>iYN4cj7W7<iY5fl86e2
+R3
+Z42 w1716410433
+Z43 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v
+Z44 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v
+L0 3
+R7
+r1
+31
+R8
+Z45 n@m10@k_line_buff
+!i10b 1
+Z46 !s100 hGak?c`nRKGRQAfl<EH?01
+!s85 0
+Z47 !s108 1716414851.293000
+Z48 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v|
+Z49 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/M10K_line_buff.v|
+!s101 -O0
+vrow_buffer
+!i10b 1
+!s100 R?ZcEOPAU:3CYQObKOeLZ3
+IAEYeb^FhUZWRGgDMPRHKH0
+V49L_F5]GYI;^P`eJHLBUE3
+R3
+w1716411192
+8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v
+FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v
+L0 3
+R7
+r1
+!s85 0
+31
+!s108 1716414851.340000
+!s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v|
+!s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/row_buffer.v|
+!s101 -O0
+R8
+vsobel_conv
+Z50 IoHz=SMWM4zU<VOGLdz7QN3
+Z51 V@l8bmnXBk>;Wm4Ok`=C9Q1
+R3
+Z52 w1716249042
+Z53 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v
+Z54 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v
+L0 2
+R7
+r1
+31
+R8
+Z55 !s100 ha3NG50coDnPOR0]J][7[1
+Z56 !s108 1716252554.449000
+Z57 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v|
+Z58 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vsobel_conv_tb
+Z59 InYV97]nmY9g6?Lf]ZW3Nz3
+Z60 VZ;^oK@<Th<0Eo7PJW:z562
+R3
+Z61 w1716252449
+Z62 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv_tb.v
+Z63 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv_tb.v
+L0 1
+R7
+r1
+31
+R8
+Z64 !s100 iXDk]HZe3j5X1dFSz2efN0
+Z65 !s108 1716252554.512000
+Z66 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv_tb.v|
+Z67 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv_tb.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vsqrt_approx_23bit
+Z68 IchQIJmV7H=?Yk0CohjY[30
+Z69 VMP=i4<EdIe9i]4YYY_h@@1
+R3
+Z70 w1716248018
+Z71 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v
+Z72 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v
+L0 1
+R7
+r1
+31
+R8
+Z73 !s100 VCCKBe94`0n6Y7g04U7o71
+Z74 !s108 1716252554.559000
+Z75 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v|
+Z76 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v|
+!i10b 1
+!s85 0
+!s101 -O0
