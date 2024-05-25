@@ -25,7 +25,7 @@ module img_row(
 	
 	// storage
 	// 640 pixels + 2 extra pixels for padding
-	reg [7:0] row [641:0] /* synthesis ramstyle = "no_rw_check, M10K" */; 
+	reg [7:0] row [1023:0] /* synthesis ramstyle = "no_rw_check, M10K" */; 
 	reg [9:0] wr_ptr; // log2(memory_depth)
 	reg [9:0] rd_ptr; // log2(memory_depth)
 	

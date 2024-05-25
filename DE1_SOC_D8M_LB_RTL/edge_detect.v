@@ -602,6 +602,8 @@ module edge_detect(
 					curr_row_to_disp <= 0;
 					first_conv_done <= 0;
 					init_curr_buff <= 2'd0; // start by loading buffer 1 with row0
+					vga_rst_req <= 1'b0;
+					vga_synced <= 1'b0;
 					// vga_reset_req
 					// vga_synced
 					
@@ -817,9 +819,9 @@ module edge_detect(
 		// while not synced for reading in row0, col0 and on pixels
 		// send out unprocessed data
 		// feed done_edge into buffer for display syncing
-		assign done_edge_R = (edge_en && vga_synced) ? edge_out : inter_in_R;
-		assign done_edge_G = (edge_en && vga_synced) ? edge_out : inter_in_G;
-		assign done_edge_B = (edge_en && vga_synced) ? edge_out : inter_in_B;
+		assign done_edge_R = (edge_en ) ? edge_out : inter_in_R;
+		assign done_edge_G = (edge_en ) ? edge_out : inter_in_G;
+		assign done_edge_B = (edge_en ) ? edge_out : inter_in_B;
 		
 		
 		
