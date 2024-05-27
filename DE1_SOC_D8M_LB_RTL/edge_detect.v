@@ -1,6 +1,6 @@
 module edge_detect(
-			input row, 
-			input col,
+			input [12:0] row, 
+			input [12:0] col,
 			input clk,
 			input edge_en,
 			input [7:0] in_R, 
@@ -173,12 +173,12 @@ module edge_detect(
 		reg [2:0] conv_state = INIT;
 		reg [2:0] next_conv_state;
 		// reg [9:0] curr_op_row_count;
-		reg [8:0] curr_buff_wr_count;
+		reg [9:0] curr_buff_wr_count;
 		//reg [9:0] rows_wr_to_buff;
 		// reg [8:0] cols_wr_to_buff;
 		//reg [9:0] rows_rd_from_buff;
 		//reg [8:0] cols_rd_from_buff;
-		reg [9:0] curr_row_to_disp;
+		reg [8:0] curr_row_to_disp;
 		//reg [8:0] cols_to_disp;
 		//reg [9:0] rd_ptr_ct;
 		//reg [9:0] wr_ptr_ct;
@@ -609,7 +609,7 @@ module edge_detect(
 					
 					
 					rst_buff <= 4'b0000; // use zero fill to reset
-					zero_fill_buff <= 4'b1111;
+					zero_fill_buff <= 4'b0000;
 					// all buffs initialized as zero buffs
 					// buff0 is ready to be read from (padded 0s)	
 				end
@@ -619,7 +619,6 @@ module edge_detect(
 					// once buff_done triggered move onto SET0
 					
 					// turn off zero_fill/reset
-					zero_fill_buff <= 4'b0000;
 					// setup buff1 and buff2
 					
 					/* start counting pixel read in from 0 to 
@@ -743,7 +742,7 @@ module edge_detect(
 		reg [1:0] next_count_state;
 		reg [18:0] cycle_count = 0;
 		reg [9:0] cycle_output = 0;
-		reg first_flag = 1;
+		reg first_flag = 1; // delete later
 		// next state progress
 		always@(posedge clk) begin
 			count_state <= next_count_state;
@@ -819,9 +818,9 @@ module edge_detect(
 		// while not synced for reading in row0, col0 and on pixels
 		// send out unprocessed data
 		// feed done_edge into buffer for display syncing
-		assign done_edge_R = (edge_en ) ? edge_out : inter_in_R;
-		assign done_edge_G = (edge_en ) ? edge_out : inter_in_G;
-		assign done_edge_B = (edge_en ) ? edge_out : inter_in_B;
+		assign done_edge_R = (edge_en && vga_synced) ? edge_out : inter_in_R;
+		assign done_edge_G = (edge_en && vga_synced) ? edge_out : inter_in_G;
+		assign done_edge_B = (edge_en && vga_synced) ? edge_out : inter_in_B;
 		
 		
 		
