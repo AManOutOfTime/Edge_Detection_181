@@ -7,13 +7,13 @@ add wave -noupdate -radix unsigned /tb_edge_detect/col
 add wave -noupdate /tb_edge_detect/clk
 add wave -noupdate /tb_edge_detect/rst
 add wave -noupdate /tb_edge_detect/edge_en
-add wave -noupdate /tb_edge_detect/vga_rst
+add wave -noupdate -radix binary /tb_edge_detect/vga_rst
 add wave -noupdate -radix unsigned /tb_edge_detect/cycles
 add wave -noupdate -group XY -radix unsigned /tb_edge_detect/col
 add wave -noupdate -group XY -radix unsigned /tb_edge_detect/row
-add wave -noupdate -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_R
-add wave -noupdate -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_G
-add wave -noupdate -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_B
+add wave -noupdate -expand -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_R
+add wave -noupdate -expand -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_G
+add wave -noupdate -expand -group {INPUT RGB} -radix hexadecimal /tb_edge_detect/in_B
 add wave -noupdate -group SYNC_FSM -radix unsigned /tb_edge_detect/dut/sync_state
 add wave -noupdate -group SYNC_FSM -radix unsigned /tb_edge_detect/dut/next_sync_state
 add wave -noupdate -group SYNC_FSM -radix unsigned /tb_edge_detect/dut/synced
@@ -56,15 +56,16 @@ add wave -noupdate -expand -group COUNT_FSM -radix unsigned /tb_edge_detect/dut/
 add wave -noupdate -expand -group COUNT_FSM -radix unsigned /tb_edge_detect/dut/next_count_state
 add wave -noupdate -expand -group COUNT_FSM -radix unsigned /tb_edge_detect/dut/cycle_count
 add wave -noupdate -expand -group COUNT_FSM -radix unsigned /tb_edge_detect/dut/cycle_output
-add wave -noupdate -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_R
-add wave -noupdate -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_G
-add wave -noupdate -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_B
+add wave -noupdate -expand -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_R
+add wave -noupdate -expand -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_G
+add wave -noupdate -expand -group {Internal Output} -radix hexadecimal /tb_edge_detect/dut/done_edge_B
 add wave -noupdate -expand -group {OUTPUT RGB} -radix hexadecimal /tb_edge_detect/done_edge_R
 add wave -noupdate -expand -group {OUTPUT RGB} -radix hexadecimal /tb_edge_detect/done_edge_G
 add wave -noupdate -expand -group {OUTPUT RGB} -radix hexadecimal /tb_edge_detect/done_edge_B
+add wave -noupdate /tb_edge_detect/dut/hex
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {init_buf_wr_1 {3072024007 ps} 1} {637_479 {3071995636 ps} 1} {{Cursor 3} {5217697399 ps} 0}
-quietly wave cursor active 3
+WaveRestoreCursors {{Cursor 4} {3084825012 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 275
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -79,4 +80,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {5217599613 ps} {5217762463 ps}
+WaveRestoreZoom {9215865293 ps} {9216028143 ps}

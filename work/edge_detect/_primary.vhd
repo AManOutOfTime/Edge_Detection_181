@@ -30,7 +30,12 @@ entity edge_detect is
         edge_G_out      : out    vl_logic_vector(7 downto 0);
         edge_B_out      : out    vl_logic_vector(7 downto 0);
         cycles          : out    vl_logic_vector(9 downto 0);
-        vga_reset       : out    vl_logic
+        vga_reset       : out    vl_logic;
+        hex             : out    vl_logic_vector(7 downto 0);
+        hex_sync_state  : out    vl_logic_vector(7 downto 0);
+        hex_next_sync_state: out    vl_logic_vector(7 downto 0);
+        hex_conv_state  : out    vl_logic_vector(7 downto 0);
+        hex_next_conv_state: out    vl_logic_vector(7 downto 0)
     );
     attribute mti_svvh_generic_type : integer;
     attribute mti_svvh_generic_type of OFF : constant is 1;

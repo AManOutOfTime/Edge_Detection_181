@@ -59,8 +59,8 @@ module DE1_SOC_D8M_LB_RTL (
 //=============================================================================
 // reg and wire declarations
 //=============================================================================
-   
-	
+
+
 	wire           orequest;
    wire           VGA_CLK_25M;
    wire           RESET_N; 
@@ -75,6 +75,13 @@ module DE1_SOC_D8M_LB_RTL (
 	wire    [7:0]  raw_VGA_R;
    wire    [7:0]  raw_VGA_G;
    wire    [7:0]  raw_VGA_B;
+	wire	  [7:0]  test_hex; // enable states
+//	assign HEX0 = test_hex; // enable states
+//	wire [7:0] hex_sync, hex_next_sync, hex_conv, hex_next_conv;
+//	assign HEX1 = hex_sync;
+//	assign HEX2 = hex_next_sync;
+//	assign HEX3 = hex_conv;
+//	assign HEX4 = hex_next_conv;
 
 	wire 	[7:0]  fil_proc_R;
 	wire 	[7:0]  fil_proc_G;
@@ -125,6 +132,40 @@ module DE1_SOC_D8M_LB_RTL (
    wire    [7:0]  sCCD_B; 
    wire   [12:0]  x_count,col; 
    wire   [12:0]  y_count,row; 
+	
+	reg [25:0] sec_counter = 0;
+	reg slow_clk;
+	reg [11:0] sample_cols, sample_rows;
+	always@(posedge CLOCK_50) begin
+		if(sec_counter[25] == 1'b1) begin
+			slow_clk <= 1'b1;
+			sec_counter <= sec_counter + 1;
+		end
+		else begin
+			slow_clk <= 1'b0;
+			sec_counter <= sec_counter + 1;
+		end
+	end
+	
+	always@(posedge slow_clk) begin
+		sample_cols <= col[11:0];
+		sample_rows <= row[11:0];
+	end
+	
+	wire [3:0] dig0 = sample_cols[3:0];
+	wire [3:0] dig1 = sample_cols[7:4];
+	wire [3:0] dig2 = sample_cols[11:8];
+	wire [3:0] dig3 = sample_rows[3:0];
+	wire [3:0] dig4 = sample_rows[7:4];
+	wire [3:0] dig5 = sample_rows[11:8];
+	
+	seven_seg hex0(.in(dig0), .seg(HEX0));
+	seven_seg hex1(.in(dig1), .seg(HEX1));
+	seven_seg hex2(.in(dig2), .seg(HEX2));
+	seven_seg hex3(.in(dig3), .seg(HEX3));
+	seven_seg hex4(.in(dig4), .seg(HEX4));
+	seven_seg hex5(.in(dig5), .seg(HEX5));
+	
    wire           I2C_RELEASE ;  
    wire           CAMERA_I2C_SCL_MIPI; 
    wire           CAMERA_I2C_SCL_AF;
@@ -278,7 +319,13 @@ edge_detect edger(
 	.in_B(input_edge_B), 
 	.edge_B_out(edged_B),
 	.edge_en(edge_en),
-	.cycles(cycle_count)
+	.cycles(cycle_count),
+	.hex(test_hex),
+	.hex_sync_state(hex_sync),
+	.hex_next_sync_state(hex_next_sync),
+	.hex_conv_state(hex_conv),
+	.hex_next_conv_state(hex_next_conv)
+	
 );
 
 //--- VGA interface signals ---

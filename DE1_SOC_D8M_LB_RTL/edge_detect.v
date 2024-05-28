@@ -10,8 +10,31 @@ module edge_detect(
 			output [7:0] edge_G_out, 
 			output [7:0] edge_B_out,
 			output [9:0] cycles,
-			output vga_reset
+			output vga_reset,
+			output reg [7:0] hex, // enable states
+			output reg [7:0] hex_sync_state, 
+			output reg [7:0] hex_next_sync_state,
+			output reg [7:0] hex_conv_state, 
+			output reg [7:0] hex_next_conv_state
 		);
+		
+		
+		// if edge_en hex display shows 1
+		// if edge_en && vga_synced display shows 2
+		reg vga_synced = 1'b0;
+
+		always@(*) begin
+			if(edge_en && vga_synced) begin
+				hex = 8'b10100100;
+			end
+			else if(edge_en) begin
+				hex = 8'b11111001;
+			end
+			else
+				hex = 8'b11111111;
+			
+		end
+		
 		
 		wire [7:0] insert_zero;
 		assign insert_zero = 8'b0;
@@ -99,6 +122,43 @@ module edge_detect(
 		reg [1:0] sync_state = OFF;
 		reg [1:0] next_sync_state;
 		reg synced = 1'b0;
+		
+		// sync state hex output testing
+		always@(*) begin
+			case(sync_state)
+				OFF: begin
+					hex_sync_state = 8'b11000000;// 0
+				end
+				IDLE: begin
+					hex_sync_state = 8'b11111001;// 1
+				end
+				ACTIVE: begin
+					hex_sync_state = 8'b10100100;// 2
+				end
+				default: begin
+					hex_sync_state = 8'b11111111;// OFF
+				end
+			endcase
+		end
+		
+		// next sync state hex output testing
+		always@(*) begin
+			case(next_sync_state)
+				OFF: begin
+					hex_next_sync_state = 8'b11000000;// 0
+				end
+				IDLE: begin
+					hex_next_sync_state = 8'b11111001;// 1
+				end
+				ACTIVE: begin
+					hex_next_sync_state = 8'b10100100;// 2
+				end
+				default: begin
+					hex_next_sync_state = 8'b11111111;// OFF
+				end
+			endcase
+		end
+		
 		// sync state progression
 		always@(posedge clk) begin
 			sync_state <= next_sync_state;
@@ -172,6 +232,60 @@ module edge_detect(
 		
 		reg [2:0] conv_state = INIT;
 		reg [2:0] next_conv_state;
+		
+		// conv state hex output testing
+		always@(*) begin
+			case(conv_state) 
+				INIT: begin // 0
+					hex_conv_state =  8'b11000000;
+				end
+				INIT_BUFF: begin // 1
+					hex_conv_state = 8'b11111001;
+				end
+				SET0: begin // 2
+					hex_conv_state = 8'b10100100;
+				end
+				SET1: begin // 3
+					hex_conv_state = 8'b10110000;
+				end
+				SET2: begin // 4
+					hex_conv_state = 8'b10011001;
+				end
+				SET3: begin // 5
+					hex_conv_state = 8'b10010010;
+				end
+				default: begin
+					hex_conv_state = 8'b11111111;
+				end
+			endcase
+		end
+		
+		always@(*) begin
+			case(next_conv_state) 
+				INIT: begin // 0
+					hex_next_conv_state =  8'b11000000;
+				end
+				INIT_BUFF: begin // 1
+					hex_next_conv_state = 8'b11111001;
+				end
+				SET0: begin // 2
+					hex_next_conv_state = 8'b10100100;
+				end
+				SET1: begin // 3
+					hex_next_conv_state = 8'b10110000;
+				end
+				SET2: begin // 4
+					hex_next_conv_state = 8'b10011001;
+				end
+				SET3: begin // 5
+					hex_next_conv_state = 8'b10010010;
+				end
+				default: begin
+					hex_next_conv_state = 8'b11111111;
+				end
+			endcase
+		end
+		
 		// reg [9:0] curr_op_row_count;
 		reg [9:0] curr_buff_wr_count;
 		//reg [9:0] rows_wr_to_buff;
@@ -207,7 +321,6 @@ module edge_detect(
 		// monitor syncing
 		// used to reset monitor to pixel 0,0
 		reg vga_rst_req = 1'b0;
-		reg vga_synced = 1'b0;
 		assign vga_reset = vga_rst_req;
 		
 		// 640x480 => 642x482
@@ -821,6 +934,7 @@ module edge_detect(
 		assign done_edge_R = (edge_en && vga_synced) ? edge_out : inter_in_R;
 		assign done_edge_G = (edge_en && vga_synced) ? edge_out : inter_in_G;
 		assign done_edge_B = (edge_en && vga_synced) ? edge_out : inter_in_B;
+		
 		
 		
 		
