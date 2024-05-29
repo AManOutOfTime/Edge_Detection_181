@@ -4,6 +4,62 @@
 			"name" : "Top",
 			"pins" : [
 				{
+					"name" : "HEX0[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX0[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX0[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX0[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX0[6]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_BLANK_N",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[0]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[1]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[2]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[3]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[4]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[5]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[6]",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_B[7]",
+					"strict" : false
+				},
+				{
 					"name" : "VGA_CLK",
 					"strict" : false
 				},
@@ -80,30 +136,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[9]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[0]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[1]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[3]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[4]",
-					"strict" : false
-				},
-				{
-					"name" : "HEX0[6]",
-					"strict" : false
-				},
-				{
 					"name" : "LEDR[0]",
 					"strict" : false
 				},
@@ -120,14 +152,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[4]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[5]",
-					"strict" : false
-				},
-				{
 					"name" : "LEDR[6]",
 					"strict" : false
 				},
@@ -140,39 +164,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "VGA_BLANK_N",
+					"name" : "LEDR[9]",
 					"strict" : false
 				},
 				{
-					"name" : "VGA_B[0]",
+					"name" : "LEDR[4]",
 					"strict" : false
 				},
 				{
-					"name" : "VGA_B[1]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[2]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[3]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[4]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[5]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[6]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_B[7]",
+					"name" : "LEDR[5]",
 					"strict" : false
 				},
 				{
@@ -192,14 +192,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "MIPI_PIXEL_CLK",
-					"strict" : false
-				},
-				{
-					"name" : "SW[9]",
-					"strict" : false
-				},
-				{
 					"name" : "SW[7]",
 					"strict" : false
 				},
@@ -208,15 +200,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "CLOCK_50",
+					"name" : "SW[9]",
 					"strict" : false
 				},
 				{
-					"name" : "SW[5]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[0]",
+					"name" : "MIPI_PIXEL_CLK",
 					"strict" : false
 				},
 				{
@@ -228,23 +216,19 @@
 					"strict" : false
 				},
 				{
-					"name" : "KEY[3]",
+					"name" : "CLOCK_50",
 					"strict" : false
 				},
 				{
-					"name" : "KEY[1]",
+					"name" : "SW[0]",
 					"strict" : false
 				},
 				{
-					"name" : "KEY[2]",
+					"name" : "SW[5]",
 					"strict" : false
 				},
 				{
-					"name" : "KEY[0]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[6]",
+					"name" : "SW[4]",
 					"strict" : false
 				},
 				{
@@ -256,11 +240,27 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[4]",
+					"name" : "SW[3]",
 					"strict" : false
 				},
 				{
-					"name" : "SW[3]",
+					"name" : "SW[6]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[3]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[0]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[1]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[2]",
 					"strict" : false
 				},
 				{

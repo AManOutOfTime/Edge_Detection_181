@@ -196,7 +196,7 @@ assign Icontrol4 = SW[4];
 // 100 
 // 101 BLUR
 // 110 EDGE DETECT
-// 111 GAME
+// 111 DIGITAL ZOOM
 
 // count convolution cycles, output range of 523776 to 512
 assign LEDR = cycle_count;
@@ -248,6 +248,43 @@ D8M_SET   ccd (
    .sCCD_B       ( raw_VGA_B )
 );
 
+always@(posedge VGA_CLK) begin
+	input_edge_R <= raw_VGA_R;
+	input_edge_G <= raw_VGA_G;
+	input_edge_B <= raw_VGA_B;
+end
+
+// edge detection
+edge_detect edger(
+	.clk(VGA_CLK),
+	.in_R(input_edge_R), 
+	.edge_R_out(edged_R),
+	.in_G(input_edge_G), 
+	.edge_G_out(edged_G),
+	.in_B(input_edge_B), 
+	.edge_B_out(edged_B),
+	.edge_en(edge_en),
+	.cycles(cycle_count),
+	.vga_reset(mon_reset),
+	.valid_pixel(orequest),
+	.hex(test_hex)
+//	.hex_sync_state(hex_sync),
+//	.hex_next_sync_state(hex_next_sync),
+//	.hex_conv_state(hex_conv),
+//	.hex_next_conv_state(hex_next_conv)
+	
+);	
+
+reg    [7:0]  reg_edged_R;
+reg    [7:0]  reg_edged_G;
+reg    [7:0]  reg_edged_B;
+
+always@(posedge VGA_CLK) begin
+	reg_edged_R <= edged_R;
+	reg_edged_G <= edged_G;
+	reg_edged_B <= edged_B;
+end
+
 //--- Processes the raw RGB pixel data
 RGB_Process p1 (
 	.Icontrol1(Icontrol1),
@@ -255,9 +292,9 @@ RGB_Process p1 (
 	.Icontrol3(Icontrol3),
 	.Icontrol4(Icontrol4),
 	.brightLevel(brightLevel),
-  	.raw_VGA_R(fifo_out_R),
-	.raw_VGA_G(fifo_out_G),
-	.raw_VGA_B(fifo_out_B),
+  	.raw_VGA_R(reg_edged_R),
+	.raw_VGA_G(reg_edged_G),
+	.raw_VGA_B(reg_edged_B),
    .row      (row),
    .col      (col),
    .o_VGA_R  (fil_proc_R),
@@ -265,6 +302,46 @@ RGB_Process p1 (
    .o_VGA_B  (fil_proc_B)
 );
 
+
+always@(posedge VGA_CLK) begin
+	reg_fil_proc_R <= fil_proc_R;
+	reg_fil_proc_G <= fil_proc_G;
+	reg_fil_proc_B <= fil_proc_B;
+end
+
+
+//--- Process monitor cursor
+cursor c_proc(
+	.raw_VGA_R(reg_fil_proc_R), 
+	.raw_VGA_G(reg_fil_proc_G),  
+	.raw_VGA_B(reg_fil_proc_B),  
+	.SW(SW), 
+	.KEY(KEY), 
+	.col(col), 
+	.row(row),
+	.CLOCK_50(VGA_CLK), 
+	.curs_ol__input_R(curs_ol__input_R), 
+	.curs_ol__input_G(curs_ol__input_G), 
+	.curs_ol__input_B(curs_ol__input_B)
+					);
+
+					
+reg 	[7:0]  reg_curs_ol__input_R;
+reg 	[7:0]  reg_curs_ol__input_G;
+reg 	[7:0]  reg_curs_ol__input_B;
+//cursor output to VGA input wires
+always @ (posedge VGA_CLK) begin
+	reg_curs_ol__input_R <= curs_ol__input_R;
+	reg_curs_ol__input_G <= curs_ol__input_G;
+	reg_curs_ol__input_B <= curs_ol__input_B;
+end
+
+
+// connect cursor out direct to VGA
+assign VGA_R = reg_curs_ol__input_R;
+assign VGA_G = reg_curs_ol__input_G;
+assign VGA_B = reg_curs_ol__input_B;
+					
 //--- Module to Handle 5x5 Gaussian Blur (greyscale, only need one input color pixel value bc R=G=B)
 // blur module inputs
 // CLOCK_50
@@ -290,125 +367,15 @@ blur_5x5 blur(
 );
 */
 
-//--- Process monitor cursor
-cursor c_proc(
-	.raw_VGA_R(reg_fil_proc_R), 
-	.raw_VGA_G(reg_fil_proc_G),  
-	.raw_VGA_B(reg_fil_proc_B),  
-	.SW(SW), 
-	.KEY(KEY), 
-	.col(col), 
-	.row(row),
-	.CLOCK_50(VGA_CLK), 
-	.curs_ol__input_R(curs_ol__input_R), 
-	.curs_ol__input_G(curs_ol__input_G), 
-	.curs_ol__input_B(curs_ol__input_B)
-					);
+
 		
-always@(posedge VGA_CLK) begin
-	input_edge_R <= raw_VGA_R;
-	input_edge_G <= raw_VGA_G;
-	input_edge_B <= raw_VGA_B;
-end	
 
-wire [23:0] raw_pixel;
-assign raw_pixel = {input_edge_R, input_edge_G, input_edge_B};
-wire [23:0] in_fifo_out;
-wire [7:0] fifo_in_R, fifo_in_G, fifo_in_B;
-assign fifo_in_R = in_fifo_out[23:16];
-assign fifo_in_G = in_fifo_out[15:8];
-assign fifo_in_B = in_fifo_out[7:0];
-
-wire in_empty, in_full;
-wire [10:0] words_used_in;
-reg in_rdreq, in_wrreq;
-
-always@(*) begin
-	if(in_full) begin
-		in_rdreq = 1'b1;
-		in_wrreq = 1'b1;
-	end
-	else begin
-		in_rdreq = 1'b0;
-		in_wrreq = 1'b1;
-	end
-end
 		
-asyn_fifo_input in_2048(
-	.clock(VGA_CLK),
-	.data(raw_pixel),
-	.empty(in_empty),
-	.full(in_full),
-	.q(in_fifo_out),
-	.usedw(words_used_in),
-	.rdreq(in_rdreq),
-	.wrreq(in_wrreq)
-);
-		
-// edge detection
-edge_detect edger(
-	.clk(VGA_CLK),
-	.in_R(fifo_in_R), 
-	.edge_R_out(edged_R),
-	.in_G(fifo_in_G), 
-	.edge_G_out(edged_G),
-	.in_B(fifo_in_B), 
-	.edge_B_out(edged_B),
-	.edge_en(edge_en),
-	.cycles(cycle_count),
-	.hex(test_hex)
-//	.hex_sync_state(hex_sync),
-//	.hex_next_sync_state(hex_next_sync),
-//	.hex_conv_state(hex_conv),
-//	.hex_next_conv_state(hex_next_conv)
-	
-);
 
-//reg    [7:0]  reg_edged_R;
-//reg    [7:0]  reg_edged_G;
-//reg    [7:0]  reg_edged_B;
 
-/*
-always@(posedge VGA_CLK) begin
-	reg_edged_R <= edged_R;
-	reg_edged_G <= edged_G;
-	reg_edged_B <= edged_B;
-end
-*/
 
-wire [23:0] conc_edge_out;
-assign conc_edge_out = {edged_R, edged_G, edged_B};
-wire [23:0] out_fifo_out;
-wire [7:0] fifo_out_R, fifo_out_G, fifo_out_B;
-assign fifo_out_R = out_fifo_out[23:16];
-assign fifo_out_G = out_fifo_out[15:8];
-assign fifo_out_B = out_fifo_out[7:0];
 
-wire out_empty, out_full;
-wire [10:0] words_used_out;
-reg out_rdreq, out_wrreq;
 
-always@(*) begin
-	if(out_full) begin
-		out_rdreq = 1'b1;
-		out_wrreq = 1'b1;
-	end
-	else begin
-		out_rdreq = 1'b0;
-		out_wrreq = 1'b1;
-	end
-end
-
-asyn_fifo_output out_4096(
-	.clock(VGA_CLK),
-	.data(conc_edge_out),
-	.rdreq(out_rdreq),
-	.wrreq(out_wrreq),
-	.empty(out_empty),
-	.full(out_full),
-	.q(out_fifo_out),
-	.usedw(words_used_out)
-);
 
 
 
@@ -424,17 +391,6 @@ assign orequest = ((x_count > 13'd0160 && x_count < 13'd0800 ) &&
 
 // this blanking signal is active low
 assign VGA_BLANK_N = ~((x_count < 13'd0160 ) || ( y_count < 13'd0045 ));
-
-
-//reg 	[7:0]  reg_curs_ol__input_R;
-//reg 	[7:0]  reg_curs_ol__input_G;
-//reg 	[7:0]  reg_curs_ol__input_B;
-////cursor output to VGA input wires
-//always @ (posedge VGA_CLK) begin
-//	reg_curs_ol__input_R <= curs_ol__input_R;
-//	reg_curs_ol__input_G <= curs_ol__input_G;
-//	reg_curs_ol__input_B <= curs_ol__input_B;
-//end
 
 // removed reg from curs_ol_input below
 
@@ -457,10 +413,7 @@ asyn_fifo slow(
 */
 
 
-// connect cursor out direct to VGA
-assign VGA_R = curs_ol__input_R;
-assign VGA_G = curs_ol__input_G;
-assign VGA_B = curs_ol__input_B;
+
 
 
 // connect output of edge to blur
@@ -472,11 +425,7 @@ assign VGA_B = curs_ol__input_B;
 // register module wires
 // raw to RGB_Process module
 
-always@(posedge VGA_CLK) begin
-	reg_fil_proc_R <= fil_proc_R;
-	reg_fil_proc_G <= fil_proc_G;
-	reg_fil_proc_B <= fil_proc_B;
-end
+
 
 
 

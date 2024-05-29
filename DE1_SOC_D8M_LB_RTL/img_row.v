@@ -7,7 +7,6 @@
 
 // return sequence of bits relative to ea step of convolution
 module img_row(
-					input zero_fill, // if on fills entire buffer with zeroes
 					input clk, 
 					input rst, 
 					input [7:0] in_data, 
@@ -25,16 +24,14 @@ module img_row(
 	
 	// storage
 	// 640 pixels + 2 extra pixels for padding
-	reg [7:0] row [1023:0] /* synthesis ramstyle = "no_rw_check, M10K" */; 
+	reg [7:0] row [641:0] /* synthesis ramstyle = "no_rw_check, M10K" */; 
 	reg [9:0] wr_ptr; // log2(memory_depth)
 	reg [9:0] rd_ptr; // log2(memory_depth)
 	
-	// initialize all val in M10K as 0
-	integer i;
+	// initialize front and back as 0
 	initial begin
-		for (i = 0; i < 642; i = i + 1) begin
-			row[i] = 8'd0;
-		end
+		row[0] = 8'd0;
+		row[641] = 8'd0;
 		wr_ptr = 10'd1; // prevent padding from being overwritten
 		rd_ptr = 10'd0; // allow rd out of padding
 	end
@@ -52,9 +49,6 @@ module img_row(
 		if(rst) begin
 			rd_ptr <= 10'd0;
 		end
-		else if (zero_fill) begin
-			rd_ptr <= 10'd0;
-		end
 		else if(rd_en) begin
 			rd_ptr <= rd_ptr + 1; // inc by 1 not 3 so convolution can occur
 		end
@@ -70,15 +64,6 @@ module img_row(
 		if(rst) begin
 			wr_ptr <= 10'd1; // start writing at word 1
 		end
-		
-		// zero fill logic
-		else if (zero_fill) begin // fill all storage with zeroes
-			for (i = 0; i < 642; i = i + 1) begin
-				row[i] <= 8'd0;
-			end
-			wr_ptr <= 10'd1;
-		end
-		
 		// wr enable logic => write in and ptr update
 		else if(wr_en) begin
 			// extra protection to protect padding vals
@@ -88,6 +73,8 @@ module img_row(
 			if(wr_ptr < 10'd640) begin // protect padding
 				wr_ptr <= wr_ptr + 1;
 			end
+			else
+				wr_ptr <= 10'd1;
 		end
 		
 		// default behavior

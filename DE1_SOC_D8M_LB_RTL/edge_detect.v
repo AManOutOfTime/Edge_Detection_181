@@ -1,5 +1,6 @@
 module edge_detect(
 			input clk,
+			input valid_pixel,
 			input edge_en,
 			input [7:0] in_R, 
 			input [7:0] in_G, 
@@ -35,9 +36,7 @@ module edge_detect(
 		
 		wire [7:0] insert_zero;
 		assign insert_zero = 8'b0;
-		reg [7:0] inter_in_R;
-		reg [7:0] inter_in_G;
-		reg [7:0] inter_in_B;
+		reg [7:0] inter_in_R, inter_in_G, inter_in_B;
 		wire [7:0] inter_grey;
 			
 		// output wires for edge detection
@@ -52,7 +51,6 @@ module edge_detect(
 		reg [3:0] rst_buff;
 		reg [3:0] rd_buff_en;
 		reg [3:0] wr_buff_en;
-		reg [3:0] zero_fill_buff;
 		// read out buffer data
 		wire [7:0] buff0_pixelA, 
 					 buff1_pixelA,
@@ -83,18 +81,20 @@ module edge_detect(
 					 reg_buff3_pixelC;
 					 
 		always @(posedge clk) begin
-			reg_buff0_pixelA <= buff0_pixelA;
-			reg_buff1_pixelA <= buff1_pixelA;
-			reg_buff2_pixelA <= buff2_pixelA;
-			reg_buff3_pixelA <= buff3_pixelA;
-			reg_buff0_pixelB <= buff0_pixelB;
-			reg_buff1_pixelB <= buff1_pixelB;
-			reg_buff2_pixelB <= buff2_pixelB;
-			reg_buff3_pixelB <= buff3_pixelB;
-			reg_buff0_pixelC <= buff0_pixelC;
-			reg_buff1_pixelC <= buff1_pixelC;
-			reg_buff2_pixelC <= buff2_pixelC;
-			reg_buff3_pixelC <= buff3_pixelC;
+			if(valid_pixel) begin
+				reg_buff0_pixelA <= buff0_pixelA;
+				reg_buff1_pixelA <= buff1_pixelA;
+				reg_buff2_pixelA <= buff2_pixelA;
+				reg_buff3_pixelA <= buff3_pixelA;
+				reg_buff0_pixelB <= buff0_pixelB;
+				reg_buff1_pixelB <= buff1_pixelB;
+				reg_buff2_pixelB <= buff2_pixelB;
+				reg_buff3_pixelB <= buff3_pixelB;
+				reg_buff0_pixelC <= buff0_pixelC;
+				reg_buff1_pixelC <= buff1_pixelC;
+				reg_buff2_pixelC <= buff2_pixelC;
+				reg_buff3_pixelC <= buff3_pixelC;
+			end
 		end
 					 
 		// wire/reg for sobel conv calcs
@@ -108,10 +108,23 @@ module edge_detect(
 					sobel_in_pixel7, 
 					sobel_in_pixel8;	
 					
+//		assign inter_in_R = in_R;
+//		assign inter_in_G = in_G;
+//		assign inter_in_B = in_B;
+	
 		always@(posedge clk) begin
-			inter_in_R <= in_R;
-			inter_in_G <= in_G;
-			inter_in_B <= in_B;
+			if(valid_pixel) begin
+				inter_in_R <= in_R;
+				inter_in_G <= in_G;
+				inter_in_B <= in_B;
+			end
+		end
+		
+		reg [7:0] direct_out_R, direct_out_G, direct_out_B;
+		always@(posedge clk) begin
+			direct_out_R <= in_R;
+			direct_out_G <= in_G;
+			direct_out_B <= in_B;
 		end
 					
 		greyscale grey(
@@ -124,14 +137,16 @@ module edge_detect(
 		reg [7:0] grey_in_data;
 		
 		always@(posedge clk) begin
-			grey_in_data <= inter_grey;
+			if(valid_pixel) begin
+				grey_in_data <= inter_grey;
+			end
 		end
 		
 		// row buffers
-		img_row M10K_0(.zero_fill(zero_fill_buff[0]), .clk(clk), .rst(rst_buff[0]), .in_data(grey_in_data), .wr_en(wr_buff_en[0]), .rd_en(rd_buff_en[0]), .pixelA(buff0_pixelA), .pixelB(buff0_pixelB), .pixelC(buff0_pixelC));
-		img_row M10K_1(.zero_fill(zero_fill_buff[1]), .clk(clk), .rst(rst_buff[1]), .in_data(grey_in_data), .wr_en(wr_buff_en[1]), .rd_en(rd_buff_en[1]), .pixelA(buff1_pixelA), .pixelB(buff1_pixelB), .pixelC(buff1_pixelC));
-		img_row M10K_2(.zero_fill(zero_fill_buff[2]), .clk(clk), .rst(rst_buff[2]), .in_data(grey_in_data), .wr_en(wr_buff_en[2]), .rd_en(rd_buff_en[2]), .pixelA(buff2_pixelA), .pixelB(buff2_pixelB), .pixelC(buff2_pixelC));
-		img_row M10K_3(.zero_fill(zero_fill_buff[3]), .clk(clk), .rst(rst_buff[3]), .in_data(grey_in_data), .wr_en(wr_buff_en[3]), .rd_en(rd_buff_en[3]), .pixelA(buff3_pixelA), .pixelB(buff3_pixelB), .pixelC(buff3_pixelC));
+		img_row M10K_0(.clk(clk), .rst(rst_buff[0]), .in_data(grey_in_data), .wr_en(wr_buff_en[0]), .rd_en(rd_buff_en[0]), .pixelA(buff0_pixelA), .pixelB(buff0_pixelB), .pixelC(buff0_pixelC));
+		img_row M10K_1(.clk(clk), .rst(rst_buff[1]), .in_data(grey_in_data), .wr_en(wr_buff_en[1]), .rd_en(rd_buff_en[1]), .pixelA(buff1_pixelA), .pixelB(buff1_pixelB), .pixelC(buff1_pixelC));
+		img_row M10K_2(.clk(clk), .rst(rst_buff[2]), .in_data(grey_in_data), .wr_en(wr_buff_en[2]), .rd_en(rd_buff_en[2]), .pixelA(buff2_pixelA), .pixelB(buff2_pixelB), .pixelC(buff2_pixelC));
+		img_row M10K_3(.clk(clk), .rst(rst_buff[3]), .in_data(grey_in_data), .wr_en(wr_buff_en[3]), .rd_en(rd_buff_en[3]), .pixelA(buff3_pixelA), .pixelB(buff3_pixelB), .pixelC(buff3_pixelC));
 		
 		// convolution module
 		sobel_conv sob(
@@ -148,6 +163,46 @@ module edge_detect(
 			
 		);
 		
+
+		
+		
+//		// sync state hex output testing
+//		always@(*) begin
+//			case(sync_state)
+//				OFF: begin
+//					hex_sync_state = 8'b11000000;// 0
+//				end
+//				IDLE: begin
+//					hex_sync_state = 8'b11111001;// 1
+//				end
+//				ACTIVE: begin
+//					hex_sync_state = 8'b10100100;// 2
+//				end
+//				default: begin
+//					hex_sync_state = 8'b11111111;// OFF
+//				end
+//			endcase
+//		end
+//		
+//		// next sync state hex output testing
+//		always@(*) begin
+//			case(next_sync_state)
+//				OFF: begin
+//					hex_next_sync_state = 8'b11000000;// 0
+//				end
+//				IDLE: begin
+//					hex_next_sync_state = 8'b11111001;// 1
+//				end
+//				ACTIVE: begin
+//					hex_next_sync_state = 8'b10100100;// 2
+//				end
+//				default: begin
+//					hex_next_sync_state = 8'b11111111;// OFF
+//				end
+//			endcase
+//		end
+
+		
 		/*
 		// FSM for pixel syncing
 		parameter OFF = 2'd0;
@@ -157,43 +212,6 @@ module edge_detect(
 		reg [1:0] next_sync_state;
 		reg synced = 1'b0;
 		
-		
-		// sync state hex output testing
-		always@(*) begin
-			case(sync_state)
-				OFF: begin
-					hex_sync_state = 8'b11000000;// 0
-				end
-				IDLE: begin
-					hex_sync_state = 8'b11111001;// 1
-				end
-				ACTIVE: begin
-					hex_sync_state = 8'b10100100;// 2
-				end
-				default: begin
-					hex_sync_state = 8'b11111111;// OFF
-				end
-			endcase
-		end
-		
-		// next sync state hex output testing
-		always@(*) begin
-			case(next_sync_state)
-				OFF: begin
-					hex_next_sync_state = 8'b11000000;// 0
-				end
-				IDLE: begin
-					hex_next_sync_state = 8'b11111001;// 1
-				end
-				ACTIVE: begin
-					hex_next_sync_state = 8'b10100100;// 2
-				end
-				default: begin
-					hex_next_sync_state = 8'b11111111;// OFF
-				end
-			endcase
-		end
-
 		
 		// sync state progression
 		always@(posedge clk) begin
@@ -206,15 +224,19 @@ module edge_detect(
 			case(sync_state)
 				OFF: begin
 					synced = 0;
+					vga_reset = 0;
 				end
 				IDLE: begin
 					synced = 0;
+					vga_reset = 1;
 				end
 				ACTIVE: begin // pixel is 0,0
 					synced = 1; // when sync actually turns on  pixel is 1,0
+					vga_reset = 0;
 				end
 				default: begin
 					synced = 0;
+					vga_reset = 0;
 				end
 			endcase
 		end
@@ -241,6 +263,8 @@ module edge_detect(
 				end
 				ACTIVE: begin // now keep on while edge_en on
 					if(edge_en)
+						next_sync_state = IDLE;
+					else if(edge_en && valid_pixel)
 						next_sync_state = ACTIVE;
 					else
 						next_sync_state = OFF;
@@ -341,7 +365,6 @@ module edge_detect(
 		// [3:0] rst_buff
 		// [3:0] rd_buff_en
 		// [3:0] wr_buff_en
-		// [3:0] zero_fill_buff
 		
 		
 		// outputs of buffers:
@@ -366,7 +389,9 @@ module edge_detect(
 		// convolution on image 642 x 482 to account for padding
 		// next state progress
 		always@(posedge clk) begin
-			conv_state <= next_conv_state;
+			if(valid_pixel) begin
+				conv_state <= next_conv_state;
+			end
 		end
 		// only conv next state calc and flag setting
 		always@(*) begin
@@ -747,190 +772,182 @@ module edge_detect(
 		end
 		// reset buffers after buff_done in ea conv_state
 		// [3:0] rst_buff;
-		// [3:0] zero_fill_buff;
 		// reset rd/wr ptrs after completed cycle
 		always@(*) begin
 			case(conv_state)
 				INIT: begin
 					rst_buff = 4'b0000;
-					zero_fill_buff = 4'b1111;
 				end
 				INIT_BUFF: begin
-					zero_fill_buff = 4'b0000;
 					if(buff_done)
 						rst_buff = 4'b1111;
 					else
 						rst_buff = 4'b0000;
 				end
 				SET0: begin
-					zero_fill_buff = 4'b0000;
 					if(buff_done)
 						rst_buff = 4'b1111;
 					else
 						rst_buff = 4'b0000;
 				end
 				SET1: begin
-					zero_fill_buff = 4'b0000;
 					if(buff_done)
 						rst_buff = 4'b1111;
 					else
 						rst_buff = 4'b0000;
 				end
 				SET2: begin
-					zero_fill_buff = 4'b0000;
 					if(buff_done)
 						rst_buff = 4'b1111;
 					else
 						rst_buff = 4'b0000;
 				end
 				SET3: begin
-					zero_fill_buff = 4'b0000;
 					if(buff_done)
 						rst_buff = 4'b1111;
 					else
 						rst_buff = 4'b0000;
 				end
 				default: begin
-					zero_fill_buff = 4'b0000;
 					rst_buff = 4'b0000;
 				end
 			endcase
 		end
 		// conv curr state action and update counter/flags
 		always@(posedge clk) begin
-			case(conv_state)
-				INIT: begin
-					// reset everything
-					curr_buff_wr_count <= 0;
-					curr_row_to_disp <= 0;
-					first_conv_done <= 0;
-					init_curr_buff <= 2'd0; // start by loading buffer 1 with row0
-					// vga_reset_req
-					// vga_synced
-					
-					// all buffs initialized as zero buffs
-					// buff0 is ready to be read from (padded 0s)	
-				end
-				INIT_BUFF: begin
-					// assume entering with init_curr_buff = 1
-					// assume starting with pixel 0,0
-					// once buff_done triggered move onto SET0
-					
-					// turn off zero_fill/reset
-					// setup buff1 and buff2
-					
-					/* start counting pixel read in from 0 to 
-						determine when to move to next buffer */
-					// check if we reached row3 to move on if necessary
-					// don't want to lose pixel next cycle
-					// if statement just incremented curr_buff_wr_count to 641
-					if(init_curr_buff+1 >= INIT_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-					
-						// first 2 buffers are ready for primetime
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
+						// reset everything
 						curr_buff_wr_count <= 0;
-						/* will recieve pixel 641 of row 2 AKA pixel 1 of row 3
-							next clock cycle */
-						// sync up monitor to start outputting processed pixels
-//						vga_rst_req <= 1'b1;	
-					end
-					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						// buffer filled
-						// curr_buff_wr_count = 639
-						/* need to put next pixel somewhere
-						 so as not to lose it */
-						 
-						// let's load up next buffer
-						// move on to loading row2 or exiting if found row3
-						init_curr_buff <= init_curr_buff + 1;
-						curr_buff_wr_count <= 0;
-					end
-					else begin
-						// still in range
-						curr_buff_wr_count <= curr_buff_wr_count + 1;
-					end
-					
-				end
-				SET0: begin // RD 0,1,2 | WR: 3
-					
-					// turn off monitor rst if on
-//					vga_rst_req <= 1'b0;
-					// synced for pixel 0,0 on first entrance
-					// curr_row_to_disp = 0 for first entrance
-					
-					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
 						curr_row_to_disp <= 0;
+						first_conv_done <= 0;
+						init_curr_buff <= 2'd0; // start by loading buffer 1 with row0
+						// vga_reset_req
+						// vga_synced
+						
+						// all buffs initialized as zero buffs
+						// buff0 is ready to be read from (padded 0s)	
 					end
-					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						// on pixel 639
-						curr_buff_wr_count <= 0;
-						curr_row_to_disp <= curr_row_to_disp + 1;
+					INIT_BUFF: begin
+						// assume entering with init_curr_buff = 1
+						// assume starting with pixel 0,0
+						// once buff_done triggered move onto SET0
+						
+						// turn off zero_fill/reset
+						// setup buff1 and buff2
+						
+						/* start counting pixel read in from 0 to 
+							determine when to move to next buffer */
+						// check if we reached row3 to move on if necessary
+						// don't want to lose pixel next cycle
+						// if statement just incremented curr_buff_wr_count to 641
+						if(init_curr_buff+1 >= INIT_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+						
+							// first 2 buffers are ready for primetime
+							curr_buff_wr_count <= 0;
+							/* will recieve pixel 641 of row 2 AKA pixel 1 of row 3
+								next clock cycle */
+							// sync up monitor to start outputting processed pixels
+	//						vga_rst_req <= 1'b1;	
+						end
+						else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							// buffer filled
+							// curr_buff_wr_count = 639
+							/* need to put next pixel somewhere
+							 so as not to lose it */
+							 
+							// let's load up next buffer
+							// move on to loading row2 or exiting if found row3
+							init_curr_buff <= init_curr_buff + 1;
+							curr_buff_wr_count <= 0;
+						end
+						else begin
+							// still in range
+							curr_buff_wr_count <= curr_buff_wr_count + 1;
+						end
+						
 					end
-					else begin
-						curr_buff_wr_count <= curr_buff_wr_count + 1;
-					end
-							
-					
+					SET0: begin // RD 0,1,2 | WR: 3
+						
+						// turn off monitor rst if on
+	//					vga_rst_req <= 1'b0;
+						// synced for pixel 0,0 on first entrance
+						// curr_row_to_disp = 0 for first entrance
+						
+						if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							first_conv_done <= 1;
+							curr_row_to_disp <= 0;
+						end
+						else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							// on pixel 639
+							curr_buff_wr_count <= 0;
+							curr_row_to_disp <= curr_row_to_disp + 1;
+						end
+						else begin
+							curr_buff_wr_count <= curr_buff_wr_count + 1;
+						end
+								
+						
 
+						
+					end
+					SET1: begin // RD: 1,2,3 | WR: 0
 					
-				end
-				SET1: begin // RD: 1,2,3 | WR: 0
-				
-					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
+						if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							first_conv_done <= 1;
+							curr_row_to_disp <= 0;
+						end
+						else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							// on pixel 639
+							curr_buff_wr_count <= 0;
+							curr_row_to_disp <= curr_row_to_disp + 1;
+						end
+						else begin
+							curr_buff_wr_count <= curr_buff_wr_count + 1;
+						end
+								
+						
 					end
-					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						// on pixel 639
+					SET2: begin // RD: 2,3,0 | WR: 1
+						if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							first_conv_done <= 1;
+							curr_row_to_disp <= 0;
+						end
+						else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							// on pixel 639
+							curr_buff_wr_count <= 0;
+							curr_row_to_disp <= curr_row_to_disp + 1;
+						end
+						else begin
+							curr_buff_wr_count <= curr_buff_wr_count + 1;
+						end
+								
+					end
+					SET3: begin // RD: 3,0,1 | WR: 2
+						if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							first_conv_done <= 1;
+							curr_row_to_disp <= 0;
+						end
+						else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+							// on pixel 639
+							curr_buff_wr_count <= 0;
+							curr_row_to_disp <= curr_row_to_disp + 1;
+						end
+						else begin
+							curr_buff_wr_count <= curr_buff_wr_count + 1;
+						end
+								
+						
+					end
+					default: begin
 						curr_buff_wr_count <= 0;
-						curr_row_to_disp <= curr_row_to_disp + 1;
-					end
-					else begin
-						curr_buff_wr_count <= curr_buff_wr_count + 1;
-					end
-							
-					
-				end
-				SET2: begin // RD: 2,3,0 | WR: 1
-					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
 						curr_row_to_disp <= 0;
+						first_conv_done <= 0;
+						init_curr_buff <= 2'd0;
 					end
-					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						// on pixel 639
-						curr_buff_wr_count <= 0;
-						curr_row_to_disp <= curr_row_to_disp + 1;
-					end
-					else begin
-						curr_buff_wr_count <= curr_buff_wr_count + 1;
-					end
-							
-				end
-				SET3: begin // RD: 3,0,1 | WR: 2
-					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
-					end
-					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						// on pixel 639
-						curr_buff_wr_count <= 0;
-						curr_row_to_disp <= curr_row_to_disp + 1;
-					end
-					else begin
-						curr_buff_wr_count <= curr_buff_wr_count + 1;
-					end
-							
-					
-				end
-				default: begin
-					curr_buff_wr_count <= 0;
-					curr_row_to_disp <= 0;
-					first_conv_done <= 0;
-					buff_done <= 0;
-					init_curr_buff <= 2'd0;
-					zero_fill_buff <= 4'b1111;
-				end
-			endcase
+				endcase
+			end
 		end
 
 		
@@ -946,7 +963,9 @@ module edge_detect(
 		reg first_flag = 1; // delete later
 		// next state progress
 		always@(posedge clk) begin
-			count_state <= next_count_state;
+			if(valid_pixel) begin
+				count_state <= next_count_state;
+			end
 		end
 		// cycle count next state calc
 		always@(*) begin
@@ -978,20 +997,22 @@ module edge_detect(
 		end
 		// cycle count state output and calcs
 		always@(posedge clk) begin
-			case(count_state)
-				EDGE_OFF: begin
-					cycle_count <= 0;
-				end
-				ON_CONV: begin
-					cycle_count <= cycle_count + 1;
-				end
-				ON_FINISH: begin
-					cycle_count <= cycle_count;
-				end
-				default: begin
-					cycle_count <= cycle_count;
-				end
-			endcase
+			if(valid_pixel) begin
+				case(count_state)
+					EDGE_OFF: begin
+						cycle_count <= 0;
+					end
+					ON_CONV: begin
+						cycle_count <= cycle_count + 1;
+					end
+					ON_FINISH: begin
+						cycle_count <= cycle_count;
+					end
+					default: begin
+						cycle_count <= cycle_count;
+					end
+				endcase
+			end
 		end
 		// LED cycles output
 		always@(*) begin
@@ -1022,7 +1043,9 @@ module edge_detect(
 		
 		reg [7:0] final_val;
 		always@(posedge clk) begin
-			final_val <= edge_out;
+			if(valid_pixel) begin
+				final_val <= edge_out;
+			end
 		end
 		
 		
@@ -1030,9 +1053,9 @@ module edge_detect(
 		assign adjusted_bw = (final_val > 8'd127) ? 8'd0 : 8'd255;
 		
 		
-		assign done_edge_R = (edge_en) ? final_val : inter_in_R;
-		assign done_edge_G = (edge_en) ? final_val : inter_in_G;
-		assign done_edge_B = (edge_en) ? final_val : inter_in_B;
+		assign done_edge_R = (edge_en) ? final_val : direct_out_R;
+		assign done_edge_G = (edge_en) ? final_val : direct_out_G;
+		assign done_edge_B = (edge_en) ? final_val : direct_out_B;
 		
 		
 		

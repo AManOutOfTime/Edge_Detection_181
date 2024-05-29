@@ -243,12 +243,14 @@ module cursor(
 						end
 					end
 					default: begin
+						rect_draw_ready = 0;
 						rect_nstate = R_OFF;
 					end
 				endcase
 		
 		end
 		else begin
+			rect_draw_ready = 0;
 			rect_nstate = R_OFF;
 		end
 	end
