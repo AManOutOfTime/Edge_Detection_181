@@ -452,59 +452,69 @@ module edge_detect(
 		end
 		// conv wr buffer enabling
 		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					wr_buff_en = 4'b0000;
-				end
-				INIT_BUFF: begin
-					case(init_curr_buff)
-						2'd0: wr_buff_en = 4'b0010;
-						2'd1: wr_buff_en = 4'b0100;
-						default: wr_buff_en = 4'b0000;
-					endcase
-				end
-				SET0: begin // write buff3
-					wr_buff_en = 4'b1000;
-				end
-				SET1: begin // write buff0
-					wr_buff_en = 4'b0001;
-				end
-				SET2: begin // write buff1
-					wr_buff_en = 4'b0010;
-				end
-				SET3: begin // write buff2
-					wr_buff_en = 4'b0100;
-				end
-				default: begin
-					wr_buff_en = 4'b0000;
-				end
-			endcase
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
+						wr_buff_en = 4'b0000;
+					end
+					INIT_BUFF: begin
+						case(init_curr_buff)
+							2'd0: wr_buff_en = 4'b0010;
+							2'd1: wr_buff_en = 4'b0100;
+							default: wr_buff_en = 4'b0000;
+						endcase
+					end
+					SET0: begin // write buff3
+						wr_buff_en = 4'b1000;
+					end
+					SET1: begin // write buff0
+						wr_buff_en = 4'b0001;
+					end
+					SET2: begin // write buff1
+						wr_buff_en = 4'b0010;
+					end
+					SET3: begin // write buff2
+						wr_buff_en = 4'b0100;
+					end
+					default: begin
+						wr_buff_en = 4'b0000;
+					end
+				endcase
+			end
+			else begin
+				wr_buff_en = 4'b0000;
+			end
 		end
 		// conv rd buffer enabling
 		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					rd_buff_en = 4'b0000;
-				end
-				INIT_BUFF: begin
-					rd_buff_en = 4'b0000;
-				end
-				SET0: begin
-					rd_buff_en = 4'b0111;
-				end
-				SET1: begin
-					rd_buff_en = 4'b1110;
-				end
-				SET2: begin
-					rd_buff_en = 4'b1101;
-				end
-				SET3: begin
-					rd_buff_en = 4'b1011;
-				end
-				default: begin
-					rd_buff_en = 4'b0000;
-				end
-			endcase
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
+						rd_buff_en = 4'b0000;
+					end
+					INIT_BUFF: begin
+						rd_buff_en = 4'b0000;
+					end
+					SET0: begin
+						rd_buff_en = 4'b0111;
+					end
+					SET1: begin
+						rd_buff_en = 4'b1110;
+					end
+					SET2: begin
+						rd_buff_en = 4'b1101;
+					end
+					SET3: begin
+						rd_buff_en = 4'b1011;
+					end
+					default: begin
+						rd_buff_en = 4'b0000;
+					end
+				endcase
+			end
+			else begin
+				rd_buff_en = 4'b0000;
+			end
 		end
 		// conv output redirection
 		always@(*) begin

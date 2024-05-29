@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DE1_SOC_D8M_LB_RTL
-Wed May 29 15:43:12 2024
+Wed May 29 16:19:54 2024
 Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
 
 
@@ -16,9 +16,9 @@ Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
   8. Analysis & Synthesis RAM Summary
   9. Analysis & Synthesis DSP Block Usage Summary
  10. Analysis & Synthesis IP Cores Summary
- 11. State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|conv_state
- 12. State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|count_state
- 13. State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state
+ 11. State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state
+ 12. State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|conv_state
+ 13. State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|count_state
  14. Registers Removed During Synthesis
  15. Removed Registers Triggering Further Register Optimizations
  16. General Register Statistics
@@ -98,7 +98,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed May 29 15:43:12 2024           ;
+; Analysis & Synthesis Status     ; Successful - Wed May 29 16:19:53 2024           ;
 ; Quartus Prime Version           ; 20.1.0 Build 711 06/05/2020 SJ Standard Edition ;
 ; Revision Name                   ; DE1_SOC_D8M_LB_RTL                              ;
 ; Top-level Entity Name           ; DE1_SOC_D8M_LB_RTL                              ;
@@ -213,26 +213,26 @@ https://fpgasoftware.intel.com/eula.
 ; Number detected on machine ; 16          ;
 ; Maximum allowed            ; 16          ;
 ;                            ;             ;
-; Average used               ; 3.44        ;
+; Average used               ; 3.55        ;
 ; Maximum used               ; 16          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  23.8%      ;
-;     Processor 3            ;  19.7%      ;
-;     Processor 4            ;  19.7%      ;
-;     Processor 5            ;  19.7%      ;
-;     Processor 6            ;  19.7%      ;
-;     Processor 7            ;  19.7%      ;
-;     Processor 8            ;  19.7%      ;
-;     Processor 9            ;  16.7%      ;
-;     Processor 10           ;  16.7%      ;
-;     Processor 11           ;  11.6%      ;
-;     Processor 12           ;  11.5%      ;
-;     Processor 13           ;  11.5%      ;
+;     Processor 2            ;  24.6%      ;
+;     Processor 3            ;  24.6%      ;
+;     Processor 4            ;  21.1%      ;
+;     Processor 5            ;  18.3%      ;
+;     Processor 6            ;  18.3%      ;
+;     Processor 7            ;  18.2%      ;
+;     Processor 8            ;  18.2%      ;
+;     Processor 9            ;  17.8%      ;
+;     Processor 10           ;  17.7%      ;
+;     Processor 11           ;  17.7%      ;
+;     Processor 12           ;  12.8%      ;
+;     Processor 13           ;  11.4%      ;
 ;     Processor 14           ;  11.4%      ;
 ;     Processor 15           ;  11.4%      ;
-;     Processor 16           ;  11.4%      ;
+;     Processor 16           ;  11.3%      ;
 +----------------------------+-------------+
 
 
@@ -345,14 +345,14 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------------+
 ; Resource                                    ; Usage                ;
 +---------------------------------------------+----------------------+
-; Estimate of Logic utilization (ALMs needed) ; 28933                ;
+; Estimate of Logic utilization (ALMs needed) ; 28670                ;
 ;                                             ;                      ;
-; Combinational ALUT usage for logic          ; 29571                ;
-;     -- 7 input functions                    ; 39                   ;
-;     -- 6 input functions                    ; 23855                ;
-;     -- 5 input functions                    ; 737                  ;
-;     -- 4 input functions                    ; 604                  ;
-;     -- <=3 input functions                  ; 4336                 ;
+; Combinational ALUT usage for logic          ; 27222                ;
+;     -- 7 input functions                    ; 38                   ;
+;     -- 6 input functions                    ; 24030                ;
+;     -- 5 input functions                    ; 712                  ;
+;     -- 4 input functions                    ; 610                  ;
+;     -- <=3 input functions                  ; 1832                 ;
 ;                                             ;                      ;
 ; Dedicated logic registers                   ; 22384                ;
 ;                                             ;                      ;
@@ -367,8 +367,8 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                      ;
 ; Maximum fan-out node                        ; MIPI_PIXEL_CLK~input ;
 ; Maximum fan-out                             ; 21221                ;
-; Total fan-out                               ; 228047               ;
-; Average fan-out                             ; 4.36                 ;
+; Total fan-out                               ; 223837               ;
+; Average fan-out                             ; 4.48                 ;
 +---------------------------------------------+----------------------+
 
 
@@ -377,9 +377,9 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                            ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |DE1_SOC_D8M_LB_RTL                                                                                                                     ; 29571 (47)          ; 22384 (96)                ; 126336            ; 27         ; 124  ; 0            ; |DE1_SOC_D8M_LB_RTL                                                                                                                                                                                                                                                                                                                                            ; DE1_SOC_D8M_LB_RTL                ; work         ;
-;    |D8M_SET:ccd|                                                                                                                        ; 137 (0)             ; 105 (0)                   ; 122880            ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd                                                                                                                                                                                                                                                                                                                                ; D8M_SET                           ; work         ;
-;       |D8M_WRITE_COUNTER:u3|                                                                                                            ; 55 (55)             ; 46 (46)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3                                                                                                                                                                                                                                                                                                           ; D8M_WRITE_COUNTER                 ; work         ;
+; |DE1_SOC_D8M_LB_RTL                                                                                                                     ; 27222 (49)          ; 22384 (96)                ; 126336            ; 27         ; 124  ; 0            ; |DE1_SOC_D8M_LB_RTL                                                                                                                                                                                                                                                                                                                                            ; DE1_SOC_D8M_LB_RTL                ; work         ;
+;    |D8M_SET:ccd|                                                                                                                        ; 136 (0)             ; 105 (0)                   ; 122880            ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd                                                                                                                                                                                                                                                                                                                                ; D8M_SET                           ; work         ;
+;       |D8M_WRITE_COUNTER:u3|                                                                                                            ; 54 (54)             ; 46 (46)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3                                                                                                                                                                                                                                                                                                           ; D8M_WRITE_COUNTER                 ; work         ;
 ;       |RAW2RGB_L:u4|                                                                                                                    ; 68 (6)              ; 46 (0)                    ; 122880            ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4                                                                                                                                                                                                                                                                                                                   ; RAW2RGB_L                         ; work         ;
 ;          |Line_Buffer_J:u0|                                                                                                             ; 25 (25)             ; 2 (2)                     ; 122880            ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|Line_Buffer_J:u0                                                                                                                                                                                                                                                                                                  ; Line_Buffer_J                     ; work         ;
 ;             |int_line:d1|                                                                                                               ; 0 (0)               ; 0 (0)                     ; 40960             ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|Line_Buffer_J:u0|int_line:d1                                                                                                                                                                                                                                                                                      ; int_line                          ; work         ;
@@ -393,18 +393,18 @@ https://fpgasoftware.intel.com/eula.
 ;                   |altsyncram_iup1:auto_generated|                                                                                      ; 0 (0)               ; 0 (0)                     ; 40960             ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|Line_Buffer_J:u0|int_line:d3|altsyncram:altsyncram_component|altsyncram_iup1:auto_generated                                                                                                                                                                                                                       ; altsyncram_iup1                   ; work         ;
 ;          |RAW_RGB_BIN:bin|                                                                                                              ; 37 (37)             ; 44 (44)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|RAW_RGB_BIN:bin                                                                                                                                                                                                                                                                                                   ; RAW_RGB_BIN                       ; work         ;
 ;       |VGA_READ_COUNTER:cnt|                                                                                                            ; 14 (14)             ; 13 (13)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|VGA_READ_COUNTER:cnt                                                                                                                                                                                                                                                                                                           ; VGA_READ_COUNTER                  ; work         ;
-;    |MIPI_BRIDGE_CAMERA_Config:cfin|                                                                                                     ; 1311 (0)            ; 466 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin                                                                                                                                                                                                                                                                                                             ; MIPI_BRIDGE_CAMERA_Config         ; work         ;
-;       |MIPI_BRIDGE_CONFIG:mpiv|                                                                                                         ; 427 (198)           ; 230 (93)                  ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv                                                                                                                                                                                                                                                                                     ; MIPI_BRIDGE_CONFIG                ; work         ;
+;    |MIPI_BRIDGE_CAMERA_Config:cfin|                                                                                                     ; 1383 (0)            ; 466 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin                                                                                                                                                                                                                                                                                                             ; MIPI_BRIDGE_CAMERA_Config         ; work         ;
+;       |MIPI_BRIDGE_CONFIG:mpiv|                                                                                                         ; 428 (199)           ; 230 (93)                  ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv                                                                                                                                                                                                                                                                                     ; MIPI_BRIDGE_CONFIG                ; work         ;
 ;          |CLOCKMEM:c1|                                                                                                                  ; 33 (33)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|CLOCKMEM:c1                                                                                                                                                                                                                                                                         ; CLOCKMEM                          ; work         ;
 ;          |I2C_READ_DATA:rd|                                                                                                             ; 70 (70)             ; 41 (41)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd                                                                                                                                                                                                                                                                    ; I2C_READ_DATA                     ; work         ;
 ;          |I2C_WRITE_PTR:wpt|                                                                                                            ; 72 (72)             ; 35 (35)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt                                                                                                                                                                                                                                                                   ; I2C_WRITE_PTR                     ; work         ;
 ;          |I2C_WRITE_WDATA:wrd|                                                                                                          ; 54 (54)             ; 28 (28)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd                                                                                                                                                                                                                                                                 ; I2C_WRITE_WDATA                   ; work         ;
-;       |MIPI_CAMERA_CONFIG:camiv|                                                                                                        ; 884 (689)           ; 236 (123)                 ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv                                                                                                                                                                                                                                                                                    ; MIPI_CAMERA_CONFIG                ; work         ;
+;       |MIPI_CAMERA_CONFIG:camiv|                                                                                                        ; 955 (760)           ; 236 (123)                 ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv                                                                                                                                                                                                                                                                                    ; MIPI_CAMERA_CONFIG                ; work         ;
 ;          |CLOCKMEM:c1|                                                                                                                  ; 8 (8)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|CLOCKMEM:c1                                                                                                                                                                                                                                                                        ; CLOCKMEM                          ; work         ;
 ;          |I2C_READ_DATA:rd|                                                                                                             ; 66 (66)             ; 49 (49)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd                                                                                                                                                                                                                                                                   ; I2C_READ_DATA                     ; work         ;
 ;          |I2C_WRITE_PTR:wpt|                                                                                                            ; 69 (69)             ; 35 (35)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt                                                                                                                                                                                                                                                                  ; I2C_WRITE_PTR                     ; work         ;
 ;          |I2C_WRITE_WDATA:wrd|                                                                                                          ; 52 (52)             ; 28 (28)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd                                                                                                                                                                                                                                                                ; I2C_WRITE_WDATA                   ; work         ;
-;    |RGB_Process:p1|                                                                                                                     ; 995 (458)           ; 0 (0)                     ; 0                 ; 13         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1                                                                                                                                                                                                                                                                                                                             ; RGB_Process                       ; work         ;
+;    |RGB_Process:p1|                                                                                                                     ; 996 (459)           ; 0 (0)                     ; 0                 ; 13         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1                                                                                                                                                                                                                                                                                                                             ; RGB_Process                       ; work         ;
 ;       |lpm_divide:Div0|                                                                                                                 ; 210 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|lpm_divide:Div0                                                                                                                                                                                                                                                                                                             ; lpm_divide                        ; work         ;
 ;          |lpm_divide_7dm:auto_generated|                                                                                                ; 210 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|lpm_divide:Div0|lpm_divide_7dm:auto_generated                                                                                                                                                                                                                                                                               ; lpm_divide_7dm                    ; work         ;
 ;             |sign_div_unsign_dnh:divider|                                                                                               ; 210 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|lpm_divide:Div0|lpm_divide_7dm:auto_generated|sign_div_unsign_dnh:divider                                                                                                                                                                                                                                                   ; sign_div_unsign_dnh               ; work         ;
@@ -418,14 +418,14 @@ https://fpgasoftware.intel.com/eula.
 ;             |sign_div_unsign_bnh:divider|                                                                                               ; 142 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|lpm_divide:Div2|lpm_divide_5dm:auto_generated|sign_div_unsign_bnh:divider                                                                                                                                                                                                                                                   ; sign_div_unsign_bnh               ; work         ;
 ;                |alt_u_div_s2f:divider|                                                                                                  ; 142 (142)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|lpm_divide:Div2|lpm_divide_5dm:auto_generated|sign_div_unsign_bnh:divider|alt_u_div_s2f:divider                                                                                                                                                                                                                             ; alt_u_div_s2f                     ; work         ;
 ;    |cursor:c_proc|                                                                                                                      ; 613 (613)           ; 198 (198)                 ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc                                                                                                                                                                                                                                                                                                                              ; cursor                            ; work         ;
-;    |edge_detect:edger|                                                                                                                  ; 26129 (223)         ; 20833 (209)               ; 0                 ; 14         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger                                                                                                                                                                                                                                                                                                                          ; edge_detect                       ; work         ;
+;    |edge_detect:edger|                                                                                                                  ; 23706 (228)         ; 20833 (209)               ; 0                 ; 14         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger                                                                                                                                                                                                                                                                                                                          ; edge_detect                       ; work         ;
 ;       |greyscale:grey|                                                                                                                  ; 0 (0)               ; 0 (0)                     ; 0                 ; 2          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|greyscale:grey                                                                                                                                                                                                                                                                                                           ; greyscale                         ; work         ;
-;       |img_row:M10K_0|                                                                                                                  ; 6420 (6420)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
-;       |img_row:M10K_1|                                                                                                                  ; 6420 (6420)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
-;       |img_row:M10K_2|                                                                                                                  ; 6420 (6420)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
-;       |img_row:M10K_3|                                                                                                                  ; 6369 (6369)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
-;       |sobel_conv:sob|                                                                                                                  ; 277 (117)           ; 0 (0)                     ; 0                 ; 12         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sobel_conv:sob                                                                                                                                                                                                                                                                                                           ; sobel_conv                        ; work         ;
-;          |sqrt_approx_23bit:sqrt_mod|                                                                                                   ; 160 (160)           ; 0 (0)                     ; 0                 ; 10         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sobel_conv:sob|sqrt_approx_23bit:sqrt_mod                                                                                                                                                                                                                                                                                ; sqrt_approx_23bit                 ; work         ;
+;       |img_row:M10K_0|                                                                                                                  ; 5778 (5778)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
+;       |img_row:M10K_1|                                                                                                                  ; 5778 (5778)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
+;       |img_row:M10K_2|                                                                                                                  ; 5778 (5778)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
+;       |img_row:M10K_3|                                                                                                                  ; 5778 (5778)         ; 5156 (5156)               ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3                                                                                                                                                                                                                                                                                                           ; img_row                           ; work         ;
+;       |sobel_conv:sob|                                                                                                                  ; 366 (117)           ; 0 (0)                     ; 0                 ; 12         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sobel_conv:sob                                                                                                                                                                                                                                                                                                           ; sobel_conv                        ; work         ;
+;          |sqrt_approx_23bit:sqrt_mod|                                                                                                   ; 249 (249)           ; 0 (0)                     ; 0                 ; 10         ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sobel_conv:sob|sqrt_approx_23bit:sqrt_mod                                                                                                                                                                                                                                                                                ; sqrt_approx_23bit                 ; work         ;
 ;    |sld_hub:auto_hub|                                                                                                                   ; 90 (1)              ; 90 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|sld_hub:auto_hub                                                                                                                                                                                                                                                                                                                           ; sld_hub                           ; altera_sld   ;
 ;       |alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric| ; 89 (0)              ; 90 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric                                                                                                                                                                                           ; alt_sld_fab_with_jtag_input       ; altera_sld   ;
 ;          |alt_sld_fab:instrumentation_fabric|                                                                                           ; 89 (0)              ; 90 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_D8M_LB_RTL|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric                                                                                                                                                        ; alt_sld_fab                       ; alt_sld_fab  ;
@@ -541,6 +541,19 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 
 Encoding Type:  One-Hot
++------------------------------------------------------------------------------------------------------+
+; State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state                                         ;
++--------------------+--------------------+--------------------+--------------------+------------------+
+; Name               ; rect_state.R_LOCK2 ; rect_state.R_LOCK1 ; rect_state.R_READY ; rect_state.R_OFF ;
++--------------------+--------------------+--------------------+--------------------+------------------+
+; rect_state.R_OFF   ; 0                  ; 0                  ; 0                  ; 0                ;
+; rect_state.R_READY ; 0                  ; 0                  ; 1                  ; 1                ;
+; rect_state.R_LOCK1 ; 0                  ; 1                  ; 0                  ; 1                ;
+; rect_state.R_LOCK2 ; 1                  ; 0                  ; 0                  ; 1                ;
++--------------------+--------------------+--------------------+--------------------+------------------+
+
+
+Encoding Type:  One-Hot
 +---------------------------------------------------------------------------------------------------------------------------------------+
 ; State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|conv_state                                                                      ;
 +----------------------+-----------------+-----------------+-----------------+-----------------+----------------------+-----------------+
@@ -565,19 +578,6 @@ Encoding Type:  One-Hot
 ; count_state.ON_CONV   ; 1                    ; 0                     ; 1                   ;
 ; count_state.ON_FINISH ; 1                    ; 1                     ; 0                   ;
 +-----------------------+----------------------+-----------------------+---------------------+
-
-
-Encoding Type:  One-Hot
-+------------------------------------------------------------------------------------------------------+
-; State Machine - |DE1_SOC_D8M_LB_RTL|cursor:c_proc|rect_state                                         ;
-+--------------------+--------------------+--------------------+--------------------+------------------+
-; Name               ; rect_state.R_LOCK2 ; rect_state.R_LOCK1 ; rect_state.R_READY ; rect_state.R_OFF ;
-+--------------------+--------------------+--------------------+--------------------+------------------+
-; rect_state.R_OFF   ; 0                  ; 0                  ; 0                  ; 0                ;
-; rect_state.R_READY ; 0                  ; 0                  ; 1                  ; 1                ;
-; rect_state.R_LOCK1 ; 0                  ; 1                  ; 0                  ; 1                ;
-; rect_state.R_LOCK2 ; 1                  ; 0                  ; 0                  ; 1                ;
-+--------------------+--------------------+--------------------+--------------------+------------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -672,16 +672,16 @@ Encoding Type:  One-Hot
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|SLAVE_ADDR[3,4]                  ; Merged with MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|SLAVE_ADDR[2]                ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|SLV8_REG16_DATA8[30]            ; Merged with MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|SLV8_REG16_DATA8[26]        ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|WORD_DATA[9]                     ; Merged with MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|WORD_DATA[10]                ;
-; edge_detect:edger|init_curr_buff[1]                                                     ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|fp2_col[0]                                                                ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|fp1_col[0]                                                                ; Stuck at GND due to stuck port data_in                                                          ;
+; edge_detect:edger|init_curr_buff[1]                                                     ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|p1_col[1]                                                                 ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|p1_row[1]                                                                 ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|fp1_col[1]                                                                ; Stuck at GND due to stuck port data_in                                                          ;
 ; cursor:c_proc|fp1_row[1]                                                                ; Stuck at GND due to stuck port data_in                                                          ;
 ; D8M_SET:ccd|VGA_READ_COUNTER:cnt|CNT_[13..15]                                           ; Lost fanout                                                                                     ;
-; cursor:c_proc|count[21]                                                                 ; Lost fanout                                                                                     ;
 ; D8M_SET:ccd|D8M_WRITE_COUNTER:u3|X_WR_CNT[12..15]                                       ; Lost fanout                                                                                     ;
+; cursor:c_proc|count[21]                                                                 ; Lost fanout                                                                                     ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|REG16_DATA16[11]                 ; Stuck at GND due to stuck port data_in                                                          ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|WORD_DATA[11]                    ; Stuck at GND due to stuck port data_in                                                          ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|SLV8_REG16_DATA8[27]            ; Stuck at VCC due to stuck port data_in                                                          ;
@@ -709,11 +709,11 @@ Encoding Type:  One-Hot
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[0..7]  ; Stuck at GND due to stuck port clock                                                            ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|DELY[0..7]   ; Stuck at GND due to stuck port clock                                                            ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|ST[6]                           ; Stuck at GND due to stuck port data_in                                                          ;
+; cursor:c_proc|rect_state~2                                                              ; Lost fanout                                                                                     ;
+; cursor:c_proc|rect_state~3                                                              ; Lost fanout                                                                                     ;
 ; edge_detect:edger|conv_state~8                                                          ; Lost fanout                                                                                     ;
 ; edge_detect:edger|conv_state~9                                                          ; Lost fanout                                                                                     ;
 ; edge_detect:edger|conv_state~10                                                         ; Lost fanout                                                                                     ;
-; cursor:c_proc|rect_state~2                                                              ; Lost fanout                                                                                     ;
-; cursor:c_proc|rect_state~3                                                              ; Lost fanout                                                                                     ;
 ; Total Number of Removed Registers = 255                                                 ;                                                                                                 ;
 +-----------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
 
@@ -745,8 +745,8 @@ Encoding Type:  One-Hot
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|ST[5],     ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|ST[5],      ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|ST[6],      ;
-;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[1], ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[0], ;
+;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[1], ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[2], ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[3], ;
 ;                                                                                   ;                           ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[4], ;
@@ -830,10 +830,10 @@ Encoding Type:  One-Hot
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|END_OK                                                                                                                                                                                                                                               ; 7       ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|END_OK                                                                                                                                                                                                                                                 ; 4       ;
 ; MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|END_OK                                                                                                                                                                                                                                                  ; 7       ;
-; edge_detect:edger|img_row:M10K_3|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
 ; edge_detect:edger|img_row:M10K_1|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
-; edge_detect:edger|img_row:M10K_0|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
+; edge_detect:edger|img_row:M10K_3|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
 ; edge_detect:edger|img_row:M10K_2|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
+; edge_detect:edger|img_row:M10K_0|wr_ptr[0]                                                                                                                                                                                                                                                                                      ; 19      ;
 ; sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric|alt_sld_fab_alt_sld_fab:alt_sld_fab|alt_sld_fab_alt_sld_fab_sldfabric:sldfabric|sld_jtag_hub:\jtag_hub_gen:real_sld_jtag_hub|jtag_ir_reg[1] ; 3       ;
 ; sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric|alt_sld_fab_alt_sld_fab:alt_sld_fab|alt_sld_fab_alt_sld_fab_sldfabric:sldfabric|sld_jtag_hub:\jtag_hub_gen:real_sld_jtag_hub|jtag_ir_reg[2] ; 3       ;
 ; sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|sld_buffer_manager:sld_buffer_manager_inst|modified_post_count[6]                                                                                                                                                   ; 1       ;
@@ -853,94 +853,94 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                              ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelA[0]                                               ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3|rd_ptr[7]                                          ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2|rd_ptr[0]                                          ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1|rd_ptr[9]                                          ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0|rd_ptr[7]                                          ;
-; 5:1                ; 9 bits    ; 27 LEs        ; 0 LEs                ; 27 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|curr_row_to_disp[2]                                               ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 0 LEs                ; 30 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|curr_buff_wr_count[4]                                             ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelB[1]                                               ;
-; 5:1                ; 40 bits   ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|Selector64                                                        ;
-; 9:1                ; 24 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|Selector11                                                        ;
 ; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff0_pixelA[0]                                               ;
 ; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff1_pixelA[0]                                               ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff2_pixelA[0]                                               ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff0_pixelC[0]                                               ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff1_pixelC[0]                                               ;
 ; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff2_pixelC[0]                                               ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelC[0]                                               ;
-; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff0_pixelB[0]                                               ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff2_pixelA[0]                                               ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelA[0]                                               ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3|rd_ptr[0]                                          ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelB[0]                                               ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff1_pixelC[0]                                               ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1|rd_ptr[0]                                          ;
 ; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff1_pixelB[0]                                               ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2|rd_ptr[0]                                          ;
 ; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff2_pixelB[0]                                               ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|VGA_READ_COUNTER:cnt|CNT_[10]                                           ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|X_Cont[15]                                         ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|X_WR_CNT[12]                                       ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|Y_Cont[15]                                         ;
-; 3:1                ; 24 bits   ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|reg_fil_proc_R[0]                                                                   ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|RAW_RGB_BIN:bin|R[3]                                       ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3|wr_ptr[5]                                          ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2|wr_ptr[6]                                          ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1|wr_ptr[4]                                          ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0|wr_ptr[6]                                          ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_bottom[3]                                                           ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_right[4]                                                            ;
-; 6:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_right[9]                                                            ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_bottom[10]                                                          ;
-; 7:1                ; 24 bits   ; 96 LEs        ; 72 LEs               ; 24 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|curs_ol__input_R[2]                                                   ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_bottom[4]                                                           ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_left[4]                                                             ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_left[8]                                                             ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_bottom[6]                                                           ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0|rd_ptr[0]                                          ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff0_pixelB[0]                                               ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff0_pixelC[0]                                               ;
+; 642:1              ; 8 bits    ; 3424 LEs      ; 3424 LEs             ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|reg_buff3_pixelC[0]                                               ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_0|wr_ptr[9]                                          ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_1|wr_ptr[9]                                          ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_2|wr_ptr[9]                                          ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|img_row:M10K_3|wr_ptr[9]                                          ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|VGA_READ_COUNTER:cnt|CNT_[6]                                            ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|X_Cont[4]                                          ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|X_WR_CNT[9]                                        ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|D8M_WRITE_COUNTER:u3|Y_Cont[14]                                         ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|reg_fil_proc_R[7]                                                                   ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|RAW_RGB_BIN:bin|B[8]                                       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_top[4]                                                              ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_right[3]                                                            ;
+; 6:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_left[7]                                                             ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_top[9]                                                              ;
+; 7:1                ; 24 bits   ; 96 LEs        ; 72 LEs               ; 24 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|curs_ol__input_G[4]                                                   ;
+; 5:1                ; 9 bits    ; 27 LEs        ; 0 LEs                ; 27 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|curr_row_to_disp[6]                                               ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 0 LEs                ; 30 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|curr_buff_wr_count[8]                                             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_top[3]                                                              ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_right[6]                                                            ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_right[8]                                                            ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |DE1_SOC_D8M_LB_RTL|cursor:c_proc|c_top[6]                                                              ;
 ; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; No         ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|RAW_RGB_BIN:bin|Add0                                       ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|RAW_RGB_BIN:bin|Add0                                       ;
-; 4:1                ; 20 bits   ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|Line_Buffer_J:u0|taps1x[7]                                 ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|D8M_SET:ccd|RAW2RGB_L:u4|Line_Buffer_J:u0|taps1x[4]                                 ;
+; 5:1                ; 40 bits   ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|Selector38                                                        ;
+; 9:1                ; 24 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|edge_detect:edger|Selector29                                                        ;
 ; 49:1               ; 4 bits    ; 128 LEs       ; 124 LEs              ; 4 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|intensityTotalNew                                                    ;
 ; 50:1               ; 8 bits    ; 264 LEs       ; 256 LEs              ; 8 LEs                  ; No         ; |DE1_SOC_D8M_LB_RTL|RGB_Process:p1|o_VGA_R                                                              ;
 ; 128:1              ; 8 bits    ; 680 LEs       ; 0 LEs                ; 680 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|CNT[2]                      ;
-; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|DELY[5]   ;
-; 128:1              ; 8 bits    ; 680 LEs       ; 0 LEs                ; 680 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|CNT[4]     ;
-; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|DELY[7]    ;
-; 128:1              ; 8 bits    ; 680 LEs       ; 0 LEs                ; 680 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|CNT[2]      ;
-; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|CNT[2]    ;
-; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|CNT[5]     ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[5] ;
-; 64:1               ; 7 bits    ; 294 LEs       ; 7 LEs                ; 287 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|A[3]       ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|DELY[7]    ;
+; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|DELY[2]   ;
+; 128:1              ; 8 bits    ; 680 LEs       ; 0 LEs                ; 680 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|CNT[5]     ;
+; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|DELY[4]    ;
+; 128:1              ; 8 bits    ; 680 LEs       ; 0 LEs                ; 680 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|CNT[4]      ;
+; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|CNT[0]    ;
+; 65:1               ; 8 bits    ; 344 LEs       ; 0 LEs                ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|CNT[4]     ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|DELY[2] ;
+; 64:1               ; 7 bits    ; 294 LEs       ; 7 LEs                ; 287 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|A[4]       ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|DELY[4]    ;
 ; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|DELY[5]  ;
-; 64:1               ; 7 bits    ; 294 LEs       ; 7 LEs                ; 287 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|A[5]        ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|DELY[6]     ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|CNT[1]  ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|CNT[7]   ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|BYTE[5]    ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|BYTE[7]     ;
-; 256:1              ; 18 bits   ; 3060 LEs      ; 144 LEs              ; 2916 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|REG16_DATA16[16]             ;
-; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|DATA16[4]  ;
-; 130:1              ; 16 bits   ; 1376 LEs      ; 0 LEs                ; 1376 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|WCNT[6]                     ;
+; 64:1               ; 7 bits    ; 294 LEs       ; 7 LEs                ; 287 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|A[2]        ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|DELY[4]     ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|CNT[4]  ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|CNT[2]   ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|BYTE[7]    ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|BYTE[4]     ;
+; 256:1              ; 18 bits   ; 3060 LEs      ; 144 LEs              ; 2916 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|REG16_DATA16[2]              ;
+; 129:1              ; 8 bits    ; 688 LEs       ; 0 LEs                ; 688 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|DATA16[3]  ;
+; 130:1              ; 16 bits   ; 1376 LEs      ; 0 LEs                ; 1376 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|WCNT[9]                     ;
 ; 130:1              ; 3 bits    ; 258 LEs       ; 3 LEs                ; 255 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|SLAVE_ADDR[3]               ;
-; 130:1              ; 17 bits   ; 1462 LEs      ; 17 LEs               ; 1445 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|POINTER[1]                  ;
+; 130:1              ; 17 bits   ; 1462 LEs      ; 17 LEs               ; 1445 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|POINTER[13]                 ;
 ; 67:1               ; 3 bits    ; 132 LEs       ; 6 LEs                ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|BYTE[2]   ;
-; 67:1               ; 3 bits    ; 132 LEs       ; 6 LEs                ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|BYTE[2]    ;
-; 257:1              ; 8 bits    ; 1368 LEs      ; 0 LEs                ; 1368 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|CNT[7]                       ;
-; 131:1              ; 6 bits    ; 522 LEs       ; 294 LEs              ; 228 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|ST[1]   ;
-; 68:1               ; 3 bits    ; 135 LEs       ; 45 LEs               ; 90 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|ST[5]     ;
-; 131:1              ; 6 bits    ; 522 LEs       ; 294 LEs              ; 228 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|ST[6]    ;
+; 67:1               ; 3 bits    ; 132 LEs       ; 6 LEs                ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|BYTE[0]    ;
+; 257:1              ; 8 bits    ; 1368 LEs      ; 0 LEs                ; 1368 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|CNT[4]                       ;
+; 131:1              ; 6 bits    ; 522 LEs       ; 294 LEs              ; 228 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|ST[0]   ;
+; 68:1               ; 3 bits    ; 135 LEs       ; 45 LEs               ; 90 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|ST[1]     ;
+; 131:1              ; 6 bits    ; 522 LEs       ; 294 LEs              ; 228 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|ST[0]    ;
 ; 68:1               ; 3 bits    ; 135 LEs       ; 45 LEs               ; 90 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|ST[1]      ;
-; 258:1              ; 8 bits    ; 1376 LEs      ; 0 LEs                ; 1376 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|WCNT[0]                      ;
+; 258:1              ; 8 bits    ; 1376 LEs      ; 0 LEs                ; 1376 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|WCNT[7]                      ;
 ; 258:1              ; 2 bits    ; 344 LEs       ; 2 LEs                ; 342 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|SLAVE_ADDR[0]                ;
 ; 258:1              ; 7 bits    ; 1204 LEs      ; 7 LEs                ; 1197 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|POINTER[6]                   ;
-; 21:1               ; 2 bits    ; 28 LEs        ; 4 LEs                ; 24 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|A[8]       ;
-; 132:1              ; 3 bits    ; 264 LEs       ; 57 LEs               ; 207 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|ST[0]      ;
+; 21:1               ; 2 bits    ; 28 LEs        ; 4 LEs                ; 24 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|A[1]       ;
+; 132:1              ; 3 bits    ; 264 LEs       ; 57 LEs               ; 207 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_READ_DATA:rd|ST[6]      ;
 ; 132:1              ; 3 bits    ; 264 LEs       ; 57 LEs               ; 207 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_READ_DATA:rd|ST[0]       ;
-; 133:1              ; 4 bits    ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|BYTE[0] ;
-; 133:1              ; 4 bits    ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|BYTE[2]  ;
-; 23:1               ; 8 bits    ; 120 LEs       ; 16 LEs               ; 104 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|A[1]      ;
-; 134:1              ; 32 bits   ; 2848 LEs      ; 0 LEs                ; 2848 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|DELY[30]                    ;
-; 23:1               ; 6 bits    ; 90 LEs        ; 12 LEs               ; 78 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|A[2]       ;
-; 70:1               ; 8 bits    ; 368 LEs       ; 24 LEs               ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|A[5]    ;
-; 70:1               ; 3 bits    ; 138 LEs       ; 12 LEs               ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|A[6]     ;
+; 133:1              ; 4 bits    ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|BYTE[1] ;
+; 133:1              ; 4 bits    ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|BYTE[3]  ;
+; 23:1               ; 8 bits    ; 120 LEs       ; 16 LEs               ; 104 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_PTR:wpt|A[8]      ;
+; 134:1              ; 32 bits   ; 2848 LEs      ; 0 LEs                ; 2848 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|DELY[1]                     ;
+; 23:1               ; 6 bits    ; 90 LEs        ; 12 LEs               ; 78 LEs                 ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_PTR:wpt|A[3]       ;
+; 70:1               ; 8 bits    ; 368 LEs       ; 24 LEs               ; 344 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_CAMERA_CONFIG:camiv|I2C_WRITE_WDATA:wrd|A[1]    ;
+; 70:1               ; 3 bits    ; 138 LEs       ; 12 LEs               ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|A[7]     ;
 ; 70:1               ; 3 bits    ; 138 LEs       ; 12 LEs               ; 126 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|I2C_WRITE_WDATA:wrd|A[3]     ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 0 LEs                ; 5600 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|DELY[13]                     ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 0 LEs                ; 5600 LEs               ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|DELY[23]                     ;
 ; 261:1              ; 2 bits    ; 348 LEs       ; 28 LEs               ; 320 LEs                ; Yes        ; |DE1_SOC_D8M_LB_RTL|MIPI_BRIDGE_CAMERA_Config:cfin|MIPI_BRIDGE_CONFIG:mpiv|ST[7]                        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
 
@@ -2066,7 +2066,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SLD               ; 69                          ;
 ;     plain             ; 275                         ;
 ; arriav_io_obuf        ; 4                           ;
-; arriav_lcell_comb     ; 29234                       ;
+; arriav_lcell_comb     ; 26884                       ;
 ;     arith             ; 1130                        ;
 ;         0 data inputs ; 54                          ;
 ;         1 data inputs ; 666                         ;
@@ -2074,16 +2074,16 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;         3 data inputs ; 82                          ;
 ;         4 data inputs ; 99                          ;
 ;         5 data inputs ; 39                          ;
-;     extend            ; 37                          ;
-;         7 data inputs ; 37                          ;
-;     normal            ; 28000                       ;
+;     extend            ; 36                          ;
+;         7 data inputs ; 36                          ;
+;     normal            ; 25651                       ;
 ;         0 data inputs ; 4                           ;
 ;         1 data inputs ; 17                          ;
-;         2 data inputs ; 2896                        ;
-;         3 data inputs ; 221                         ;
-;         4 data inputs ; 464                         ;
-;         5 data inputs ; 625                         ;
-;         6 data inputs ; 23773                       ;
+;         2 data inputs ; 359                         ;
+;         3 data inputs ; 253                         ;
+;         4 data inputs ; 470                         ;
+;         5 data inputs ; 600                         ;
+;         6 data inputs ; 23948                       ;
 ;     shared            ; 67                          ;
 ;         0 data inputs ; 11                          ;
 ;         1 data inputs ; 33                          ;
@@ -2095,7 +2095,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; stratixv_ram_block    ; 30                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 33.70                       ;
-; Average LUT depth     ; 5.61                        ;
+; Average LUT depth     ; 5.72                        ;
 +-----------------------+-----------------------------+
 
 
@@ -2104,7 +2104,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:38     ;
+; Top            ; 00:00:37     ;
 +----------------+--------------+
 
 
@@ -2139,8 +2139,8 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; cols[8]              ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
 ; cols[9]              ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
 ; cols[9]              ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
-; edge_en              ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; edge_en                             ; N/A                                                                                                                                                            ;
-; edge_en              ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; edge_en                             ; N/A                                                                                                                                                            ;
+; edge_en              ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; edge_en~_wirecell                   ; N/A                                                                                                                                                            ;
+; edge_en              ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; edge_en~_wirecell                   ; N/A                                                                                                                                                            ;
 ; rows[0]              ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
 ; rows[0]              ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
 ; rows[10]             ; pre-synthesis ; missing   ; Top                            ; post-synthesis    ; GND                                 ; The name does not exist in your design or refers to an invalid hierarchy or bus element.  You may have modified your design after creating the debug instance. ;
@@ -2209,7 +2209,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
-    Info: Processing started: Wed May 29 15:42:05 2024
+    Info: Processing started: Wed May 29 16:18:47 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
     Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
@@ -2489,19 +2489,19 @@ Warning (10230): Verilog HDL assignment warning at RAW_RGB_BIN.v(42): truncated 
 Warning (10230): Verilog HDL assignment warning at RAW_RGB_BIN.v(48): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/V_D8M/RAW_RGB_BIN.v Line: 48
 Warning (10230): Verilog HDL assignment warning at RAW_RGB_BIN.v(54): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/V_D8M/RAW_RGB_BIN.v Line: 54
 Info (12128): Elaborating entity "edge_detect" for hierarchy "edge_detect:edger" File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 276
-Warning (10036): Verilog HDL or VHDL warning at edge_detect.v(963): object "first_flag" assigned a value but never read File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 963
-Warning (10036): Verilog HDL or VHDL warning at edge_detect.v(1052): object "adjusted_bw" assigned a value but never read File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 1052
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(862): truncated value with size 32 to match size of target (2) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 862
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(867): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 867
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(885): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 885
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(888): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 888
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(904): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 904
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(907): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 907
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(920): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 920
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(923): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 923
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(935): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 935
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(938): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 938
-Warning (10230): Verilog HDL assignment warning at edge_detect.v(1006): truncated value with size 32 to match size of target (19) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 1006
+Warning (10036): Verilog HDL or VHDL warning at edge_detect.v(973): object "first_flag" assigned a value but never read File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 973
+Warning (10036): Verilog HDL or VHDL warning at edge_detect.v(1062): object "adjusted_bw" assigned a value but never read File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 1062
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(872): truncated value with size 32 to match size of target (2) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 872
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(877): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 877
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(895): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 895
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(898): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 898
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(914): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 914
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(917): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 917
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(930): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 930
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(933): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 933
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(945): truncated value with size 32 to match size of target (9) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 945
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(948): truncated value with size 32 to match size of target (10) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 948
+Warning (10230): Verilog HDL assignment warning at edge_detect.v(1016): truncated value with size 32 to match size of target (19) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 1016
 Info (12128): Elaborating entity "greyscale" for hierarchy "edge_detect:edger|greyscale:grey" File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 135
 Warning (10230): Verilog HDL assignment warning at greyscale.v(15): truncated value with size 32 to match size of target (16) File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/greyscale.v Line: 15
 Info (12128): Elaborating entity "img_row" for hierarchy "edge_detect:edger|img_row:M10K_0" File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v Line: 146
@@ -2572,7 +2572,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
     Info (12023): Found entity 1: cmpr_99c File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/db/cmpr_99c.tdf Line: 23
 Info (12033): Analysis and Synthesis generated Signal Tap or debug node instance "auto_signaltap_0"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.05.29.15:42:19 Progress: Loading sld0c8888fe/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.05.29.16:19:02 Progress: Loading sld0c8888fe/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -2629,6 +2629,10 @@ Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
     Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
+Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
+    Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
+Warning (125092): Tcl Script File asyn_fifo.qip not found
+    Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
@@ -2645,10 +2649,6 @@ Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
     Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
-Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
-    Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
-Warning (125092): Tcl Script File asyn_fifo.qip not found
-    Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
@@ -2726,6 +2726,10 @@ Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
     Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
+Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
+    Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
+Warning (125092): Tcl Script File asyn_fifo.qip not found
+    Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
@@ -2746,10 +2750,6 @@ Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
     Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
-Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
-    Info (125063): set_global_assignment -name QIP_FILE V/vga_pll/vga_pll_0002.qip
-Warning (125092): Tcl Script File asyn_fifo.qip not found
-    Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File asyn_fifo.qip not found
     Info (125063): set_global_assignment -name QIP_FILE asyn_fifo.qip
 Warning (125092): Tcl Script File V/vga_pll/vga_pll_0002.qip not found
@@ -2775,6 +2775,40 @@ Warning (13009): TRI or OPNDRN buffers permanently enabled
     Warning (13010): Node "CAMERA_I2C_SCL~synth" File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 44
     Warning (13010): Node "MIPI_I2C_SCL~synth" File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 48
 Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 40
+    Warning (13410): Pin "CAMERA_PWDN_n" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 46
+    Warning (13410): Pin "MIPI_CS_n" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 47
+    Warning (13410): Pin "MIPI_MCLK" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 50
+    Warning (13410): Pin "HEX5[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX5[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
+    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX4[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
+    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX2[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
+    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
+    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
     Warning (13410): Pin "HEX0[2]" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 26
     Warning (13410): Pin "HEX0[5]" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 26
     Warning (13410): Pin "HEX0[7]" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 26
@@ -2782,46 +2816,12 @@ Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
-    Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX5[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX2[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX3[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 29
-    Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
-    Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 30
     Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX1[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 27
     Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
     Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 28
-    Warning (13410): Pin "HEX5[5]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[6]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "HEX5[7]" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 31
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 40
-    Warning (13410): Pin "CAMERA_PWDN_n" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 46
-    Warning (13410): Pin "MIPI_CS_n" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 47
-    Warning (13410): Pin "MIPI_MCLK" is stuck at GND File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 50
     Warning (13410): Pin "MIPI_RESET_n" is stuck at VCC File: C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/de1_soc_d8m_lb_rtl.v Line: 57
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Info (17049): 77 registers lost all their fanouts during netlist optimizations.
@@ -2833,18 +2833,18 @@ Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 14 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
 Warning: RST port on the PLL is not properly connected on instance video_pll:MIPI_clk|altera_pll:altera_pll_i|general[0].gpll. The reset port on the PLL should be connected. If the PLL loses lock for any reason, you might need to manually reset the PLL in order to re-establish lock to the reference clock. File: c:/intelfpga/20.1/quartus/libraries/megafunctions/altera_pll.v Line: 749
     Info: Must be connected
-Info (21057): Implemented 51173 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 48824 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 31 input pins
     Info (21059): Implemented 93 output pins
     Info (21060): Implemented 4 bidirectional pins
-    Info (21061): Implemented 50959 logic cells
+    Info (21061): Implemented 48610 logic cells
     Info (21064): Implemented 57 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 27 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 272 warnings
-    Info: Peak virtual memory: 5331 megabytes
-    Info: Processing ended: Wed May 29 15:43:12 2024
+    Info: Peak virtual memory: 5363 megabytes
+    Info: Processing ended: Wed May 29 16:19:54 2024
     Info: Elapsed time: 00:01:07
-    Info: Total CPU time (on all processors): 00:01:43
+    Info: Total CPU time (on all processors): 00:01:38
 
 
