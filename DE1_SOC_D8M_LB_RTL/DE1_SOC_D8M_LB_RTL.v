@@ -92,9 +92,6 @@ module DE1_SOC_D8M_LB_RTL (
 	wire 	[7:0]  curs_ol__input_R;
 	wire 	[7:0]  curs_ol__input_G;
 	wire 	[7:0]  curs_ol__input_B;
-	reg 	[7:0]  reg_curs_ol__input_R;
-	reg 	[7:0]  reg_curs_ol__input_G;
-	reg 	[7:0]  reg_curs_ol__input_B;
 	wire [7:0] in_blur_R;
 	wire [7:0] in_blur_G;
 	wire [7:0] in_blur_B;
@@ -121,9 +118,6 @@ module DE1_SOC_D8M_LB_RTL (
 	wire [7:0] edged_R;
 	wire [7:0] edged_G;
 	wire [7:0] edged_B;
-	reg    [7:0]  reg_edged_R;
-   reg    [7:0]  reg_edged_G;
-   reg    [7:0]  reg_edged_B;
 	wire [9:0] cycle_count;
 	
 	
@@ -133,38 +127,41 @@ module DE1_SOC_D8M_LB_RTL (
    wire   [12:0]  x_count,col; 
    wire   [12:0]  y_count,row; 
 	
-	reg [25:0] sec_counter = 0;
-	reg slow_clk;
-	reg [11:0] sample_cols, sample_rows;
-	always@(posedge CLOCK_50) begin
-		if(sec_counter[25] == 1'b1) begin
-			slow_clk <= 1'b1;
-			sec_counter <= sec_counter + 1;
-		end
-		else begin
-			slow_clk <= 1'b0;
-			sec_counter <= sec_counter + 1;
-		end
-	end
+//	reg [25:0] sec_counter = 0;
+//	reg slow_clk;
+//	reg [11:0] sample_cols, sample_rows;
+//	always@(posedge CLOCK_50) begin
+//		if(sec_counter[25] == 1'b1) begin
+//			slow_clk <= 1'b1;
+//			sec_counter <= sec_counter + 1;
+//		end
+//		else begin
+//			slow_clk <= 1'b0;
+//			sec_counter <= sec_counter + 1;
+//		end
+//	end
 	
-	always@(posedge slow_clk) begin
-		sample_cols <= col[11:0];
-		sample_rows <= row[11:0];
-	end
-	
-	wire [3:0] dig0 = sample_cols[3:0];
-	wire [3:0] dig1 = sample_cols[7:4];
-	wire [3:0] dig2 = sample_cols[11:8];
-	wire [3:0] dig3 = sample_rows[3:0];
-	wire [3:0] dig4 = sample_rows[7:4];
-	wire [3:0] dig5 = sample_rows[11:8];
-	
-	seven_seg hex0(.in(dig0), .seg(HEX0));
-	seven_seg hex1(.in(dig1), .seg(HEX1));
-	seven_seg hex2(.in(dig2), .seg(HEX2));
-	seven_seg hex3(.in(dig3), .seg(HEX3));
-	seven_seg hex4(.in(dig4), .seg(HEX4));
-	seven_seg hex5(.in(dig5), .seg(HEX5));
+//	always@(posedge slow_clk) begin
+//		sample_cols <= col[11:0];
+//		sample_rows <= row[11:0];
+//	end
+//	
+//	wire [3:0] dig0 = sample_cols[3:0];
+//	wire [3:0] dig1 = sample_cols[7:4];
+//	wire [3:0] dig2 = sample_cols[11:8];
+//	wire [3:0] dig3 = sample_rows[3:0];
+//	wire [3:0] dig4 = sample_rows[7:4];
+//	wire [3:0] dig5 = sample_rows[11:8];
+//	
+//	seven_seg hex0(.in(dig0), .seg(HEX0));
+//	seven_seg hex1(.in(dig1), .seg(HEX1));
+//	seven_seg hex2(.in(dig2), .seg(HEX2));
+//	seven_seg hex3(.in(dig3), .seg(HEX3));
+//	seven_seg hex4(.in(dig4), .seg(HEX4));
+//	seven_seg hex5(.in(dig5), .seg(HEX5));
+
+
+	assign HEX0 = test_hex;
 	
    wire           I2C_RELEASE ;  
    wire           CAMERA_I2C_SCL_MIPI; 
@@ -185,7 +182,7 @@ assign  LUT_MIPI_PIXEL_VS = MIPI_PIXEL_VS;
 assign  LUT_MIPI_PIXEL_D  = MIPI_PIXEL_D ;
 
 
-assign RESET_N= 1; 
+assign RESET_N = ~mon_reset; 
 assign Icontrol1 = SW[1];
 assign Icontrol2 = SW[2];
 assign Icontrol3 = SW[3];
@@ -235,7 +232,7 @@ video_pll MIPI_clk(
 
 //--- D8M RAWDATA to RGB ---
 D8M_SET   ccd (
-   .RESET_SYS_N  ( ~mon_reset ),
+   .RESET_SYS_N  ( RESET_N ),
    .CLOCK_50     ( CLOCK_50 ),
    .CCD_DATA     ( LUT_MIPI_PIXEL_D [9:0]),
    .CCD_FVAL     ( LUT_MIPI_PIXEL_VS ),       // 60HZ
@@ -258,9 +255,9 @@ RGB_Process p1 (
 	.Icontrol3(Icontrol3),
 	.Icontrol4(Icontrol4),
 	.brightLevel(brightLevel),
-  	.raw_VGA_R(reg_blurred_R),
-	.raw_VGA_G(reg_blurred_G),
-	.raw_VGA_B(reg_blurred_B),
+  	.raw_VGA_R(fifo_out_R),
+	.raw_VGA_G(fifo_out_G),
+	.raw_VGA_B(fifo_out_B),
    .row      (row),
    .col      (col),
    .o_VGA_R  (fil_proc_R),
@@ -279,8 +276,9 @@ RGB_Process p1 (
 // ready_flag
 // output_pixel
 
+/*
 blur_5x5 blur(
-	.clk(CLOCK_50), 
+	.clk(VGA_CLK), 
 	.en(blur_en),
 	.input_pixel_R(reg_blur_R),
 	.input_pixel_G(reg_blur_G),
@@ -290,6 +288,7 @@ blur_5x5 blur(
 	.output_pixel_B(blurred_B),
 	.rd_flag(read_flag)
 );
+*/
 
 //--- Process monitor cursor
 cursor c_proc(
@@ -300,33 +299,118 @@ cursor c_proc(
 	.KEY(KEY), 
 	.col(col), 
 	.row(row),
-	.CLOCK_50(CLOCK_50), 
+	.CLOCK_50(VGA_CLK), 
 	.curs_ol__input_R(curs_ol__input_R), 
 	.curs_ol__input_G(curs_ol__input_G), 
 	.curs_ol__input_B(curs_ol__input_B)
 					);
-					
+		
+always@(posedge VGA_CLK) begin
+	input_edge_R <= raw_VGA_R;
+	input_edge_G <= raw_VGA_G;
+	input_edge_B <= raw_VGA_B;
+end	
+
+wire [23:0] raw_pixel;
+assign raw_pixel = {input_edge_R, input_edge_G, input_edge_B};
+wire [23:0] in_fifo_out;
+wire [7:0] fifo_in_R, fifo_in_G, fifo_in_B;
+assign fifo_in_R = in_fifo_out[23:16];
+assign fifo_in_G = in_fifo_out[15:8];
+assign fifo_in_B = in_fifo_out[7:0];
+
+wire in_empty, in_full;
+wire [10:0] words_used_in;
+reg in_rdreq, in_wrreq;
+
+always@(*) begin
+	if(in_full) begin
+		in_rdreq = 1'b1;
+		in_wrreq = 1'b1;
+	end
+	else begin
+		in_rdreq = 1'b0;
+		in_wrreq = 1'b1;
+	end
+end
+		
+asyn_fifo_input in_2048(
+	.clock(VGA_CLK),
+	.data(raw_pixel),
+	.empty(in_empty),
+	.full(in_full),
+	.q(in_fifo_out),
+	.usedw(words_used_in),
+	.rdreq(in_rdreq),
+	.wrreq(in_wrreq)
+);
+		
 // edge detection
 edge_detect edger(
-	.vga_reset(mon_reset),
-	.row(row), 
-	.col(col),
-	.clk(CLOCK_50),
-	.in_R(input_edge_R), 
+	.clk(VGA_CLK),
+	.in_R(fifo_in_R), 
 	.edge_R_out(edged_R),
-	.in_G(input_edge_G), 
+	.in_G(fifo_in_G), 
 	.edge_G_out(edged_G),
-	.in_B(input_edge_B), 
+	.in_B(fifo_in_B), 
 	.edge_B_out(edged_B),
 	.edge_en(edge_en),
 	.cycles(cycle_count),
-	.hex(test_hex),
-	.hex_sync_state(hex_sync),
-	.hex_next_sync_state(hex_next_sync),
-	.hex_conv_state(hex_conv),
-	.hex_next_conv_state(hex_next_conv)
+	.hex(test_hex)
+//	.hex_sync_state(hex_sync),
+//	.hex_next_sync_state(hex_next_sync),
+//	.hex_conv_state(hex_conv),
+//	.hex_next_conv_state(hex_next_conv)
 	
 );
+
+//reg    [7:0]  reg_edged_R;
+//reg    [7:0]  reg_edged_G;
+//reg    [7:0]  reg_edged_B;
+
+/*
+always@(posedge VGA_CLK) begin
+	reg_edged_R <= edged_R;
+	reg_edged_G <= edged_G;
+	reg_edged_B <= edged_B;
+end
+*/
+
+wire [23:0] conc_edge_out;
+assign conc_edge_out = {edged_R, edged_G, edged_B};
+wire [23:0] out_fifo_out;
+wire [7:0] fifo_out_R, fifo_out_G, fifo_out_B;
+assign fifo_out_R = out_fifo_out[23:16];
+assign fifo_out_G = out_fifo_out[15:8];
+assign fifo_out_B = out_fifo_out[7:0];
+
+wire out_empty, out_full;
+wire [10:0] words_used_out;
+reg out_rdreq, out_wrreq;
+
+always@(*) begin
+	if(out_full) begin
+		out_rdreq = 1'b1;
+		out_wrreq = 1'b1;
+	end
+	else begin
+		out_rdreq = 1'b0;
+		out_wrreq = 1'b1;
+	end
+end
+
+asyn_fifo_output out_4096(
+	.clock(VGA_CLK),
+	.data(conc_edge_out),
+	.rdreq(out_rdreq),
+	.wrreq(out_wrreq),
+	.empty(out_empty),
+	.full(out_full),
+	.q(out_fifo_out),
+	.usedw(words_used_out)
+);
+
+
 
 //--- VGA interface signals ---
 assign VGA_CLK    = MIPI_PIXEL_CLK;           // GPIO clk
@@ -341,37 +425,62 @@ assign orequest = ((x_count > 13'd0160 && x_count < 13'd0800 ) &&
 // this blanking signal is active low
 assign VGA_BLANK_N = ~((x_count < 13'd0160 ) || ( y_count < 13'd0045 ));
 
+
+//reg 	[7:0]  reg_curs_ol__input_R;
+//reg 	[7:0]  reg_curs_ol__input_G;
+//reg 	[7:0]  reg_curs_ol__input_B;
+////cursor output to VGA input wires
+//always @ (posedge VGA_CLK) begin
+//	reg_curs_ol__input_R <= curs_ol__input_R;
+//	reg_curs_ol__input_G <= curs_ol__input_G;
+//	reg_curs_ol__input_B <= curs_ol__input_B;
+//end
+
+// removed reg from curs_ol_input below
+
+/*
+wire [23:0] fifo_wr_in, fifo_rd_out;
+assign fifo_wr_in = {curs_ol__input_R, curs_ol__input_G, curs_ol__input_B};
+assign VGA_R = edge_en ? fifo_rd_out[23:16] : curs_ol__input_R;
+assign VGA_G = edge_en ? fifo_rd_out[15:8]  : curs_ol__input_G;
+assign VGA_B = edge_en ? fifo_rd_out[7:0]   : curs_ol__input_B;
+asyn_fifo slow(
+	.data(fifo_wr_in),
+	.rdclk(VGA_CLK),
+	.rdreq(edge_en),
+	.wrclk(VGA_CLK),
+	.wrreq(edge_en),
+	.q(fifo_rd_out),
+	.rdempty(),
+	.wrfull()
+);
+*/
+
+
 // connect cursor out direct to VGA
-assign VGA_R = reg_curs_ol__input_R;
-assign VGA_G = reg_curs_ol__input_G;
-assign VGA_B = reg_curs_ol__input_B;
+assign VGA_R = curs_ol__input_R;
+assign VGA_G = curs_ol__input_G;
+assign VGA_B = curs_ol__input_B;
+
 
 // connect output of edge to blur
-assign in_blur_R = reg_edged_R;
-assign in_blur_G = reg_edged_G;
-assign in_blur_B = reg_edged_B;
+//assign in_blur_R = reg_edged_R;
+//assign in_blur_G = reg_edged_G;
+//assign in_blur_B = reg_edged_B;
 
 
 // register module wires
 // raw to RGB_Process module
 
-always@(posedge CLOCK_50) begin
+always@(posedge VGA_CLK) begin
 	reg_fil_proc_R <= fil_proc_R;
 	reg_fil_proc_G <= fil_proc_G;
 	reg_fil_proc_B <= fil_proc_B;
 end
 
-always@(posedge CLOCK_50) begin
-	reg_edged_R <= edged_R;
-	reg_edged_G <= edged_G;
-	reg_edged_B <= edged_B;
-end
 
-always@(posedge CLOCK_50) begin
-	input_edge_R <= raw_VGA_R;
-	input_edge_G <= raw_VGA_G;
-	input_edge_B <= raw_VGA_B;
-end
+
+
 ////blur output to reg
 //always @(posedge CLOCK_50)
 //begin
@@ -386,8 +495,8 @@ end
 //end
 
 //RGB_Process output to cursor module input
-
-always @ (posedge CLOCK_50) begin
+/*
+always @ (posedge VGA_CLK) begin
 	if(SW[9] && ~SW[8] && SW[7])
 	begin
 		//deal with 0's padding on inputs for 2 rows and two cols
@@ -432,12 +541,7 @@ always @ (posedge CLOCK_50) begin
 		reg_blurred_B <= in_blur_B;
 	end
 end
-//cursor output to VGA input wires
-always @ (posedge CLOCK_50) begin
-	reg_curs_ol__input_R <= curs_ol__input_R;
-	reg_curs_ol__input_G <= curs_ol__input_G;
-	reg_curs_ol__input_B <= curs_ol__input_B;
-end
+*/
 	
 // generate the horizontal and vertical sync signals
 always @(*) begin

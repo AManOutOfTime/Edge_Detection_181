@@ -25,8 +25,8 @@ begin
 	begin
 		Pre_FVAL	<=iFVAL;
 		Pre_LVAL	<=iLVAL;
-		X_Cont	<=	13'd0164;
-		Y_Cont	<=	13'd0047;
+		X_Cont	<=	0;
+		Y_Cont	<=	0;
 		X_WR_CNT <= 0; 
 end
 	else

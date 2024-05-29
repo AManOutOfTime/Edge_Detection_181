@@ -2,9 +2,6 @@ library verilog;
 use verilog.vl_types.all;
 entity edge_detect is
     generic(
-        OFF             : vl_logic_vector(0 to 1) := (Hi0, Hi0);
-        IDLE            : vl_logic_vector(0 to 1) := (Hi0, Hi1);
-        ACTIVE          : vl_logic_vector(0 to 1) := (Hi1, Hi0);
         MAX_DISP_ROWS   : integer := 480;
         MAX_DISP_COLS   : integer := 640;
         INIT_ROWS       : integer := 2;
@@ -19,8 +16,6 @@ entity edge_detect is
         ON_FINISH       : vl_logic_vector(0 to 1) := (Hi1, Hi0)
     );
     port(
-        row             : in     vl_logic_vector(12 downto 0);
-        col             : in     vl_logic_vector(12 downto 0);
         clk             : in     vl_logic;
         edge_en         : in     vl_logic;
         in_R            : in     vl_logic_vector(7 downto 0);
@@ -31,16 +26,9 @@ entity edge_detect is
         edge_B_out      : out    vl_logic_vector(7 downto 0);
         cycles          : out    vl_logic_vector(9 downto 0);
         vga_reset       : out    vl_logic;
-        hex             : out    vl_logic_vector(7 downto 0);
-        hex_sync_state  : out    vl_logic_vector(7 downto 0);
-        hex_next_sync_state: out    vl_logic_vector(7 downto 0);
-        hex_conv_state  : out    vl_logic_vector(7 downto 0);
-        hex_next_conv_state: out    vl_logic_vector(7 downto 0)
+        hex             : out    vl_logic_vector(7 downto 0)
     );
     attribute mti_svvh_generic_type : integer;
-    attribute mti_svvh_generic_type of OFF : constant is 1;
-    attribute mti_svvh_generic_type of IDLE : constant is 1;
-    attribute mti_svvh_generic_type of ACTIVE : constant is 1;
     attribute mti_svvh_generic_type of MAX_DISP_ROWS : constant is 1;
     attribute mti_svvh_generic_type of MAX_DISP_COLS : constant is 1;
     attribute mti_svvh_generic_type of INIT_ROWS : constant is 1;

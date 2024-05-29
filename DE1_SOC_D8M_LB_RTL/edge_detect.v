@@ -1,6 +1,4 @@
 module edge_detect(
-			input [12:0] row, 
-			input [12:0] col,
 			input clk,
 			input edge_en,
 			input [7:0] in_R, 
@@ -11,20 +9,19 @@ module edge_detect(
 			output [7:0] edge_B_out,
 			output [9:0] cycles,
 			output vga_reset,
-			output reg [7:0] hex, // enable states
-			output reg [7:0] hex_sync_state, 
-			output reg [7:0] hex_next_sync_state,
-			output reg [7:0] hex_conv_state, 
-			output reg [7:0] hex_next_conv_state
+			output reg [7:0] hex // enable states
+//			output reg [7:0] hex_sync_state, 
+//			output reg [7:0] hex_next_sync_state,
+//			output reg [7:0] hex_conv_state, 
+//			output reg [7:0] hex_next_conv_state
 		);
 		
 		
 		// if edge_en hex display shows 1
 		// if edge_en && vga_synced display shows 2
-		reg vga_synced = 1'b0;
 
 		always@(*) begin
-			if(edge_en && vga_synced) begin
+			if(edge_en) begin
 				hex = 8'b10100100;
 			end
 			else if(edge_en) begin
@@ -38,9 +35,9 @@ module edge_detect(
 		
 		wire [7:0] insert_zero;
 		assign insert_zero = 8'b0;
-		wire [7:0] inter_in_R;
-		wire [7:0] inter_in_G;
-		wire [7:0] inter_in_B;
+		reg [7:0] inter_in_R;
+		reg [7:0] inter_in_G;
+		reg [7:0] inter_in_B;
 		wire [7:0] inter_grey;
 			
 		// output wires for edge detection
@@ -70,6 +67,36 @@ module edge_detect(
 					 buff2_pixelC, 
 					 buff3_pixelC;
 					 
+		// register buff data
+		// read out buffer data
+		reg [7:0] reg_buff0_pixelA, 
+					 reg_buff1_pixelA,
+					 reg_buff2_pixelA, 
+					 reg_buff3_pixelA,
+					 reg_buff0_pixelB, 
+					 reg_buff1_pixelB,
+					 reg_buff2_pixelB, 
+					 reg_buff3_pixelB,
+					 reg_buff0_pixelC, 
+					 reg_buff1_pixelC,
+					 reg_buff2_pixelC, 
+					 reg_buff3_pixelC;
+					 
+		always @(posedge clk) begin
+			reg_buff0_pixelA <= buff0_pixelA;
+			reg_buff1_pixelA <= buff1_pixelA;
+			reg_buff2_pixelA <= buff2_pixelA;
+			reg_buff3_pixelA <= buff3_pixelA;
+			reg_buff0_pixelB <= buff0_pixelB;
+			reg_buff1_pixelB <= buff1_pixelB;
+			reg_buff2_pixelB <= buff2_pixelB;
+			reg_buff3_pixelB <= buff3_pixelB;
+			reg_buff0_pixelC <= buff0_pixelC;
+			reg_buff1_pixelC <= buff1_pixelC;
+			reg_buff2_pixelC <= buff2_pixelC;
+			reg_buff3_pixelC <= buff3_pixelC;
+		end
+					 
 		// wire/reg for sobel conv calcs
 		reg [7:0] sobel_in_pixel0, 
 					sobel_in_pixel1, 
@@ -81,6 +108,12 @@ module edge_detect(
 					sobel_in_pixel7, 
 					sobel_in_pixel8;	
 					
+		always@(posedge clk) begin
+			inter_in_R <= in_R;
+			inter_in_G <= in_G;
+			inter_in_B <= in_B;
+		end
+					
 		greyscale grey(
 			.in_R(inter_in_R), 
 			.in_G(inter_in_G), 
@@ -88,15 +121,17 @@ module edge_detect(
 			.grey(inter_grey)
 		);
 		
-		assign inter_in_R = in_R;
-		assign inter_in_G = in_G;
-		assign inter_in_B = in_B;
+		reg [7:0] grey_in_data;
+		
+		always@(posedge clk) begin
+			grey_in_data <= inter_grey;
+		end
 		
 		// row buffers
-		img_row M10K_0(.zero_fill(zero_fill_buff[0]), .clk(clk), .rst(rst_buff[0]), .in_data(inter_grey), .wr_en(wr_buff_en[0]), .rd_en(rd_buff_en[0]), .pixelA(buff0_pixelA), .pixelB(buff0_pixelB), .pixelC(buff0_pixelC));
-		img_row M10K_1(.zero_fill(zero_fill_buff[1]), .clk(clk), .rst(rst_buff[1]), .in_data(inter_grey), .wr_en(wr_buff_en[1]), .rd_en(rd_buff_en[1]), .pixelA(buff1_pixelA), .pixelB(buff1_pixelB), .pixelC(buff1_pixelC));
-		img_row M10K_2(.zero_fill(zero_fill_buff[2]), .clk(clk), .rst(rst_buff[2]), .in_data(inter_grey), .wr_en(wr_buff_en[2]), .rd_en(rd_buff_en[2]), .pixelA(buff2_pixelA), .pixelB(buff2_pixelB), .pixelC(buff2_pixelC));
-		img_row M10K_3(.zero_fill(zero_fill_buff[3]), .clk(clk), .rst(rst_buff[3]), .in_data(inter_grey), .wr_en(wr_buff_en[3]), .rd_en(rd_buff_en[3]), .pixelA(buff3_pixelA), .pixelB(buff3_pixelB), .pixelC(buff3_pixelC));
+		img_row M10K_0(.zero_fill(zero_fill_buff[0]), .clk(clk), .rst(rst_buff[0]), .in_data(grey_in_data), .wr_en(wr_buff_en[0]), .rd_en(rd_buff_en[0]), .pixelA(buff0_pixelA), .pixelB(buff0_pixelB), .pixelC(buff0_pixelC));
+		img_row M10K_1(.zero_fill(zero_fill_buff[1]), .clk(clk), .rst(rst_buff[1]), .in_data(grey_in_data), .wr_en(wr_buff_en[1]), .rd_en(rd_buff_en[1]), .pixelA(buff1_pixelA), .pixelB(buff1_pixelB), .pixelC(buff1_pixelC));
+		img_row M10K_2(.zero_fill(zero_fill_buff[2]), .clk(clk), .rst(rst_buff[2]), .in_data(grey_in_data), .wr_en(wr_buff_en[2]), .rd_en(rd_buff_en[2]), .pixelA(buff2_pixelA), .pixelB(buff2_pixelB), .pixelC(buff2_pixelC));
+		img_row M10K_3(.zero_fill(zero_fill_buff[3]), .clk(clk), .rst(rst_buff[3]), .in_data(grey_in_data), .wr_en(wr_buff_en[3]), .rd_en(rd_buff_en[3]), .pixelA(buff3_pixelA), .pixelB(buff3_pixelB), .pixelC(buff3_pixelC));
 		
 		// convolution module
 		sobel_conv sob(
@@ -113,8 +148,7 @@ module edge_detect(
 			
 		);
 		
-		
-		
+		/*
 		// FSM for pixel syncing
 		parameter OFF = 2'd0;
 		parameter IDLE = 2'd1;
@@ -122,6 +156,7 @@ module edge_detect(
 		reg [1:0] sync_state = OFF;
 		reg [1:0] next_sync_state;
 		reg synced = 1'b0;
+		
 		
 		// sync state hex output testing
 		always@(*) begin
@@ -158,6 +193,7 @@ module edge_detect(
 				end
 			endcase
 		end
+
 		
 		// sync state progression
 		always@(posedge clk) begin
@@ -198,7 +234,7 @@ module edge_detect(
 				IDLE: begin
 					if(~edge_en)
 						next_sync_state = OFF;
-					else if(col == 638 && row == 479) // takes 2 cycles to actuallly process sync
+					else if(edge_en) // takes 2 cycles to actuallly process sync
 						next_sync_state = ACTIVE; // next pixel at 0,0 should be ready to be saved
 					else
 						next_sync_state = IDLE;
@@ -214,7 +250,7 @@ module edge_detect(
 				end
 			endcase
 		end
-		
+		*/
 		
 		
 		// FSM for convolution control
@@ -233,6 +269,7 @@ module edge_detect(
 		reg [2:0] conv_state = INIT;
 		reg [2:0] next_conv_state;
 		
+		/*
 		// conv state hex output testing
 		always@(*) begin
 			case(conv_state) 
@@ -285,6 +322,7 @@ module edge_detect(
 				end
 			endcase
 		end
+		*/
 		
 		// reg [9:0] curr_op_row_count;
 		reg [9:0] curr_buff_wr_count;
@@ -323,6 +361,7 @@ module edge_detect(
 		reg vga_rst_req = 1'b0;
 		assign vga_reset = vga_rst_req;
 		
+		
 		// 640x480 => 642x482
 		// convolution on image 642 x 482 to account for padding
 		// next state progress
@@ -335,7 +374,7 @@ module edge_detect(
 				INIT: begin
 					// if edging and syncing activate
 					// start reading in row 0 and col 0
-					if(edge_en && synced) 
+					if(edge_en) // && synced
 						// synced actually turns on when
 						next_conv_state = INIT_BUFF;
 					else
@@ -480,23 +519,23 @@ module edge_detect(
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = buff1_pixelA;
-						sobel_in_pixel4 = buff1_pixelB;
-						sobel_in_pixel5 = buff1_pixelC;
+						sobel_in_pixel3 = reg_buff1_pixelA;
+						sobel_in_pixel4 = reg_buff1_pixelB;
+						sobel_in_pixel5 = reg_buff1_pixelC;
 						// third row
-						sobel_in_pixel6 = buff2_pixelA;
-						sobel_in_pixel7 = buff2_pixelB;
-						sobel_in_pixel8 = buff2_pixelC;
+						sobel_in_pixel6 = reg_buff2_pixelA;
+						sobel_in_pixel7 = reg_buff2_pixelB;
+						sobel_in_pixel8 = reg_buff2_pixelC;
 					end
 					else if(curr_row_to_disp == 639) begin
 						// first row
-						sobel_in_pixel0 = buff0_pixelA;
-						sobel_in_pixel1 = buff0_pixelB;
-						sobel_in_pixel2 = buff0_pixelC;
+						sobel_in_pixel0 = reg_buff0_pixelA;
+						sobel_in_pixel1 = reg_buff0_pixelB;
+						sobel_in_pixel2 = reg_buff0_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff1_pixelA;
-						sobel_in_pixel4 = buff1_pixelB;
-						sobel_in_pixel5 = buff1_pixelC;
+						sobel_in_pixel3 = reg_buff1_pixelA;
+						sobel_in_pixel4 = reg_buff1_pixelB;
+						sobel_in_pixel5 = reg_buff1_pixelC;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
@@ -504,17 +543,17 @@ module edge_detect(
 					end
 					else begin
 						// first row
-						sobel_in_pixel0 = buff0_pixelA;
-						sobel_in_pixel1 = buff0_pixelB;
-						sobel_in_pixel2 = buff0_pixelC;
+						sobel_in_pixel0 = reg_buff0_pixelA;
+						sobel_in_pixel1 = reg_buff0_pixelB;
+						sobel_in_pixel2 = reg_buff0_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff1_pixelA;
-						sobel_in_pixel4 = buff1_pixelB;
-						sobel_in_pixel5 = buff1_pixelC;
+						sobel_in_pixel3 = reg_buff1_pixelA;
+						sobel_in_pixel4 = reg_buff1_pixelB;
+						sobel_in_pixel5 = reg_buff1_pixelC;
 						// third row
-						sobel_in_pixel6 = buff2_pixelA;
-						sobel_in_pixel7 = buff2_pixelB;
-						sobel_in_pixel8 = buff2_pixelC;
+						sobel_in_pixel6 = reg_buff2_pixelA;
+						sobel_in_pixel7 = reg_buff2_pixelB;
+						sobel_in_pixel8 = reg_buff2_pixelC;
 					end
 				end
 				SET1: begin // RD: 1,2,3 | WR: 0
@@ -524,23 +563,23 @@ module edge_detect(
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = buff2_pixelA;
-						sobel_in_pixel4 = buff2_pixelB;
-						sobel_in_pixel5 = buff2_pixelC;
+						sobel_in_pixel3 = reg_buff2_pixelA;
+						sobel_in_pixel4 = reg_buff2_pixelB;
+						sobel_in_pixel5 = reg_buff2_pixelC;
 						// third row
-						sobel_in_pixel6 = buff3_pixelA;
-						sobel_in_pixel7 = buff3_pixelB;
-						sobel_in_pixel8 = buff3_pixelC;
+						sobel_in_pixel6 = reg_buff3_pixelA;
+						sobel_in_pixel7 = reg_buff3_pixelB;
+						sobel_in_pixel8 = reg_buff3_pixelC;
 					end
 					else if(curr_row_to_disp == 639) begin
 						// first row
-						sobel_in_pixel0 = buff1_pixelA;
-						sobel_in_pixel1 = buff1_pixelB;
-						sobel_in_pixel2 = buff1_pixelC;
+						sobel_in_pixel0 = reg_buff1_pixelA;
+						sobel_in_pixel1 = reg_buff1_pixelB;
+						sobel_in_pixel2 = reg_buff1_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff2_pixelA;
-						sobel_in_pixel4 = buff2_pixelB;
-						sobel_in_pixel5 = buff2_pixelC;
+						sobel_in_pixel3 = reg_buff2_pixelA;
+						sobel_in_pixel4 = reg_buff2_pixelB;
+						sobel_in_pixel5 = reg_buff2_pixelC;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
@@ -548,17 +587,17 @@ module edge_detect(
 					end
 					else begin
 						// first row
-						sobel_in_pixel0 = buff1_pixelA;
-						sobel_in_pixel1 = buff1_pixelB;
-						sobel_in_pixel2 = buff1_pixelC;
+						sobel_in_pixel0 = reg_buff1_pixelA;
+						sobel_in_pixel1 = reg_buff1_pixelB;
+						sobel_in_pixel2 = reg_buff1_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff2_pixelA;
-						sobel_in_pixel4 = buff2_pixelB;
-						sobel_in_pixel5 = buff2_pixelC;
+						sobel_in_pixel3 = reg_buff2_pixelA;
+						sobel_in_pixel4 = reg_buff2_pixelB;
+						sobel_in_pixel5 = reg_buff2_pixelC;
 						// third row
-						sobel_in_pixel6 = buff3_pixelA;
-						sobel_in_pixel7 = buff3_pixelB;
-						sobel_in_pixel8 = buff3_pixelC;
+						sobel_in_pixel6 = reg_buff3_pixelA;
+						sobel_in_pixel7 = reg_buff3_pixelB;
+						sobel_in_pixel8 = reg_buff3_pixelC;
 					end
 				end
 				SET2: begin // RD: 2,3,0 | WR: 1
@@ -568,23 +607,23 @@ module edge_detect(
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = buff3_pixelA;
-						sobel_in_pixel4 = buff3_pixelB;
-						sobel_in_pixel5 = buff3_pixelC;
+						sobel_in_pixel3 = reg_buff3_pixelA;
+						sobel_in_pixel4 = reg_buff3_pixelB;
+						sobel_in_pixel5 = reg_buff3_pixelC;
 						// third row
-						sobel_in_pixel6 = buff0_pixelA;
-						sobel_in_pixel7 = buff0_pixelB;
-						sobel_in_pixel8 = buff0_pixelC;
+						sobel_in_pixel6 = reg_buff0_pixelA;
+						sobel_in_pixel7 = reg_buff0_pixelB;
+						sobel_in_pixel8 = reg_buff0_pixelC;
 					end
 					else if(curr_row_to_disp == 639) begin
 						// first row
-						sobel_in_pixel0 = buff2_pixelA;
-						sobel_in_pixel1 = buff2_pixelB;
-						sobel_in_pixel2 = buff2_pixelC;
+						sobel_in_pixel0 = reg_buff2_pixelA;
+						sobel_in_pixel1 = reg_buff2_pixelB;
+						sobel_in_pixel2 = reg_buff2_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff3_pixelA;
-						sobel_in_pixel4 = buff3_pixelB;
-						sobel_in_pixel5 = buff3_pixelC;
+						sobel_in_pixel3 = reg_buff3_pixelA;
+						sobel_in_pixel4 = reg_buff3_pixelB;
+						sobel_in_pixel5 = reg_buff3_pixelC;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
@@ -592,17 +631,17 @@ module edge_detect(
 					end
 					else begin
 						// first row
-						sobel_in_pixel0 = buff2_pixelA;
-						sobel_in_pixel1 = buff2_pixelB;
-						sobel_in_pixel2 = buff2_pixelC;
+						sobel_in_pixel0 = reg_buff2_pixelA;
+						sobel_in_pixel1 = reg_buff2_pixelB;
+						sobel_in_pixel2 = reg_buff2_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff3_pixelA;
-						sobel_in_pixel4 = buff3_pixelB;
-						sobel_in_pixel5 = buff3_pixelC;
+						sobel_in_pixel3 = reg_buff3_pixelA;
+						sobel_in_pixel4 = reg_buff3_pixelB;
+						sobel_in_pixel5 = reg_buff3_pixelC;
 						// third row
-						sobel_in_pixel6 = buff0_pixelA;
-						sobel_in_pixel7 = buff0_pixelB;
-						sobel_in_pixel8 = buff0_pixelC;
+						sobel_in_pixel6 = reg_buff0_pixelA;
+						sobel_in_pixel7 = reg_buff0_pixelB;
+						sobel_in_pixel8 = reg_buff0_pixelC;
 					end
 				end
 				SET3: begin // RD: 3,0,1 | WR: 2
@@ -612,23 +651,23 @@ module edge_detect(
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = buff0_pixelA;
-						sobel_in_pixel4 = buff0_pixelB;
-						sobel_in_pixel5 = buff0_pixelC;
+						sobel_in_pixel3 = reg_buff0_pixelA;
+						sobel_in_pixel4 = reg_buff0_pixelB;
+						sobel_in_pixel5 = reg_buff0_pixelC;
 						// third row
-						sobel_in_pixel6 = buff1_pixelA;
-						sobel_in_pixel7 = buff1_pixelB;
-						sobel_in_pixel8 = buff1_pixelC;
+						sobel_in_pixel6 = reg_buff1_pixelA;
+						sobel_in_pixel7 = reg_buff1_pixelB;
+						sobel_in_pixel8 = reg_buff1_pixelC;
 					end
 					else if(curr_row_to_disp == 639) begin
 						// first row
-						sobel_in_pixel0 = buff3_pixelA;
-						sobel_in_pixel1 = buff3_pixelB;
-						sobel_in_pixel2 = buff3_pixelC;
+						sobel_in_pixel0 = reg_buff3_pixelA;
+						sobel_in_pixel1 = reg_buff3_pixelB;
+						sobel_in_pixel2 = reg_buff3_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff0_pixelA;
-						sobel_in_pixel4 = buff0_pixelB;
-						sobel_in_pixel5 = buff0_pixelC;
+						sobel_in_pixel3 = reg_buff0_pixelA;
+						sobel_in_pixel4 = reg_buff0_pixelB;
+						sobel_in_pixel5 = reg_buff0_pixelC;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
@@ -636,17 +675,17 @@ module edge_detect(
 					end
 					else begin
 						// first row
-						sobel_in_pixel0 = buff3_pixelA;
-						sobel_in_pixel1 = buff3_pixelB;
-						sobel_in_pixel2 = buff3_pixelC;
+						sobel_in_pixel0 = reg_buff3_pixelA;
+						sobel_in_pixel1 = reg_buff3_pixelB;
+						sobel_in_pixel2 = reg_buff3_pixelC;
 						// second row 
-						sobel_in_pixel3 = buff0_pixelA;
-						sobel_in_pixel4 = buff0_pixelB;
-						sobel_in_pixel5 = buff0_pixelC;
+						sobel_in_pixel3 = reg_buff0_pixelA;
+						sobel_in_pixel4 = reg_buff0_pixelB;
+						sobel_in_pixel5 = reg_buff0_pixelC;
 						// third row
-						sobel_in_pixel6 = buff1_pixelA;
-						sobel_in_pixel7 = buff1_pixelB;
-						sobel_in_pixel8 = buff1_pixelC;
+						sobel_in_pixel6 = reg_buff1_pixelA;
+						sobel_in_pixel7 = reg_buff1_pixelB;
+						sobel_in_pixel8 = reg_buff1_pixelC;
 					end
 				end
 				default: begin
@@ -706,6 +745,57 @@ module edge_detect(
 				end
 			endcase
 		end
+		// reset buffers after buff_done in ea conv_state
+		// [3:0] rst_buff;
+		// [3:0] zero_fill_buff;
+		// reset rd/wr ptrs after completed cycle
+		always@(*) begin
+			case(conv_state)
+				INIT: begin
+					rst_buff = 4'b0000;
+					zero_fill_buff = 4'b1111;
+				end
+				INIT_BUFF: begin
+					zero_fill_buff = 4'b0000;
+					if(buff_done)
+						rst_buff = 4'b1111;
+					else
+						rst_buff = 4'b0000;
+				end
+				SET0: begin
+					zero_fill_buff = 4'b0000;
+					if(buff_done)
+						rst_buff = 4'b1111;
+					else
+						rst_buff = 4'b0000;
+				end
+				SET1: begin
+					zero_fill_buff = 4'b0000;
+					if(buff_done)
+						rst_buff = 4'b1111;
+					else
+						rst_buff = 4'b0000;
+				end
+				SET2: begin
+					zero_fill_buff = 4'b0000;
+					if(buff_done)
+						rst_buff = 4'b1111;
+					else
+						rst_buff = 4'b0000;
+				end
+				SET3: begin
+					zero_fill_buff = 4'b0000;
+					if(buff_done)
+						rst_buff = 4'b1111;
+					else
+						rst_buff = 4'b0000;
+				end
+				default: begin
+					zero_fill_buff = 4'b0000;
+					rst_buff = 4'b0000;
+				end
+			endcase
+		end
 		// conv curr state action and update counter/flags
 		always@(posedge clk) begin
 			case(conv_state)
@@ -715,14 +805,9 @@ module edge_detect(
 					curr_row_to_disp <= 0;
 					first_conv_done <= 0;
 					init_curr_buff <= 2'd0; // start by loading buffer 1 with row0
-					vga_rst_req <= 1'b0;
-					vga_synced <= 1'b0;
 					// vga_reset_req
 					// vga_synced
 					
-					
-					rst_buff <= 4'b0000; // use zero fill to reset
-					zero_fill_buff <= 4'b0000;
 					// all buffs initialized as zero buffs
 					// buff0 is ready to be read from (padded 0s)	
 				end
@@ -746,7 +831,7 @@ module edge_detect(
 						/* will recieve pixel 641 of row 2 AKA pixel 1 of row 3
 							next clock cycle */
 						// sync up monitor to start outputting processed pixels
-						vga_rst_req <= 1'b1;	
+//						vga_rst_req <= 1'b1;	
 					end
 					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
 						// buffer filled
@@ -768,12 +853,15 @@ module edge_detect(
 				SET0: begin // RD 0,1,2 | WR: 3
 					
 					// turn off monitor rst if on
-					vga_rst_req <= 1'b0;
-					vga_synced <= 1'b1;
+//					vga_rst_req <= 1'b0;
 					// synced for pixel 0,0 on first entrance
 					// curr_row_to_disp = 0 for first entrance
 					
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+						first_conv_done <= 1;
+						curr_row_to_disp <= 0;
+					end
+					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
 						// on pixel 639
 						curr_buff_wr_count <= 0;
 						curr_row_to_disp <= curr_row_to_disp + 1;
@@ -782,15 +870,17 @@ module edge_detect(
 						curr_buff_wr_count <= curr_buff_wr_count + 1;
 					end
 							
-					if(curr_row_to_disp+1 == MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
-					end
+					
 
 					
 				end
 				SET1: begin // RD: 1,2,3 | WR: 0
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+				
+					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+						first_conv_done <= 1;
+						curr_row_to_disp <= 0;
+					end
+					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
 						// on pixel 639
 						curr_buff_wr_count <= 0;
 						curr_row_to_disp <= curr_row_to_disp + 1;
@@ -799,13 +889,14 @@ module edge_detect(
 						curr_buff_wr_count <= curr_buff_wr_count + 1;
 					end
 							
-					if(curr_row_to_disp+1 == MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
-					end
+					
 				end
 				SET2: begin // RD: 2,3,0 | WR: 1
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+						first_conv_done <= 1;
+						curr_row_to_disp <= 0;
+					end
+					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
 						// on pixel 639
 						curr_buff_wr_count <= 0;
 						curr_row_to_disp <= curr_row_to_disp + 1;
@@ -814,13 +905,13 @@ module edge_detect(
 						curr_buff_wr_count <= curr_buff_wr_count + 1;
 					end
 							
-					if(curr_row_to_disp+1 == MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
-					end
 				end
 				SET3: begin // RD: 3,0,1 | WR: 2
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+					if(curr_row_to_disp+1 >= MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
+						first_conv_done <= 1;
+						curr_row_to_disp <= 0;
+					end
+					else if(curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
 						// on pixel 639
 						curr_buff_wr_count <= 0;
 						curr_row_to_disp <= curr_row_to_disp + 1;
@@ -829,10 +920,7 @@ module edge_detect(
 						curr_buff_wr_count <= curr_buff_wr_count + 1;
 					end
 							
-					if(curr_row_to_disp+1 == MAX_DISP_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS) begin
-						first_conv_done <= 1;
-						curr_row_to_disp <= 0;
-					end
+					
 				end
 				default: begin
 					curr_buff_wr_count <= 0;
@@ -931,9 +1019,20 @@ module edge_detect(
 		// while not synced for reading in row0, col0 and on pixels
 		// send out unprocessed data
 		// feed done_edge into buffer for display syncing
-		assign done_edge_R = (edge_en && vga_synced) ? edge_out : inter_in_R;
-		assign done_edge_G = (edge_en && vga_synced) ? edge_out : inter_in_G;
-		assign done_edge_B = (edge_en && vga_synced) ? edge_out : inter_in_B;
+		
+		reg [7:0] final_val;
+		always@(posedge clk) begin
+			final_val <= edge_out;
+		end
+		
+		
+		wire [7:0] adjusted_bw;
+		assign adjusted_bw = (final_val > 8'd127) ? 8'd0 : 8'd255;
+		
+		
+		assign done_edge_R = (edge_en) ? final_val : inter_in_R;
+		assign done_edge_G = (edge_en) ? final_val : inter_in_G;
+		assign done_edge_B = (edge_en) ? final_val : inter_in_B;
 		
 		
 		

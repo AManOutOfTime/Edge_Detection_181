@@ -4,20 +4,20 @@ K3
 cModel Technology
 Z0 dC:\altera\13.0sp1
 vedge_detect
-Z1 !s100 kb8li_ZJD4QnY4dAL3ZHe3
-Z2 I<<jS@IYoQZJgc3:4hFi0k2
-Z3 V3EZ;7YF]hCa<zZk`7gOoX2
-Z4 dC:\Users\amaan\Documents\WinterQtr2024\EEC181A\final\Edge_Detection_181
-Z5 w1716840700
-Z6 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v
-Z7 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v
+Z1 InE_AYd_9joNEcT6H7=;D01
+Z2 VDoKTG>1IE2^:^M0Y@h^OU1
+Z3 dC:\Users\amaan\Documents\WinterQtr2024\EEC181A\final\Edge_Detection_181
+Z4 w1716966165
+Z5 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v
+Z6 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v
 L0 1
-Z8 OV;L;10.1d;51
+Z7 OV;L;10.1d;51
 r1
 31
-Z9 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v|
-Z10 o-work work -O0
-Z11 !s108 1716840897.018000
+Z8 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v|
+Z9 o-work work -O0
+Z10 !s100 7]Yd1B2ciX3EhScjm9=[F1
+Z11 !s108 1716966278.154000
 Z12 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/edge_detect.v|
 !i10b 1
 !s85 0
@@ -26,17 +26,17 @@ vgreyscale
 Z13 !s100 TzKYNBVdfoFROGRd@Daf52
 Z14 IDER5[Y;E?7i^0V8:Z0oO81
 Z15 VIoVY9]TdB:Eg5^8X5z:5b0
-R4
+R3
 Z16 w1716360238
 Z17 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/greyscale.v
 Z18 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/greyscale.v
 L0 1
-R8
+R7
 r1
 31
 Z19 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/greyscale.v|
-R10
-Z20 !s108 1716840897.081000
+R9
+Z20 !s108 1716966278.212000
 Z21 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/greyscale.v|
 !i10b 1
 !s85 0
@@ -45,17 +45,17 @@ vimg_row
 Z22 !s100 K_ZC06GzOM?[Xb]a7>VF50
 Z23 Id[Rd>>kIdE4fcLnl:YMU32
 Z24 VCnW[=`k9VC74`W4dkkISi3
-R4
-Z25 w1716678034
+R3
+Z25 w1716965590
 Z26 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/img_row.v
 Z27 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/img_row.v
 L0 9
-R8
+R7
 r1
 31
 Z28 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/img_row.v|
-R10
-Z29 !s108 1716840897.130000
+R9
+Z29 !s108 1716966278.259000
 Z30 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/img_row.v|
 !i10b 1
 !s85 0
@@ -64,17 +64,17 @@ vsobel_conv
 Z31 !s100 ha3NG50coDnPOR0]J][7[1
 Z32 IoHz=SMWM4zU<VOGLdz7QN3
 Z33 V@l8bmnXBk>;Wm4Ok`=C9Q1
-R4
-Z34 w1716249042
+R3
+Z34 w1716962323
 Z35 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v
 Z36 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v
 L0 2
-R8
+R7
 r1
 31
 Z37 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v|
-R10
-Z38 !s108 1716840897.178000
+R9
+Z38 !s108 1716966278.308000
 Z39 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sobel_conv.v|
 !i10b 1
 !s85 0
@@ -83,35 +83,35 @@ vsqrt_approx_23bit
 Z40 !s100 VCCKBe94`0n6Y7g04U7o71
 Z41 IchQIJmV7H=?Yk0CohjY[30
 Z42 VMP=i4<EdIe9i]4YYY_h@@1
-R4
+R3
 Z43 w1716248018
 Z44 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v
 Z45 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v
 L0 1
-R8
+R7
 r1
 31
 Z46 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v|
-R10
+R9
 !i10b 1
 !s85 0
-Z47 !s108 1716840897.227000
+Z47 !s108 1716966278.354000
 Z48 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_23bit.v|
 !s101 -O0
 vsqrt_approx_tb
 Z49 !s100 _fW<]D[56[?Phod?gJ0941
 Z50 I7NHG]OR?m:8YJ;<L^1OlU0
 Z51 VCV`2oC<V?_]ZUEQhnb9>03
-R4
+R3
 Z52 w1716248275
 Z53 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_tb.v
 Z54 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_tb.v
 L0 1
-R8
+R7
 r1
 31
 Z55 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_tb.v|
-R10
+R9
 Z56 !s108 1716248343.218000
 Z57 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/sqrt_approx_tb.v|
 !i10b 1
@@ -119,20 +119,20 @@ Z57 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_18
 !s101 -O0
 vtb_edge_detect
 !i10b 1
-Z58 !s100 3T@77ihb>3n<f?Oh3k[2E0
-Z59 I^eOme]ITD^X0C_m@LO0J]0
+Z58 !s100 @mZV^BPLYfbS637E>]no=0
+Z59 I2Dkj06laD?:9_XkM9W=^V0
 Z60 VDSi>RR;=cGUdnI[<mMh:80
-R4
-Z61 w1716796305
+R3
+Z61 w1716960637
 Z62 8C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/tb_edge_detect.v
 Z63 FC:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/tb_edge_detect.v
 L0 3
-R8
+R7
 r1
 !s85 0
 31
-!s108 1716840897.275000
+!s108 1716966278.401000
 !s107 C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/tb_edge_detect.v|
 Z64 !s90 -reportprogress|300|-work|work|C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/tb_edge_detect.v|
 !s101 -O0
-R10
+R9

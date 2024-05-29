@@ -1,10 +1,4 @@
 
-State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|sync_state
-Name sync_state.OFF sync_state.ACTIVE sync_state.IDLE 
-sync_state.OFF 0 0 0 
-sync_state.IDLE 1 0 1 
-sync_state.ACTIVE 1 1 0 
-
 State Machine - |DE1_SOC_D8M_LB_RTL|edge_detect:edger|conv_state
 Name conv_state.SET3 conv_state.SET2 conv_state.SET1 conv_state.SET0 conv_state.INIT_BUFF conv_state.INIT 
 conv_state.INIT 0 0 0 0 0 0 

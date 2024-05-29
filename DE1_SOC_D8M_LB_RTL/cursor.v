@@ -15,7 +15,7 @@ module cursor(
 	// parameters for cursor control
 	parameter H_LIMIT = 640;
 	parameter V_LIMIT = 480;
-	parameter VELOCITY = 4;
+	parameter VELOCITY = 8;
 	parameter R = 4;
 	parameter LENGTH = 5;
 

@@ -1,5 +1,5 @@
 Flow report for DE1_SOC_D8M_LB_RTL
-Tue May 28 02:18:44 2024
+Wed May 29 02:37:17 2024
 Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
 
 
@@ -41,19 +41,19 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Tue May 28 02:17:52 2024           ;
+; Flow Status                     ; Successful - Wed May 29 02:36:12 2024           ;
 ; Quartus Prime Version           ; 20.1.0 Build 711 06/05/2020 SJ Standard Edition ;
 ; Revision Name                   ; DE1_SOC_D8M_LB_RTL                              ;
 ; Top-level Entity Name           ; DE1_SOC_D8M_LB_RTL                              ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 21,281 / 32,070 ( 66 % )                        ;
-; Total registers                 ; 35696                                           ;
+; Logic utilization (in ALMs)     ; 20,830 / 32,070 ( 65 % )                        ;
+; Total registers                 ; 34767                                           ;
 ; Total pins                      ; 124 / 457 ( 27 % )                              ;
 ; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 298,368 / 4,065,280 ( 7 % )                     ;
-; Total DSP Blocks                ; 87 / 87 ( 100 % )                               ;
+; Total block memory bits         ; 273,792 / 4,065,280 ( 7 % )                     ;
+; Total DSP Blocks                ; 27 / 87 ( 31 % )                                ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
 ; Total HSSI TX PCSs              ; 0                                               ;
@@ -155,7 +155,73 @@ https://fpgasoftware.intel.com/eula.
 ; Fitter                 ; 00:17:16     ; 1.5                     ; 9210 MB             ; 00:39:40                           ;
 ; Assembler              ; 00:00:25     ; 1.0                     ; 5236 MB             ; 00:00:11                           ;
 ; Timing Analyzer        ; 00:00:50     ; 8.0                     ; 6069 MB             ; 00:02:20                           ;
-; Total                  ; 01:05:25     ; --                      ; --                  ; 02:15:54                           ;
+; Analysis & Synthesis   ; 00:02:04     ; 3.3                     ; 6338 MB             ; 00:03:23                           ;
+; Partition Merge        ; 00:00:06     ; 1.0                     ; 4967 MB             ; 00:00:03                           ;
+; Fitter                 ; 00:15:12     ; 1.6                     ; 9247 MB             ; 00:48:57                           ;
+; Assembler              ; 00:00:23     ; 1.0                     ; 5233 MB             ; 00:00:08                           ;
+; Timing Analyzer        ; 00:00:50     ; 8.0                     ; 6066 MB             ; 00:02:17                           ;
+; Analysis & Elaboration ; 00:00:08     ; 1.0                     ; 4884 MB             ; 00:00:07                           ;
+; Analysis & Elaboration ; 00:00:34     ; 1.0                     ; 5474 MB             ; 00:00:20                           ;
+; Analysis & Synthesis   ; 00:00:07     ; 1.0                     ; 4886 MB             ; 00:00:07                           ;
+; Analysis & Synthesis   ; 00:02:01     ; 4.2                     ; 6296 MB             ; 00:03:27                           ;
+; Partition Merge        ; 00:00:06     ; 1.0                     ; 4965 MB             ; 00:00:03                           ;
+; Analysis & Synthesis   ; 00:02:27     ; 3.3                     ; 6334 MB             ; 00:03:37                           ;
+; Partition Merge        ; 00:00:07     ; 1.0                     ; 4960 MB             ; 00:00:04                           ;
+; Fitter                 ; 00:24:13     ; 1.5                     ; 9258 MB             ; 00:43:41                           ;
+; Assembler              ; 00:00:23     ; 1.0                     ; 5239 MB             ; 00:00:10                           ;
+; Timing Analyzer        ; 00:00:51     ; 8.0                     ; 6074 MB             ; 00:02:23                           ;
+; Analysis & Synthesis   ; 00:00:08     ; 1.0                     ; 4886 MB             ; 00:00:08                           ;
+; Analysis & Synthesis   ; 00:02:03     ; 4.1                     ; 6297 MB             ; 00:03:36                           ;
+; Partition Merge        ; 00:00:06     ; 1.0                     ; 4966 MB             ; 00:00:04                           ;
+; Fitter                 ; 00:25:01     ; 1.4                     ; 9252 MB             ; 00:35:25                           ;
+; Assembler              ; 00:00:30     ; 1.0                     ; 5249 MB             ; 00:00:09                           ;
+; Timing Analyzer        ; 00:01:14     ; 8.7                     ; 6071 MB             ; 00:03:38                           ;
+; Analysis & Synthesis   ; 00:01:54     ; 3.7                     ; 6340 MB             ; 00:03:09                           ;
+; Partition Merge        ; 00:00:06     ; 1.0                     ; 4959 MB             ; 00:00:02                           ;
+; Fitter                 ; 00:08:07     ; 2.0                     ; 9106 MB             ; 00:22:01                           ;
+; Assembler              ; 00:00:22     ; 1.0                     ; 5214 MB             ; 00:00:05                           ;
+; Timing Analyzer        ; 00:00:41     ; 7.9                     ; 6021 MB             ; 00:01:41                           ;
+; Analysis & Synthesis   ; 00:01:53     ; 4.0                     ; 6298 MB             ; 00:03:07                           ;
+; Partition Merge        ; 00:00:06     ; 1.0                     ; 4962 MB             ; 00:00:03                           ;
+; Fitter                 ; 00:08:06     ; 2.0                     ; 9112 MB             ; 00:22:51                           ;
+; Assembler              ; 00:00:21     ; 1.0                     ; 5224 MB             ; 00:00:18                           ;
+; Timing Analyzer        ; 00:00:41     ; 8.0                     ; 6026 MB             ; 00:01:42                           ;
+; Analysis & Synthesis   ; 00:01:13     ; 3.6                     ; 5386 MB             ; 00:01:10                           ;
+; Partition Merge        ; 00:00:05     ; 1.0                     ; 4933 MB             ; 00:00:02                           ;
+; Fitter                 ; 00:07:54     ; 2.0                     ; 8690 MB             ; 00:22:19                           ;
+; Assembler              ; 00:00:21     ; 1.0                     ; 5168 MB             ; 00:00:08                           ;
+; Timing Analyzer        ; 00:00:40     ; 7.9                     ; 5964 MB             ; 00:01:32                           ;
+; Analysis & Synthesis   ; 00:01:13     ; 3.7                     ; 5415 MB             ; 00:01:11                           ;
+; Partition Merge        ; 00:00:04     ; 1.0                     ; 4921 MB             ; 00:00:02                           ;
+; Fitter                 ; 00:07:38     ; 2.0                     ; 8685 MB             ; 00:19:41                           ;
+; Assembler              ; 00:00:21     ; 1.0                     ; 5185 MB             ; 00:00:09                           ;
+; Timing Analyzer        ; 00:00:40     ; 8.1                     ; 5966 MB             ; 00:01:35                           ;
+; Analysis & Elaboration ; 00:00:25     ; 1.0                     ; 5122 MB             ; 00:00:19                           ;
+; Analysis & Synthesis   ; 00:01:49     ; 3.7                     ; 5465 MB             ; 00:01:34                           ;
+; Partition Merge        ; 00:00:05     ; 1.0                     ; 4925 MB             ; 00:00:01                           ;
+; Fitter                 ; 00:09:01     ; 2.0                     ; 8709 MB             ; 00:23:40                           ;
+; Assembler              ; 00:00:24     ; 1.0                     ; 5185 MB             ; 00:00:07                           ;
+; Timing Analyzer        ; 00:00:44     ; 7.8                     ; 6012 MB             ; 00:01:42                           ;
+; Analysis & Synthesis   ; 00:01:18     ; 3.8                     ; 5451 MB             ; 00:01:36                           ;
+; Partition Merge        ; 00:00:04     ; 1.0                     ; 4923 MB             ; 00:00:02                           ;
+; Fitter                 ; 00:09:17     ; 1.9                     ; 8726 MB             ; 00:25:40                           ;
+; Assembler              ; 00:00:21     ; 1.0                     ; 5183 MB             ; 00:00:09                           ;
+; Timing Analyzer        ; 00:00:44     ; 7.7                     ; 6025 MB             ; 00:01:42                           ;
+; Analysis & Synthesis   ; 00:00:08     ; 1.0                     ; 4862 MB             ; 00:00:06                           ;
+; Analysis & Synthesis   ; 00:01:14     ; 3.6                     ; 5418 MB             ; 00:01:30                           ;
+; Partition Merge        ; 00:00:05     ; 1.0                     ; 4928 MB             ; 00:00:02                           ;
+; Fitter                 ; 00:08:46     ; 2.0                     ; 8751 MB             ; 00:23:44                           ;
+; Assembler              ; 00:00:21     ; 1.0                     ; 5186 MB             ; 00:00:17                           ;
+; Timing Analyzer        ; 00:00:46     ; 7.6                     ; 6026 MB             ; 00:01:48                           ;
+; Analysis & Synthesis   ; 00:01:17     ; 4.3                     ; 5420 MB             ; 00:01:31                           ;
+; Partition Merge        ; 00:00:05     ; 1.0                     ; 4929 MB             ; 00:00:02                           ;
+; Analysis & Synthesis   ; 00:00:08     ; 1.0                     ; 4856 MB             ; 00:00:08                           ;
+; Analysis & Synthesis   ; 00:01:18     ; 4.0                     ; 5423 MB             ; 00:01:29                           ;
+; Partition Merge        ; 00:00:04     ; 1.0                     ; 4927 MB             ; 00:00:01                           ;
+; Fitter                 ; 00:08:38     ; 2.0                     ; 8718 MB             ; 00:24:46                           ;
+; Assembler              ; 00:00:36     ; 1.0                     ; 5198 MB             ; 00:00:09                           ;
+; Timing Analyzer        ; 00:01:03     ; 8.2                     ; 6036 MB             ; 00:02:34                           ;
+; Total                  ; 03:55:06     ; --                      ; --                  ; 08:25:08                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -185,6 +251,72 @@ https://fpgasoftware.intel.com/eula.
 ; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
 ; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
 ; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Elaboration ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Elaboration ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Elaboration ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis   ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Partition Merge        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                 ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler              ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer        ; Tempest          ; Windows 10 ; 10.0       ; x86_64         ;
 +------------------------+------------------+------------+------------+----------------+
 
 
@@ -206,6 +338,72 @@ quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_
 quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
 quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
 quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --analysis_and_elaboration
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --analysis_and_elaboration
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --analysis_and_elaboration
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --analysis_and_elaboration
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_asm --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_sta DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
+quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on
 quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
 quartus_map --read_settings_files=on --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL
 quartus_cdb --read_settings_files=off --write_settings_files=off DE1_SOC_D8M_LB_RTL -c DE1_SOC_D8M_LB_RTL --merge=on

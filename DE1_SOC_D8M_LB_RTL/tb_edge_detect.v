@@ -17,7 +17,6 @@ module tb_edge_detect();
 
     // DUT interface
     reg [7:0] in_R, in_G, in_B;
-    reg [12:0] row, col;
     wire [7:0] done_edge_R, done_edge_G, done_edge_B;
     reg edge_en;
     wire [9:0] cycles;
@@ -29,8 +28,6 @@ module tb_edge_detect();
         .in_R(in_R),
         .in_G(in_G),
         .in_B(in_B),
-        .row(row),
-        .col(col),
         .edge_en(edge_en),
         .edge_R_out(done_edge_R),
         .edge_G_out(done_edge_G),
@@ -53,8 +50,6 @@ module tb_edge_detect();
         in_R = 0;
         in_G = 0;
         in_B = 0;
-        row = 0;
-        col = 0;
 
         // Load input image
         $readmemh("C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/input_image.hex", img_in);
@@ -65,10 +60,9 @@ module tb_edge_detect();
 		#CLK_PERIOD;
 
         edge_en=1;
+		#CLK_PERIOD;
         for (r = 0; r < IMG_HEIGHT; r = r + 1) begin
             for ( c = 0; c < IMG_WIDTH; c = c + 1) begin
-                row = r;
-                col = c;
                 in_R = img_in[(r * IMG_WIDTH + c)*3];
                 in_G = img_in[(r * IMG_WIDTH + c)*3 +1];
                 in_B = img_in[(r * IMG_WIDTH + c)*3 +2];
@@ -78,8 +72,6 @@ module tb_edge_detect();
         end
 		for (r = 0; r < IMG_HEIGHT; r = r + 1) begin
             for ( c = 0; c < IMG_WIDTH; c = c + 1) begin
-                row = r;
-                col = c;
                 in_R = img_in[(r * IMG_WIDTH + c)*3];
                 in_G = img_in[(r * IMG_WIDTH + c)*3 +1];
                 in_B = img_in[(r * IMG_WIDTH + c)*3 +2];
@@ -89,8 +81,6 @@ module tb_edge_detect();
         end
 		for (r = 0; r < IMG_HEIGHT; r = r + 1) begin
             for ( c = 0; c < IMG_WIDTH; c = c + 1) begin
-                row = r;
-                col = c;
                 in_R = img_in[(r * IMG_WIDTH + c)*3];
                 in_G = img_in[(r * IMG_WIDTH + c)*3 +1];
                 in_B = img_in[(r * IMG_WIDTH + c)*3 +2];
@@ -103,7 +93,7 @@ module tb_edge_detect();
             end
         end
 		  // Write output image
-            $writememh("output_image.hex", img_out);
+            $writememh("C:/Users/amaan/Documents/WinterQtr2024/EEC181A/final/Edge_Detection_181/DE1_SOC_D8M_LB_RTL/output_image.hex", img_out);
 				$display("clock cycles: %d", cycles);
             $end;
 		$finish;
