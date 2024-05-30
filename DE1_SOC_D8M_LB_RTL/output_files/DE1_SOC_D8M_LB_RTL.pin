@@ -260,9 +260,9 @@ VCCIO5B                      : AE30      : power  :                   : 3.3V    
 GND                          : AF1       : gnd    :                   :         :           :                
 GND                          : AF2       : gnd    :                   :         :           :                
 GND                          : AF3       : gnd    :                   :         :           :                
-HEX5[7]                      : AF4       : output : 2.5 V             :         : 3A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : AF4       :        :                   :         : 3A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF5       :        :                   :         : 3A        :                
-HEX4[7]                      : AF6       : output : 2.5 V             :         : 3A        : N              
+HEX2[7]                      : AF6       : output : 2.5 V             :         : 3A        : N              
 VCCIO3A                      : AF7       : power  :                   : 2.5V    : 3A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF8       :        :                   :         : 3A        :                
 SW[2]                        : AF9       : input  : 3.3-V LVTTL       :         : 3A        : Y              
@@ -287,8 +287,8 @@ GND                          : AF27      : gnd    :                   :         
 HEX0[4]                      : AF28      : output : 3.3-V LVTTL       :         : 5A        : Y              
 HEX1[4]                      : AF29      : output : 3.3-V LVTTL       :         : 5A        : Y              
 HEX1[5]                      : AF30      : output : 3.3-V LVTTL       :         : 5A        : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : AG1       :        :                   :         : 3A        :                
-HEX3[7]                      : AG2       : output : 2.5 V             :         : 3A        : N              
+HEX5[7]                      : AG1       : output : 2.5 V             :         : 3A        : N              
+HEX4[7]                      : AG2       : output : 2.5 V             :         : 3A        : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AG3       :        :                   :         : 3A        :                
 VCCIO3A                      : AG4       : power  :                   : 2.5V    : 3A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AG5       :        :                   :         : 3A        :                
@@ -348,7 +348,7 @@ HEX0[6]                      : AH28      : output : 3.3-V LVTTL       :         
 HEX1[1]                      : AH29      : output : 3.3-V LVTTL       :         : 5A        : Y              
 HEX1[2]                      : AH30      : output : 3.3-V LVTTL       :         : 5A        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AJ1       :        :                   :         : 3A        :                
-HEX2[7]                      : AJ2       : output : 2.5 V             :         : 3A        : N              
+HEX3[7]                      : AJ2       : output : 2.5 V             :         : 3A        : N              
 GND                          : AJ3       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AJ4       :        :                   :         : 3B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AJ5       :        :                   :         : 3B        :                

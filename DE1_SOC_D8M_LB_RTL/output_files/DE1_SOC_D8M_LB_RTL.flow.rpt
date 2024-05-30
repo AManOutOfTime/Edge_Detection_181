@@ -1,5 +1,5 @@
 Flow report for DE1_SOC_D8M_LB_RTL
-Wed May 29 16:32:53 2024
+Wed May 29 17:23:57 2024
 Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Standard Edition
 
 
@@ -41,15 +41,15 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Wed May 29 16:32:08 2024           ;
+; Flow Status                     ; Successful - Wed May 29 17:23:11 2024           ;
 ; Quartus Prime Version           ; 20.1.0 Build 711 06/05/2020 SJ Standard Edition ;
 ; Revision Name                   ; DE1_SOC_D8M_LB_RTL                              ;
 ; Top-level Entity Name           ; DE1_SOC_D8M_LB_RTL                              ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 25,146 / 32,070 ( 78 % )                        ;
-; Total registers                 ; 25762                                           ;
+; Logic utilization (in ALMs)     ; 25,173 / 32,070 ( 78 % )                        ;
+; Total registers                 ; 25789                                           ;
 ; Total pins                      ; 124 / 457 ( 27 % )                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 126,336 / 4,065,280 ( 3 % )                     ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/29/2024 16:18:48 ;
+; Start date & time ; 05/29/2024 17:10:12 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; DE1_SOC_D8M_LB_RTL  ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------+---------------+-------------+------------------+
 ; Assignment Name                     ; Value                                                                                                                     ; Default Value ; Entity Name ; Section Id       ;
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------+---------------+-------------+------------------+
-; COMPILER_SIGNATURE_ID               ; 2222737845120.171702472800348                                                                                             ; --            ; --          ; --               ;
+; COMPILER_SIGNATURE_ID               ; 2222737845120.171702781200956                                                                                             ; --            ; --          ; --               ;
 ; ENABLE_SIGNALTAP                    ; On                                                                                                                        ; --            ; --          ; --               ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                                                                                                        ; --            ; --          ; --               ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                                                                                         ; --            ; --          ; --               ;
@@ -130,11 +130,11 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:01:02     ; 3.5                     ; 5363 MB             ; 00:01:37                           ;
-; Fitter               ; 00:11:38     ; 1.8                     ; 8709 MB             ; 00:38:53                           ;
-; Assembler            ; 00:00:23     ; 1.0                     ; 5227 MB             ; 00:00:13                           ;
-; Timing Analyzer      ; 00:00:44     ; 8.0                     ; 6025 MB             ; 00:02:42                           ;
-; Total                ; 00:13:47     ; --                      ; --                  ; 00:43:25                           ;
+; Analysis & Synthesis ; 00:01:04     ; 3.7                     ; 5351 MB             ; 00:01:38                           ;
+; Fitter               ; 00:11:15     ; 1.8                     ; 8698 MB             ; 00:32:46                           ;
+; Assembler            ; 00:00:23     ; 1.0                     ; 5225 MB             ; 00:00:10                           ;
+; Timing Analyzer      ; 00:00:45     ; 7.9                     ; 6032 MB             ; 00:02:44                           ;
+; Total                ; 00:13:27     ; --                      ; --                  ; 00:37:18                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

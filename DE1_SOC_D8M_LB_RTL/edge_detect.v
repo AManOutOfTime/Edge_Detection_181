@@ -25,7 +25,7 @@ module edge_detect(
 			if(edge_en) begin
 				hex = 8'b10100100;
 			end
-			else if(edge_en) begin
+			else if(edge_en && valid_pixel) begin
 				hex = 8'b11111001;
 			end
 			else
@@ -395,60 +395,64 @@ module edge_detect(
 		end
 		// only conv next state calc and flag setting
 		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					// if edging and syncing activate
-					// start reading in row 0 and col 0
-					if(edge_en) // && synced
-						// synced actually turns on when
-						next_conv_state = INIT_BUFF;
-					else
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
+						// if edging and syncing activate
+						// start reading in row 0 and col 0
+						if(edge_en) // && synced
+							// synced actually turns on when
+							next_conv_state = INIT_BUFF;
+						else
+							next_conv_state = INIT;
+					end
+					INIT_BUFF: begin
+						if(~edge_en)
+							next_conv_state = INIT;
+						else if(buff_done)
+							next_conv_state = SET0;
+						else
+							next_conv_state = INIT_BUFF;
+					end
+					SET0: begin // RD: 0,1,2 | WR: 3
+						if(~edge_en)
+							next_conv_state = INIT;
+						else if(buff_done)
+							next_conv_state = SET1;
+						else
+							next_conv_state = SET0;
+					end
+					SET1: begin // RD: 1,2,3 | WR: 0
+						if(~edge_en)
+							next_conv_state = INIT;
+						else if(buff_done)
+							next_conv_state = SET2;
+						else
+							next_conv_state = SET1;
+					end
+					SET2: begin // RD: 2,3,0 | WR: 1
+						if(~edge_en)
+							next_conv_state = INIT;
+						else if(buff_done)
+							next_conv_state = SET3;
+						else
+							next_conv_state = SET2;
+					end
+					SET3: begin // RD: 3,0,1 | WR: 2
+						if(~edge_en)
+							next_conv_state = INIT;
+						else if(buff_done)
+							next_conv_state = SET0;
+						else
+							next_conv_state = SET3;
+					end
+					default: begin
 						next_conv_state = INIT;
-				end
-				INIT_BUFF: begin
-					if(~edge_en)
-						next_conv_state = INIT;
-					else if(buff_done)
-						next_conv_state = SET0;
-					else
-						next_conv_state = INIT_BUFF;
-				end
-				SET0: begin // RD: 0,1,2 | WR: 3
-					if(~edge_en)
-						next_conv_state = INIT;
-					else if(buff_done)
-						next_conv_state = SET1;
-					else
-						next_conv_state = SET0;
-				end
-				SET1: begin // RD: 1,2,3 | WR: 0
-					if(~edge_en)
-						next_conv_state = INIT;
-					else if(buff_done)
-						next_conv_state = SET2;
-					else
-						next_conv_state = SET1;
-				end
-				SET2: begin // RD: 2,3,0 | WR: 1
-					if(~edge_en)
-						next_conv_state = INIT;
-					else if(buff_done)
-						next_conv_state = SET3;
-					else
-						next_conv_state = SET2;
-				end
-				SET3: begin // RD: 3,0,1 | WR: 2
-					if(~edge_en)
-						next_conv_state = INIT;
-					else if(buff_done)
-						next_conv_state = SET0;
-					else
-						next_conv_state = SET3;
-				end
-				default: begin
-					next_conv_state = INIT;
-				end
-			endcase
+					end
+				endcase
+			end
+			else
+				next_conv_state = INIT;
 		end
 		// conv wr buffer enabling
 		always@(*) begin
@@ -517,311 +521,336 @@ module edge_detect(
 			end
 		end
 		// conv output redirection
-		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					// first row
-					sobel_in_pixel0 = insert_zero;
-					sobel_in_pixel1 = insert_zero;
-					sobel_in_pixel2 = insert_zero;
-					// second row 
-					sobel_in_pixel3 = insert_zero;
-					sobel_in_pixel4 = insert_zero;
-					sobel_in_pixel5 = insert_zero;
-					// third row
-					sobel_in_pixel6 = insert_zero;
-					sobel_in_pixel7 = insert_zero;
-					sobel_in_pixel8 = insert_zero;
-				end
-				INIT_BUFF: begin
-					// first row
-					sobel_in_pixel0 = insert_zero;
-					sobel_in_pixel1 = insert_zero;
-					sobel_in_pixel2 = insert_zero;
-					// second row 
-					sobel_in_pixel3 = insert_zero;
-					sobel_in_pixel4 = insert_zero;
-					sobel_in_pixel5 = insert_zero;
-					// third row
-					sobel_in_pixel6 = insert_zero;
-					sobel_in_pixel7 = insert_zero;
-					sobel_in_pixel8 = insert_zero;
-				end
-				SET0: begin // RD: 0,1,2 | WR: 3
-					if(curr_row_to_disp == 0) begin
+		always@(*) begin // check later
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
 						// first row
 						sobel_in_pixel0 = insert_zero;
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = reg_buff1_pixelA;
-						sobel_in_pixel4 = reg_buff1_pixelB;
-						sobel_in_pixel5 = reg_buff1_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff2_pixelA;
-						sobel_in_pixel7 = reg_buff2_pixelB;
-						sobel_in_pixel8 = reg_buff2_pixelC;
-					end
-					else if(curr_row_to_disp == 639) begin
-						// first row
-						sobel_in_pixel0 = reg_buff0_pixelA;
-						sobel_in_pixel1 = reg_buff0_pixelB;
-						sobel_in_pixel2 = reg_buff0_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff1_pixelA;
-						sobel_in_pixel4 = reg_buff1_pixelB;
-						sobel_in_pixel5 = reg_buff1_pixelC;
+						sobel_in_pixel3 = insert_zero;
+						sobel_in_pixel4 = insert_zero;
+						sobel_in_pixel5 = insert_zero;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
 						sobel_in_pixel8 = insert_zero;
 					end
-					else begin
-						// first row
-						sobel_in_pixel0 = reg_buff0_pixelA;
-						sobel_in_pixel1 = reg_buff0_pixelB;
-						sobel_in_pixel2 = reg_buff0_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff1_pixelA;
-						sobel_in_pixel4 = reg_buff1_pixelB;
-						sobel_in_pixel5 = reg_buff1_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff2_pixelA;
-						sobel_in_pixel7 = reg_buff2_pixelB;
-						sobel_in_pixel8 = reg_buff2_pixelC;
-					end
-				end
-				SET1: begin // RD: 1,2,3 | WR: 0
-					if(curr_row_to_disp == 0) begin
+					INIT_BUFF: begin
 						// first row
 						sobel_in_pixel0 = insert_zero;
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = reg_buff2_pixelA;
-						sobel_in_pixel4 = reg_buff2_pixelB;
-						sobel_in_pixel5 = reg_buff2_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff3_pixelA;
-						sobel_in_pixel7 = reg_buff3_pixelB;
-						sobel_in_pixel8 = reg_buff3_pixelC;
-					end
-					else if(curr_row_to_disp == 639) begin
-						// first row
-						sobel_in_pixel0 = reg_buff1_pixelA;
-						sobel_in_pixel1 = reg_buff1_pixelB;
-						sobel_in_pixel2 = reg_buff1_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff2_pixelA;
-						sobel_in_pixel4 = reg_buff2_pixelB;
-						sobel_in_pixel5 = reg_buff2_pixelC;
+						sobel_in_pixel3 = insert_zero;
+						sobel_in_pixel4 = insert_zero;
+						sobel_in_pixel5 = insert_zero;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
 						sobel_in_pixel8 = insert_zero;
 					end
-					else begin
-						// first row
-						sobel_in_pixel0 = reg_buff1_pixelA;
-						sobel_in_pixel1 = reg_buff1_pixelB;
-						sobel_in_pixel2 = reg_buff1_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff2_pixelA;
-						sobel_in_pixel4 = reg_buff2_pixelB;
-						sobel_in_pixel5 = reg_buff2_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff3_pixelA;
-						sobel_in_pixel7 = reg_buff3_pixelB;
-						sobel_in_pixel8 = reg_buff3_pixelC;
+					SET0: begin // RD: 0,1,2 | WR: 3
+						if(curr_row_to_disp == 0) begin
+							// first row
+							sobel_in_pixel0 = insert_zero;
+							sobel_in_pixel1 = insert_zero;
+							sobel_in_pixel2 = insert_zero;
+							// second row 
+							sobel_in_pixel3 = reg_buff1_pixelA;
+							sobel_in_pixel4 = reg_buff1_pixelB;
+							sobel_in_pixel5 = reg_buff1_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff2_pixelA;
+							sobel_in_pixel7 = reg_buff2_pixelB;
+							sobel_in_pixel8 = reg_buff2_pixelC;
+						end
+						else if(curr_row_to_disp == 639) begin
+							// first row
+							sobel_in_pixel0 = reg_buff0_pixelA;
+							sobel_in_pixel1 = reg_buff0_pixelB;
+							sobel_in_pixel2 = reg_buff0_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff1_pixelA;
+							sobel_in_pixel4 = reg_buff1_pixelB;
+							sobel_in_pixel5 = reg_buff1_pixelC;
+							// third row
+							sobel_in_pixel6 = insert_zero;
+							sobel_in_pixel7 = insert_zero;
+							sobel_in_pixel8 = insert_zero;
+						end
+						else begin
+							// first row
+							sobel_in_pixel0 = reg_buff0_pixelA;
+							sobel_in_pixel1 = reg_buff0_pixelB;
+							sobel_in_pixel2 = reg_buff0_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff1_pixelA;
+							sobel_in_pixel4 = reg_buff1_pixelB;
+							sobel_in_pixel5 = reg_buff1_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff2_pixelA;
+							sobel_in_pixel7 = reg_buff2_pixelB;
+							sobel_in_pixel8 = reg_buff2_pixelC;
+						end
 					end
-				end
-				SET2: begin // RD: 2,3,0 | WR: 1
-					if(curr_row_to_disp == 0) begin
+					SET1: begin // RD: 1,2,3 | WR: 0
+						if(curr_row_to_disp == 0) begin
+							// first row
+							sobel_in_pixel0 = insert_zero;
+							sobel_in_pixel1 = insert_zero;
+							sobel_in_pixel2 = insert_zero;
+							// second row 
+							sobel_in_pixel3 = reg_buff2_pixelA;
+							sobel_in_pixel4 = reg_buff2_pixelB;
+							sobel_in_pixel5 = reg_buff2_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff3_pixelA;
+							sobel_in_pixel7 = reg_buff3_pixelB;
+							sobel_in_pixel8 = reg_buff3_pixelC;
+						end
+						else if(curr_row_to_disp == 639) begin
+							// first row
+							sobel_in_pixel0 = reg_buff1_pixelA;
+							sobel_in_pixel1 = reg_buff1_pixelB;
+							sobel_in_pixel2 = reg_buff1_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff2_pixelA;
+							sobel_in_pixel4 = reg_buff2_pixelB;
+							sobel_in_pixel5 = reg_buff2_pixelC;
+							// third row
+							sobel_in_pixel6 = insert_zero;
+							sobel_in_pixel7 = insert_zero;
+							sobel_in_pixel8 = insert_zero;
+						end
+						else begin
+							// first row
+							sobel_in_pixel0 = reg_buff1_pixelA;
+							sobel_in_pixel1 = reg_buff1_pixelB;
+							sobel_in_pixel2 = reg_buff1_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff2_pixelA;
+							sobel_in_pixel4 = reg_buff2_pixelB;
+							sobel_in_pixel5 = reg_buff2_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff3_pixelA;
+							sobel_in_pixel7 = reg_buff3_pixelB;
+							sobel_in_pixel8 = reg_buff3_pixelC;
+						end
+					end
+					SET2: begin // RD: 2,3,0 | WR: 1
+						if(curr_row_to_disp == 0) begin
+							// first row
+							sobel_in_pixel0 = insert_zero;
+							sobel_in_pixel1 = insert_zero;
+							sobel_in_pixel2 = insert_zero;
+							// second row 
+							sobel_in_pixel3 = reg_buff3_pixelA;
+							sobel_in_pixel4 = reg_buff3_pixelB;
+							sobel_in_pixel5 = reg_buff3_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff0_pixelA;
+							sobel_in_pixel7 = reg_buff0_pixelB;
+							sobel_in_pixel8 = reg_buff0_pixelC;
+						end
+						else if(curr_row_to_disp == 639) begin
+							// first row
+							sobel_in_pixel0 = reg_buff2_pixelA;
+							sobel_in_pixel1 = reg_buff2_pixelB;
+							sobel_in_pixel2 = reg_buff2_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff3_pixelA;
+							sobel_in_pixel4 = reg_buff3_pixelB;
+							sobel_in_pixel5 = reg_buff3_pixelC;
+							// third row
+							sobel_in_pixel6 = insert_zero;
+							sobel_in_pixel7 = insert_zero;
+							sobel_in_pixel8 = insert_zero;
+						end
+						else begin
+							// first row
+							sobel_in_pixel0 = reg_buff2_pixelA;
+							sobel_in_pixel1 = reg_buff2_pixelB;
+							sobel_in_pixel2 = reg_buff2_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff3_pixelA;
+							sobel_in_pixel4 = reg_buff3_pixelB;
+							sobel_in_pixel5 = reg_buff3_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff0_pixelA;
+							sobel_in_pixel7 = reg_buff0_pixelB;
+							sobel_in_pixel8 = reg_buff0_pixelC;
+						end
+					end
+					SET3: begin // RD: 3,0,1 | WR: 2
+						if(curr_row_to_disp == 0) begin
+							// first row
+							sobel_in_pixel0 = insert_zero;
+							sobel_in_pixel1 = insert_zero;
+							sobel_in_pixel2 = insert_zero;
+							// second row 
+							sobel_in_pixel3 = reg_buff0_pixelA;
+							sobel_in_pixel4 = reg_buff0_pixelB;
+							sobel_in_pixel5 = reg_buff0_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff1_pixelA;
+							sobel_in_pixel7 = reg_buff1_pixelB;
+							sobel_in_pixel8 = reg_buff1_pixelC;
+						end
+						else if(curr_row_to_disp == 639) begin
+							// first row
+							sobel_in_pixel0 = reg_buff3_pixelA;
+							sobel_in_pixel1 = reg_buff3_pixelB;
+							sobel_in_pixel2 = reg_buff3_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff0_pixelA;
+							sobel_in_pixel4 = reg_buff0_pixelB;
+							sobel_in_pixel5 = reg_buff0_pixelC;
+							// third row
+							sobel_in_pixel6 = insert_zero;
+							sobel_in_pixel7 = insert_zero;
+							sobel_in_pixel8 = insert_zero;
+						end
+						else begin
+							// first row
+							sobel_in_pixel0 = reg_buff3_pixelA;
+							sobel_in_pixel1 = reg_buff3_pixelB;
+							sobel_in_pixel2 = reg_buff3_pixelC;
+							// second row 
+							sobel_in_pixel3 = reg_buff0_pixelA;
+							sobel_in_pixel4 = reg_buff0_pixelB;
+							sobel_in_pixel5 = reg_buff0_pixelC;
+							// third row
+							sobel_in_pixel6 = reg_buff1_pixelA;
+							sobel_in_pixel7 = reg_buff1_pixelB;
+							sobel_in_pixel8 = reg_buff1_pixelC;
+						end
+					end
+					default: begin
 						// first row
 						sobel_in_pixel0 = insert_zero;
 						sobel_in_pixel1 = insert_zero;
 						sobel_in_pixel2 = insert_zero;
 						// second row 
-						sobel_in_pixel3 = reg_buff3_pixelA;
-						sobel_in_pixel4 = reg_buff3_pixelB;
-						sobel_in_pixel5 = reg_buff3_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff0_pixelA;
-						sobel_in_pixel7 = reg_buff0_pixelB;
-						sobel_in_pixel8 = reg_buff0_pixelC;
-					end
-					else if(curr_row_to_disp == 639) begin
-						// first row
-						sobel_in_pixel0 = reg_buff2_pixelA;
-						sobel_in_pixel1 = reg_buff2_pixelB;
-						sobel_in_pixel2 = reg_buff2_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff3_pixelA;
-						sobel_in_pixel4 = reg_buff3_pixelB;
-						sobel_in_pixel5 = reg_buff3_pixelC;
+						sobel_in_pixel3 = insert_zero;
+						sobel_in_pixel4 = insert_zero;
+						sobel_in_pixel5 = insert_zero;
 						// third row
 						sobel_in_pixel6 = insert_zero;
 						sobel_in_pixel7 = insert_zero;
 						sobel_in_pixel8 = insert_zero;
 					end
-					else begin
-						// first row
-						sobel_in_pixel0 = reg_buff2_pixelA;
-						sobel_in_pixel1 = reg_buff2_pixelB;
-						sobel_in_pixel2 = reg_buff2_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff3_pixelA;
-						sobel_in_pixel4 = reg_buff3_pixelB;
-						sobel_in_pixel5 = reg_buff3_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff0_pixelA;
-						sobel_in_pixel7 = reg_buff0_pixelB;
-						sobel_in_pixel8 = reg_buff0_pixelC;
-					end
-				end
-				SET3: begin // RD: 3,0,1 | WR: 2
-					if(curr_row_to_disp == 0) begin
-						// first row
-						sobel_in_pixel0 = insert_zero;
-						sobel_in_pixel1 = insert_zero;
-						sobel_in_pixel2 = insert_zero;
-						// second row 
-						sobel_in_pixel3 = reg_buff0_pixelA;
-						sobel_in_pixel4 = reg_buff0_pixelB;
-						sobel_in_pixel5 = reg_buff0_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff1_pixelA;
-						sobel_in_pixel7 = reg_buff1_pixelB;
-						sobel_in_pixel8 = reg_buff1_pixelC;
-					end
-					else if(curr_row_to_disp == 639) begin
-						// first row
-						sobel_in_pixel0 = reg_buff3_pixelA;
-						sobel_in_pixel1 = reg_buff3_pixelB;
-						sobel_in_pixel2 = reg_buff3_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff0_pixelA;
-						sobel_in_pixel4 = reg_buff0_pixelB;
-						sobel_in_pixel5 = reg_buff0_pixelC;
-						// third row
-						sobel_in_pixel6 = insert_zero;
-						sobel_in_pixel7 = insert_zero;
-						sobel_in_pixel8 = insert_zero;
-					end
-					else begin
-						// first row
-						sobel_in_pixel0 = reg_buff3_pixelA;
-						sobel_in_pixel1 = reg_buff3_pixelB;
-						sobel_in_pixel2 = reg_buff3_pixelC;
-						// second row 
-						sobel_in_pixel3 = reg_buff0_pixelA;
-						sobel_in_pixel4 = reg_buff0_pixelB;
-						sobel_in_pixel5 = reg_buff0_pixelC;
-						// third row
-						sobel_in_pixel6 = reg_buff1_pixelA;
-						sobel_in_pixel7 = reg_buff1_pixelB;
-						sobel_in_pixel8 = reg_buff1_pixelC;
-					end
-				end
-				default: begin
-					// first row
-					sobel_in_pixel0 = insert_zero;
-					sobel_in_pixel1 = insert_zero;
-					sobel_in_pixel2 = insert_zero;
-					// second row 
-					sobel_in_pixel3 = insert_zero;
-					sobel_in_pixel4 = insert_zero;
-					sobel_in_pixel5 = insert_zero;
-					// third row
-					sobel_in_pixel6 = insert_zero;
-					sobel_in_pixel7 = insert_zero;
-					sobel_in_pixel8 = insert_zero;
-				end
-			endcase
+				endcase
+			end
+			else begin
+				// first row
+				sobel_in_pixel0 = insert_zero;
+				sobel_in_pixel1 = insert_zero;
+				sobel_in_pixel2 = insert_zero;
+				// second row 
+				sobel_in_pixel3 = insert_zero;
+				sobel_in_pixel4 = insert_zero;
+				sobel_in_pixel5 = insert_zero;
+				// third row
+				sobel_in_pixel6 = insert_zero;
+				sobel_in_pixel7 = insert_zero;
+				sobel_in_pixel8 = insert_zero;
+			end
 		end
 		// check if buffers are full
 		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					buff_done = 0;
-				end
-				INIT_BUFF: begin
-					if(init_curr_buff+1 >= INIT_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS)
-						buff_done = 1;
-					else
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
 						buff_done = 0;
-				end
-				SET0: begin
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
-						buff_done = 1;
-					else 
+					end
+					INIT_BUFF: begin
+						if(init_curr_buff+1 >= INIT_ROWS && curr_buff_wr_count+1 >= MAX_DISP_COLS)
+							buff_done = 1;
+						else
+							buff_done = 0;
+					end
+					SET0: begin
+						if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
+							buff_done = 1;
+						else 
+							buff_done = 0;
+					end
+					SET1: begin
+						if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
+							buff_done = 1;
+						else 
+							buff_done = 0;
+					end
+					SET2: begin
+						if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
+							buff_done = 1;
+						else 
+							buff_done = 0;
+					end
+					SET3: begin
+						if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
+							buff_done = 1;
+						else 
+							buff_done = 0;
+					end
+					default: begin
 						buff_done = 0;
-				end
-				SET1: begin
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
-						buff_done = 1;
-					else 
-						buff_done = 0;
-				end
-				SET2: begin
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
-						buff_done = 1;
-					else 
-						buff_done = 0;
-				end
-				SET3: begin
-					if(curr_buff_wr_count+1 >= MAX_DISP_COLS)
-						buff_done = 1;
-					else 
-						buff_done = 0;
-				end
-				default: begin
-					buff_done = 0;
-				end
-			endcase
+					end
+				endcase
+			end
+			else begin
+				buff_done = 0;
+			end
 		end
 		// reset buffers after buff_done in ea conv_state
 		// [3:0] rst_buff;
 		// reset rd/wr ptrs after completed cycle
 		always@(*) begin
-			case(conv_state)
-				INIT: begin
-					rst_buff = 4'b0000;
-				end
-				INIT_BUFF: begin
-					if(buff_done)
-						rst_buff = 4'b1111;
-					else
+			if(valid_pixel) begin
+				case(conv_state)
+					INIT: begin
 						rst_buff = 4'b0000;
-				end
-				SET0: begin
-					if(buff_done)
-						rst_buff = 4'b1111;
-					else
+					end
+					INIT_BUFF: begin
+						if(buff_done)
+							rst_buff = 4'b1111;
+						else
+							rst_buff = 4'b0000;
+					end
+					SET0: begin
+						if(buff_done)
+							rst_buff = 4'b1111;
+						else
+							rst_buff = 4'b0000;
+					end
+					SET1: begin
+						if(buff_done)
+							rst_buff = 4'b1111;
+						else
+							rst_buff = 4'b0000;
+					end
+					SET2: begin
+						if(buff_done)
+							rst_buff = 4'b1111;
+						else
+							rst_buff = 4'b0000;
+					end
+					SET3: begin
+						if(buff_done)
+							rst_buff = 4'b1111;
+						else
+							rst_buff = 4'b0000;
+					end
+					default: begin
 						rst_buff = 4'b0000;
-				end
-				SET1: begin
-					if(buff_done)
-						rst_buff = 4'b1111;
-					else
-						rst_buff = 4'b0000;
-				end
-				SET2: begin
-					if(buff_done)
-						rst_buff = 4'b1111;
-					else
-						rst_buff = 4'b0000;
-				end
-				SET3: begin
-					if(buff_done)
-						rst_buff = 4'b1111;
-					else
-						rst_buff = 4'b0000;
-				end
-				default: begin
-					rst_buff = 4'b0000;
-				end
-			endcase
+					end
+				endcase
+			end
+			else
+				rst_buff = 4'b0000;
 		end
 		// conv curr state action and update counter/flags
 		always@(posedge clk) begin
@@ -979,31 +1008,35 @@ module edge_detect(
 		end
 		// cycle count next state calc
 		always@(*) begin
-			case(count_state) 
-				EDGE_OFF: begin
-					if(edge_en)
-						next_count_state = ON_CONV;
-					else
-						next_count_state = EDGE_OFF;
-				end
-				ON_CONV: begin
-					if(~edge_en)
-						next_count_state = EDGE_OFF;
-					else if(first_conv_done)
-						next_count_state = ON_FINISH;
-					else
-						next_count_state = ON_CONV;
-				end
-				ON_FINISH: begin
-					if(edge_en)
-						next_count_state = ON_FINISH;
-					else
-						next_count_state = EDGE_OFF;
-				end
-				default: begin
-					next_count_state =  EDGE_OFF;
-				end
-			endcase
+			if(valid_pixel) begin
+				case(count_state) 
+					EDGE_OFF: begin
+						if(edge_en)
+							next_count_state = ON_CONV;
+						else
+							next_count_state = EDGE_OFF;
+					end
+					ON_CONV: begin
+						if(~edge_en)
+							next_count_state = EDGE_OFF;
+						else if(first_conv_done)
+							next_count_state = ON_FINISH;
+						else
+							next_count_state = ON_CONV;
+					end
+					ON_FINISH: begin
+						if(edge_en)
+							next_count_state = ON_FINISH;
+						else
+							next_count_state = EDGE_OFF;
+					end
+					default: begin
+						next_count_state =  EDGE_OFF;
+					end
+				endcase
+			end
+			else
+				next_count_state = EDGE_OFF;
 		end
 		// cycle count state output and calcs
 		always@(posedge clk) begin
@@ -1026,20 +1059,24 @@ module edge_detect(
 		end
 		// LED cycles output
 		always@(*) begin
-			case(count_state)
-				EDGE_OFF: begin
-					cycle_output = 0;
-				end
-				ON_CONV: begin
-					cycle_output = 0;
-				end
-				ON_FINISH: begin
-					cycle_output = cycle_count[18:9];
-				end
-				default: begin
-					cycle_output = 0;
-				end
-			endcase
+			if(valid_pixel) begin
+				case(count_state)
+					EDGE_OFF: begin
+						cycle_output = 0;
+					end
+					ON_CONV: begin
+						cycle_output = 0;
+					end
+					ON_FINISH: begin
+						cycle_output = cycle_count[18:9];
+					end
+					default: begin
+						cycle_output = 0;
+					end
+				endcase
+			end
+			else
+				cycle_output = 0;
 		end
 		
 		assign cycles = cycle_output;
@@ -1063,9 +1100,9 @@ module edge_detect(
 		assign adjusted_bw = (final_val > 8'd127) ? 8'd0 : 8'd255;
 		
 		
-		assign done_edge_R = (edge_en) ? final_val : direct_out_R;
-		assign done_edge_G = (edge_en) ? final_val : direct_out_G;
-		assign done_edge_B = (edge_en) ? final_val : direct_out_B;
+		assign done_edge_R = (edge_en && valid_pixel) ? final_val : direct_out_R;
+		assign done_edge_G = (edge_en && valid_pixel) ? final_val : direct_out_G;
+		assign done_edge_B = (edge_en && valid_pixel) ? final_val : direct_out_B;
 		
 		
 		
