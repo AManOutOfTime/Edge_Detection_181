@@ -1,4 +1,6 @@
 module edge_detect(
+			input [12:0] x,
+			input [12:0] y,
 			input clk,
 			input valid_pixel,
 			input edge_en,
@@ -10,13 +12,15 @@ module edge_detect(
 			output [7:0] edge_B_out,
 			output [9:0] cycles,
 			output vga_reset,
+			output oreq,
+			output reg firs_pix,
 			output reg [7:0] hex // enable states
 //			output reg [7:0] hex_sync_state, 
 //			output reg [7:0] hex_next_sync_state,
 //			output reg [7:0] hex_conv_state, 
 //			output reg [7:0] hex_next_conv_state
 		);
-		
+
 		
 		// if edge_en hex display shows 1
 		// if edge_en && vga_synced display shows 2
@@ -79,9 +83,11 @@ module edge_detect(
 					 reg_buff1_pixelC,
 					 reg_buff2_pixelC, 
 					 reg_buff3_pixelC;
-					 
+		
+		reg pipe_con2;
 		always @(posedge clk) begin
-			if(valid_pixel) begin
+			if(pipe_con1) begin
+				pipe_con2 <= pipe_con1;
 				reg_buff0_pixelA <= buff0_pixelA;
 				reg_buff1_pixelA <= buff1_pixelA;
 				reg_buff2_pixelA <= buff2_pixelA;
@@ -112,8 +118,10 @@ module edge_detect(
 //		assign inter_in_G = in_G;
 //		assign inter_in_B = in_B;
 	
+		reg pipe_con0;
 		always@(posedge clk) begin
 			if(valid_pixel) begin
+				pipe_con0 <= valid_pixel;
 				inter_in_R <= in_R;
 				inter_in_G <= in_G;
 				inter_in_B <= in_B;
@@ -136,8 +144,10 @@ module edge_detect(
 		
 		reg [7:0] grey_in_data;
 		
+		reg pipe_con1;
 		always@(posedge clk) begin
-			if(valid_pixel) begin
+			if(pipe_con0) begin
+				pipe_con1 <= pipe_con0;
 				grey_in_data <= inter_grey;
 			end
 		end
@@ -389,13 +399,10 @@ module edge_detect(
 		// convolution on image 642 x 482 to account for padding
 		// next state progress
 		always@(posedge clk) begin
-			if(valid_pixel) begin
 				conv_state <= next_conv_state;
-			end
 		end
 		// only conv next state calc and flag setting
 		always@(*) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						// if edging and syncing activate
@@ -450,13 +457,10 @@ module edge_detect(
 						next_conv_state = INIT;
 					end
 				endcase
-			end
-			else
-				next_conv_state = INIT;
+			
 		end
 		// conv wr buffer enabling
 		always@(*) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						wr_buff_en = 4'b0000;
@@ -484,14 +488,9 @@ module edge_detect(
 						wr_buff_en = 4'b0000;
 					end
 				endcase
-			end
-			else begin
-				wr_buff_en = 4'b0000;
-			end
 		end
 		// conv rd buffer enabling
 		always@(*) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						rd_buff_en = 4'b0000;
@@ -515,14 +514,9 @@ module edge_detect(
 						rd_buff_en = 4'b0000;
 					end
 				endcase
-			end
-			else begin
-				rd_buff_en = 4'b0000;
-			end
 		end
 		// conv output redirection
 		always@(*) begin // check later
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						// first row
@@ -743,25 +737,9 @@ module edge_detect(
 						sobel_in_pixel8 = insert_zero;
 					end
 				endcase
-			end
-			else begin
-				// first row
-				sobel_in_pixel0 = insert_zero;
-				sobel_in_pixel1 = insert_zero;
-				sobel_in_pixel2 = insert_zero;
-				// second row 
-				sobel_in_pixel3 = insert_zero;
-				sobel_in_pixel4 = insert_zero;
-				sobel_in_pixel5 = insert_zero;
-				// third row
-				sobel_in_pixel6 = insert_zero;
-				sobel_in_pixel7 = insert_zero;
-				sobel_in_pixel8 = insert_zero;
-			end
 		end
 		// check if buffers are full
 		always@(*) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						buff_done = 0;
@@ -800,16 +778,11 @@ module edge_detect(
 						buff_done = 0;
 					end
 				endcase
-			end
-			else begin
-				buff_done = 0;
-			end
 		end
 		// reset buffers after buff_done in ea conv_state
 		// [3:0] rst_buff;
 		// reset rd/wr ptrs after completed cycle
 		always@(*) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						rst_buff = 4'b0000;
@@ -848,13 +821,9 @@ module edge_detect(
 						rst_buff = 4'b0000;
 					end
 				endcase
-			end
-			else
-				rst_buff = 4'b0000;
 		end
 		// conv curr state action and update counter/flags
 		always@(posedge clk) begin
-			if(valid_pixel) begin
 				case(conv_state)
 					INIT: begin
 						// reset everything
@@ -908,7 +877,11 @@ module edge_detect(
 						
 					end
 					SET0: begin // RD 0,1,2 | WR: 3
-						
+						if(curr_row_to_disp == 0 && curr_buff_wr_count == 0) begin
+							firs_pix <= 1'b1;
+						end
+						else 
+							firs_pix <= 1'b0;
 						// turn off monitor rst if on
 	//					vga_rst_req <= 1'b0;
 						// synced for pixel 0,0 on first entrance
@@ -986,7 +959,6 @@ module edge_detect(
 						init_curr_buff <= 2'd0;
 					end
 				endcase
-			end
 		end
 
 		
@@ -994,21 +966,18 @@ module edge_detect(
 		// FSM for cycle count
 		parameter EDGE_OFF = 2'd0;
 		parameter ON_CONV = 2'd1;
+		
 		parameter ON_FINISH = 2'd2;
 		reg [1:0] count_state = EDGE_OFF; 
 		reg [1:0] next_count_state;
 		reg [18:0] cycle_count = 0;
 		reg [9:0] cycle_output = 0;
-		reg first_flag = 1; // delete later
 		// next state progress
 		always@(posedge clk) begin
-			if(valid_pixel) begin
 				count_state <= next_count_state;
-			end
 		end
 		// cycle count next state calc
 		always@(*) begin
-			if(valid_pixel) begin
 				case(count_state) 
 					EDGE_OFF: begin
 						if(edge_en)
@@ -1034,13 +1003,9 @@ module edge_detect(
 						next_count_state =  EDGE_OFF;
 					end
 				endcase
-			end
-			else
-				next_count_state = EDGE_OFF;
 		end
 		// cycle count state output and calcs
 		always@(posedge clk) begin
-			if(valid_pixel) begin
 				case(count_state)
 					EDGE_OFF: begin
 						cycle_count <= 0;
@@ -1055,11 +1020,10 @@ module edge_detect(
 						cycle_count <= cycle_count;
 					end
 				endcase
-			end
+			
 		end
 		// LED cycles output
 		always@(*) begin
-			if(valid_pixel) begin
 				case(count_state)
 					EDGE_OFF: begin
 						cycle_output = 0;
@@ -1074,9 +1038,6 @@ module edge_detect(
 						cycle_output = 0;
 					end
 				endcase
-			end
-			else
-				cycle_output = 0;
 		end
 		
 		assign cycles = cycle_output;
@@ -1088,9 +1049,11 @@ module edge_detect(
 		// send out unprocessed data
 		// feed done_edge into buffer for display syncing
 		
+		reg pipe_con3;
 		reg [7:0] final_val;
 		always@(posedge clk) begin
-			if(valid_pixel) begin
+			if(pipe_con2) begin
+				pipe_con3 <= pipe_con2;
 				final_val <= edge_out;
 			end
 		end
@@ -1100,9 +1063,9 @@ module edge_detect(
 		assign adjusted_bw = (final_val > 8'd127) ? 8'd0 : 8'd255;
 		
 		
-		assign done_edge_R = (edge_en && valid_pixel) ? final_val : direct_out_R;
-		assign done_edge_G = (edge_en && valid_pixel) ? final_val : direct_out_G;
-		assign done_edge_B = (edge_en && valid_pixel) ? final_val : direct_out_B;
+		assign done_edge_R = (edge_en) ? final_val : direct_out_R;
+		assign done_edge_G = (edge_en) ? final_val : direct_out_G;
+		assign done_edge_B = (edge_en) ? final_val : direct_out_B;
 		
 		
 		

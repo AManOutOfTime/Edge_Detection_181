@@ -4,7 +4,7 @@
 // MODULE: scfifo 
 
 // ============================================================
-// File Name: asyn_fifo_input.v
+// File Name: asyn_fifo_2048.v
 // Megafunction Name(s):
 // 			scfifo
 //
@@ -37,15 +37,14 @@
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module asyn_fifo_input (
+module asyn_fifo_2048 (
 	clock,
 	data,
 	rdreq,
 	wrreq,
 	empty,
 	full,
-	q,
-	usedw);
+	q);
 
 	input	  clock;
 	input	[23:0]  data;
@@ -54,16 +53,13 @@ module asyn_fifo_input (
 	output	  empty;
 	output	  full;
 	output	[23:0]  q;
-	output	[10:0]  usedw;
 
 	wire  sub_wire0;
 	wire  sub_wire1;
 	wire [23:0] sub_wire2;
-	wire [10:0] sub_wire3;
 	wire  empty = sub_wire0;
 	wire  full = sub_wire1;
 	wire [23:0] q = sub_wire2[23:0];
-	wire [10:0] usedw = sub_wire3[10:0];
 
 	scfifo	scfifo_component (
 				.clock (clock),
@@ -73,14 +69,14 @@ module asyn_fifo_input (
 				.empty (sub_wire0),
 				.full (sub_wire1),
 				.q (sub_wire2),
-				.usedw (sub_wire3),
 				.aclr (),
 				.almost_empty (),
 				.almost_full (),
 				.eccstatus (),
-				.sclr ());
+				.sclr (),
+				.usedw ());
 	defparam
-		scfifo_component.add_ram_output_register = "ON",
+		scfifo_component.add_ram_output_register = "OFF",
 		scfifo_component.intended_device_family = "Cyclone V",
 		scfifo_component.lpm_hint = "RAM_BLOCK_TYPE=M10K",
 		scfifo_component.lpm_numwords = 2048,
@@ -112,11 +108,11 @@ endmodule
 // Retrieval info: PRIVATE: LegacyRREQ NUMERIC "1"
 // Retrieval info: PRIVATE: MAX_DEPTH_BY_9 NUMERIC "0"
 // Retrieval info: PRIVATE: OVERFLOW_CHECKING NUMERIC "0"
-// Retrieval info: PRIVATE: Optimize NUMERIC "1"
+// Retrieval info: PRIVATE: Optimize NUMERIC "2"
 // Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "2"
 // Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "0"
 // Retrieval info: PRIVATE: UNDERFLOW_CHECKING NUMERIC "0"
-// Retrieval info: PRIVATE: UsedW NUMERIC "1"
+// Retrieval info: PRIVATE: UsedW NUMERIC "0"
 // Retrieval info: PRIVATE: Width NUMERIC "24"
 // Retrieval info: PRIVATE: dc_aclr NUMERIC "0"
 // Retrieval info: PRIVATE: diff_widths NUMERIC "0"
@@ -131,7 +127,7 @@ endmodule
 // Retrieval info: PRIVATE: wsFull NUMERIC "1"
 // Retrieval info: PRIVATE: wsUsedW NUMERIC "0"
 // Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
-// Retrieval info: CONSTANT: ADD_RAM_OUTPUT_REGISTER STRING "ON"
+// Retrieval info: CONSTANT: ADD_RAM_OUTPUT_REGISTER STRING "OFF"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone V"
 // Retrieval info: CONSTANT: LPM_HINT STRING "RAM_BLOCK_TYPE=M10K"
 // Retrieval info: CONSTANT: LPM_NUMWORDS NUMERIC "2048"
@@ -148,7 +144,6 @@ endmodule
 // Retrieval info: USED_PORT: full 0 0 0 0 OUTPUT NODEFVAL "full"
 // Retrieval info: USED_PORT: q 0 0 24 0 OUTPUT NODEFVAL "q[23..0]"
 // Retrieval info: USED_PORT: rdreq 0 0 0 0 INPUT NODEFVAL "rdreq"
-// Retrieval info: USED_PORT: usedw 0 0 11 0 OUTPUT NODEFVAL "usedw[10..0]"
 // Retrieval info: USED_PORT: wrreq 0 0 0 0 INPUT NODEFVAL "wrreq"
 // Retrieval info: CONNECT: @clock 0 0 0 0 clock 0 0 0 0
 // Retrieval info: CONNECT: @data 0 0 24 0 data 0 0 24 0
@@ -157,11 +152,10 @@ endmodule
 // Retrieval info: CONNECT: empty 0 0 0 0 @empty 0 0 0 0
 // Retrieval info: CONNECT: full 0 0 0 0 @full 0 0 0 0
 // Retrieval info: CONNECT: q 0 0 24 0 @q 0 0 24 0
-// Retrieval info: CONNECT: usedw 0 0 11 0 @usedw 0 0 11 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input_inst.v FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_input_bb.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL asyn_fifo_2048_bb.v TRUE
 // Retrieval info: LIB_FILE: altera_mf

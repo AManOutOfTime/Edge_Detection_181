@@ -64,14 +64,14 @@ module DE1_SOC_D8M_LB_RTL (
 	wire           orequest;
    wire           VGA_CLK_25M;
    wire           RESET_N; 
-	wire				mon_reset;
+	reg				mon_reset;
 	wire           Icontrol1;
 	wire           Icontrol2;
 	wire           rIenable;
 	wire           gIenable;
 	wire           bIenable;
 	wire           brightLevel;
-	wire				edge_en;
+	wire				edge_en, blur_5x5_en, blur_11x11_en;
 	wire    [7:0]  raw_VGA_R;
    wire    [7:0]  raw_VGA_G;
    wire    [7:0]  raw_VGA_B;
@@ -107,7 +107,6 @@ module DE1_SOC_D8M_LB_RTL (
 	wire [7:0] 	 blur_output;
 	reg  [7:0]   reg_blur_input, reg_blur_output;
 	reg	blur_en; 
-	wire read_flag;
 	wire [8:0] rows_written;
 	wire [9:0] cols_written;
 	// inputs to edge.v
@@ -182,7 +181,7 @@ assign  LUT_MIPI_PIXEL_VS = MIPI_PIXEL_VS;
 assign  LUT_MIPI_PIXEL_D  = MIPI_PIXEL_D ;
 
 
-assign RESET_N = ~mon_reset; 
+assign RESET_N = ~mon_reset; // 1'b1 
 assign Icontrol1 = SW[1];
 assign Icontrol2 = SW[2];
 assign Icontrol3 = SW[3];
@@ -192,9 +191,9 @@ assign Icontrol4 = SW[4];
 // 000 normal operation
 // 001 brightLevel (greyscale/contrast)
 // 010 
-// 011 
-// 100 
-// 101 BLUR
+// 011 IMAGE SHARPEN
+// 100 BLUR 5x5
+// 101 BLUR 11x11
 // 110 EDGE DETECT
 // 111 DIGITAL ZOOM
 
@@ -205,6 +204,14 @@ assign LEDR = cycle_count;
 assign brightLevel = (~SW[9] && ~SW[8] && SW[7]);
 // EDGE DETECT enable
 assign edge_en = (SW[9] && SW[8] && ~SW[7]);
+// BLUR 5x5
+assign blur_5x5_en = {SW[9] && ~SW[8] && ~SW[7]};
+// BLUR 11x11
+assign blur_11x11_en = {SW[9] && ~SW[8] && SW[7]};
+// orequest sync
+wire o_sync;
+assign o_sync = {edge_en || blur_5x5_en || blur_11x11_en};
+
 
 assign MIPI_RESET_n   = RESET_N;
 assign CAMERA_PWDN_n  = RESET_N; 
@@ -248,14 +255,31 @@ D8M_SET   ccd (
    .sCCD_B       ( raw_VGA_B )
 );
 
+reg pipe1_orequest;
+// pipeline stage 1
 always@(posedge VGA_CLK) begin
-	input_edge_R <= raw_VGA_R;
-	input_edge_G <= raw_VGA_G;
-	input_edge_B <= raw_VGA_B;
+	if(o_sync) begin
+		if(orequest) begin
+			pipe1_orequest <= orequest;
+			input_edge_R <= raw_VGA_R;
+			input_edge_G <= raw_VGA_G;
+			input_edge_B <= raw_VGA_B;
+		end
+	end
+	else begin
+		input_edge_R <= raw_VGA_R;
+		input_edge_G <= raw_VGA_G;
+		input_edge_B <= raw_VGA_B;
+	end
 end
 
+wire pipe2_orequest;
+wire firs_pix;
 // edge detection
 edge_detect edger(
+	.firs_pix(firs_pix),
+	.x(x_count),
+	.y(y_count),
 	.clk(VGA_CLK),
 	.in_R(input_edge_R), 
 	.edge_R_out(edged_R),
@@ -265,8 +289,9 @@ edge_detect edger(
 	.edge_B_out(edged_B),
 	.edge_en(edge_en),
 	.cycles(cycle_count),
-	.vga_reset(mon_reset),
-	.valid_pixel(orequest),
+	.vga_reset(),
+	.oreq(pipe2_orequest),
+	.valid_pixel(pipe1_orequest),
 	.hex(test_hex)
 //	.hex_sync_state(hex_sync),
 //	.hex_next_sync_state(hex_next_sync),
@@ -275,14 +300,26 @@ edge_detect edger(
 	
 );	
 
-reg    [7:0]  reg_edged_R;
-reg    [7:0]  reg_edged_G;
-reg    [7:0]  reg_edged_B;
-
+reg pipe3_firs_pix;
+reg pipe3_orequest;
+reg [7:0] reg_edged_R, reg_edged_B, reg_edged_G;
+// pipeline stage 2
 always@(posedge VGA_CLK) begin
-	reg_edged_R <= edged_R;
-	reg_edged_G <= edged_G;
-	reg_edged_B <= edged_B;
+	if(o_sync) begin
+		if(pipe2_orequest) begin
+			if(firs_pix)
+				pipe3_firs_pix <= firs_pix;
+			pipe3_orequest <= pipe2_orequest;
+			reg_edged_R <= edged_R;
+			reg_edged_G <= edged_G;
+			reg_edged_B <= edged_B;
+		end
+	end
+	else begin
+		reg_edged_R <= edged_R;
+		reg_edged_G <= edged_G;
+		reg_edged_B <= edged_B;
+	end
 end
 
 //--- Processes the raw RGB pixel data
@@ -302,11 +339,25 @@ RGB_Process p1 (
    .o_VGA_B  (fil_proc_B)
 );
 
-
+reg pipe4_firs_pix;
+reg pipe4_orequest;
+// pipeline stage 3
 always@(posedge VGA_CLK) begin
-	reg_fil_proc_R <= fil_proc_R;
-	reg_fil_proc_G <= fil_proc_G;
-	reg_fil_proc_B <= fil_proc_B;
+	if(o_sync) begin
+		if(pipe3_orequest) begin
+			if(pipe3_firs_pix)
+				pipe4_firs_pix <= pipe3_firs_pix;
+			pipe4_orequest <= pipe3_orequest;
+			reg_fil_proc_R <= fil_proc_R;
+			reg_fil_proc_G <= fil_proc_G;
+			reg_fil_proc_B <= fil_proc_B;
+		end
+	end
+	else begin
+		reg_fil_proc_R <= fil_proc_R;
+		reg_fil_proc_G <= fil_proc_G;
+		reg_fil_proc_B <= fil_proc_B;
+	end
 end
 
 
@@ -324,23 +375,173 @@ cursor c_proc(
 	.curs_ol__input_G(curs_ol__input_G), 
 	.curs_ol__input_B(curs_ol__input_B)
 					);
-
 					
+reg pipe5_firs_pix;
+reg pipe5_orequest;		
 reg 	[7:0]  reg_curs_ol__input_R;
 reg 	[7:0]  reg_curs_ol__input_G;
 reg 	[7:0]  reg_curs_ol__input_B;
 //cursor output to VGA input wires
+// pipeline stage 4
 always @ (posedge VGA_CLK) begin
-	reg_curs_ol__input_R <= curs_ol__input_R;
-	reg_curs_ol__input_G <= curs_ol__input_G;
-	reg_curs_ol__input_B <= curs_ol__input_B;
+	if(o_sync) begin
+		if(pipe4_orequest) begin
+			if(pipe4_firs_pix)
+				pipe5_firs_pix <= pipe4_firs_pix;
+			pipe5_orequest <= pipe4_orequest;
+			reg_curs_ol__input_R <= curs_ol__input_R;
+			reg_curs_ol__input_G <= curs_ol__input_G;
+			reg_curs_ol__input_B <= curs_ol__input_B;
+		end
+	end
+	else begin
+		reg_curs_ol__input_R <= curs_ol__input_R;
+		reg_curs_ol__input_G <= curs_ol__input_G;
+		reg_curs_ol__input_B <= curs_ol__input_B;
+	end
 end
 
+reg [7:0] interm_R, interm_G, interm_B;
+always@(posedge VGA_CLK) begin
+	interm_R <= reg_curs_ol__input_R;
+	interm_G <= reg_curs_ol__input_G;
+	interm_B <= reg_curs_ol__input_B;
+end
+
+reg active = 1'b0;
+reg [1:0] firs_pix_state, next_firs_pix_state;
+always@(posedge VGA_CLK) begin
+	firs_pix_state <= next_firs_pix_state;
+end
+// calc next state
+always@(*) begin
+	if(o_sync) begin
+		case(firs_pix_state)
+			2'd0: begin // OFF
+				if(pipe5_firs_pix && pipe5_orequest)
+					next_firs_pix_state = 2'd2;
+				else if(pipe5_orequest)
+					next_firs_pix_state = 2'd1;
+				else
+					next_firs_pix_state = 2'd0;
+			end
+			2'd1: begin // IDLE
+				if(pipe5_firs_pix)
+					next_firs_pix_state = 2'd2;
+				else if(pipe5_orequest)
+					next_firs_pix_state = 2'd1;
+				else
+					next_firs_pix_state = 2'd0;
+			end
+			2'd2: begin // ACTIVE
+				if(pipe5_orequest)
+					next_firs_pix_state = 2'd2;
+				else
+					next_firs_pix_state = 2'd0;
+			end
+			default: begin
+				next_firs_pix_state = 2'd0;
+			end
+		endcase
+	end
+	else
+		next_firs_pix_state = 2'd0;
+end
+always@(*) begin
+	if(o_sync) begin
+		case(firs_pix_state)
+			2'd0: active = 1'b0;
+			2'd1: active = 1'b0;
+			2'd2: active = 1'b1;
+			default: active = 1'b0;
+		endcase
+	end
+	else
+		active = 1'b0;
+end
+
+reg display_ready = 1'b0;
+reg [1:0] disp_state, next_disp_state;
+always@(posedge VGA_CLK) begin
+	disp_state <= next_disp_state;
+end
+always@(*) begin
+	if(o_sync) begin
+		case(disp_state)
+			2'd0: begin // OFF 
+				if(active) begin
+					next_disp_state = 2'd1;
+				end
+				else
+					next_disp_state = 2'd0;
+			end
+			2'd1: begin // MON_RESET
+				if(~active)
+					next_disp_state = 2'd0;
+				else
+					next_disp_state = 2'd2;
+			end
+			2'd2: begin // OUTPUT
+				if(~active)
+					next_disp_state = 2'd0;
+				else
+					next_disp_state = 2'd2;
+			end
+			default:
+				next_disp_state = 2'd0;
+		endcase
+	end
+	else
+		next_disp_state = 2'd0;
+end
+always@(*) begin // disp_ready and mon_reset
+	if(o_sync) begin
+		case(disp_state)
+			2'd0: begin
+				mon_reset = 0;
+				display_ready = 0;
+			end
+			2'd1: begin
+				mon_reset = 1;
+				display_ready = 0;
+			end
+			2'd2: begin
+				mon_reset = 0;
+				display_ready = 1;
+			end
+			default: begin
+				mon_reset = 0;
+				display_ready = 0;
+			end
+		endcase
+	end
+	else
+		mon_reset = 0;
+		display_ready = 0;
+end
+
+wire read_flag;
+assign read_flag = (display_ready && orequest);
+
+wire [23:0] fifo_wr_in, fifo_rd_out;
+assign fifo_wr_in = {interm_R, interm_G, interm_B};
+assign VGA_R = (o_sync) ? fifo_rd_out[23:16] : reg_curs_ol__input_R;
+assign VGA_G = (o_sync) ? fifo_rd_out[15:8]  : reg_curs_ol__input_G;
+assign VGA_B = (o_sync) ? fifo_rd_out[7:0]   : reg_curs_ol__input_B;
+asyn_fifo_2048 slow(
+	.data(fifo_wr_in),
+	.clock(VGA_CLK),
+	.rdreq(read_flag),
+	.wrreq(active),
+	.q(fifo_rd_out),
+	.empty(),
+	.full()
+);
 
 // connect cursor out direct to VGA
-assign VGA_R = reg_curs_ol__input_R;
-assign VGA_G = reg_curs_ol__input_G;
-assign VGA_B = reg_curs_ol__input_B;
+//assign VGA_R = reg_curs_ol__input_R;
+//assign VGA_G = reg_curs_ol__input_G;
+//assign VGA_B = reg_curs_ol__input_B;
 					
 //--- Module to Handle 5x5 Gaussian Blur (greyscale, only need one input color pixel value bc R=G=B)
 // blur module inputs
@@ -380,6 +581,7 @@ blur_5x5 blur(
 
 
 //--- VGA interface signals ---
+// VGA CLK = MIPI PIXEL CLK
 assign VGA_CLK    = MIPI_PIXEL_CLK;           // GPIO clk
 assign VGA_SYNC_N = 1'b0;
 //if greyscale enabled and blur switch high
